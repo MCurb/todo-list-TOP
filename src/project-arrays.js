@@ -1,3 +1,6 @@
+import { isToday, isFuture, isPast } from "date-fns";
+import { ta } from "date-fns/locale";
+
 //factory function that handles array creation, and categorizing
 
 export const categorize = (function () {
@@ -17,6 +20,7 @@ export const categorize = (function () {
   //Push the object to the tasks array
   const newTask = (taskObj) => {
     tasks.push(taskObj);
+    findCorrectCategory();
   };
 
   //function that loops through the task objects
@@ -24,7 +28,16 @@ export const categorize = (function () {
   //then adds each task object to all the categories that match those property values
   const findCorrectCategory = () => {
     tasks.forEach((task) => {
-      categorizeByProject(task, currentProjects);
+      ["project", "date", "checkboxStatus"].forEach((prop) => {
+        if (prop === "checkboxStatus") {
+          categorizeByCompletion(task, currentProjects);
+        }
+        if (prop === "project") {
+          categorizeByProject(task, currentProjects);
+        } else if (prop === "date") {
+          categorizeByDate(task, currentProjects);
+        }
+      });
     });
   };
 
@@ -40,14 +53,69 @@ export const categorize = (function () {
     newProject,
     newTask,
     findCorrectCategory,
+    eraseTaskFromEverywhere,
     getCurrentProjects,
     getCurrentTasks,
   };
 })();
 
-function categorizeByProject(currentTask, currentProjects) {
-  ["project"].forEach((prop) => {
-    const key = currentTask[prop];
-    currentProjects[key].push(currentTask);
+function categorizeByProject(task, currentProjects) {
+  const key = task["project"];
+  if (isTaskPresent(task, currentProjects[key])) {
+    return;
+  }
+  currentProjects[key].push(task);
+}
+
+function categorizeByDate(task, currentProjects) {
+  // if(isTaskPresent(task, currentProjects["Today"]) && isTaskPresent(task, currentProjects["Upcomming"]))
+  if (isToday(task["date"]) && !isTaskPresent(task, currentProjects["Today"])) {
+    currentProjects["Today"].push(task);
+  } else if (
+    isFuture(task["date"]) &&
+    !isTaskPresent(task, currentProjects["Upcomming"])
+  ) {
+    currentProjects["Upcomming"].push(task);
+  } else {
+    console.log("You can only plan the present and future son");
+  }
+}
+
+function categorizeByCompletion(task, currentProjects) {
+  if (task["checkboxStatus"]) {
+    console.log(task);
+    eraseTaskFromProjects(task.id);
+    currentProjects["Completed"].push(task);
+  }
+}
+
+export function eraseTaskFromEverywhere(
+  taskId,
+  currentTasks = categorize.getCurrentTasks()
+) {
+  for (let i = 0; i < currentTasks.length; i++) {
+    if (currentTasks[i].id === taskId) {
+      currentTasks.splice(i, 1);
+    }
+  }
+  eraseTaskFromProjects(taskId);
+}
+
+function isTaskPresent(task, currentProject) {
+  return currentProject.includes(task);
+}
+
+export function eraseTaskFromProjects(taskId, currentProjects = categorize.getCurrentProjects()) {
+  console.log(taskId);
+  Object.keys(currentProjects).forEach((project) => {
+    // currentProjects[project] = currentProjects[project].filter(task => task.id !== taskId)
+    const projectArr = currentProjects[project];
+
+    for (let i = projectArr.length - 1; i >= 0; i--) {
+      if (projectArr[i].id === taskId) {
+        projectArr.splice(i, 1);
+      }
+    }
   });
+  console.log(currentProjects)
 }
