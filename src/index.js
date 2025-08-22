@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { Task } from "./task-objects";
 
-import { categorize, eraseTaskFromEverywhere } from "./project-arrays";
+import { categorize, eraseTaskFromEverywhere, eraseProject } from "./project-arrays";
 
 categorize.newProject("Today");
 categorize.newProject("Home");
@@ -49,5 +49,6 @@ console.log(actualProjects);
 console.log(categorize.getCurrentTasks());
 
 eraseTaskFromEverywhere(categorize.getCurrentTasks()[1].id);
+eraseProject("Work")
 console.log(categorize.getCurrentProjects());
 console.log(categorize.getCurrentTasks());

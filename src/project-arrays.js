@@ -28,7 +28,7 @@ export const categorize = (function () {
   //then adds each task object to all the categories that match those property values
   const findCorrectCategory = () => {
     tasks.forEach((task) => {
-      ["project", "date", "checkboxStatus"].forEach((prop) => {
+      ["checkboxStatus", "project", "date"].forEach((prop) => {
         if (prop === "checkboxStatus") {
           categorizeByCompletion(task, currentProjects);
         }
@@ -61,14 +61,16 @@ export const categorize = (function () {
 
 function categorizeByProject(task, currentProjects) {
   const key = task["project"];
-  if (isTaskPresent(task, currentProjects[key])) {
+  if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"]) {
     return;
   }
   currentProjects[key].push(task);
 }
 
 function categorizeByDate(task, currentProjects) {
-  // if(isTaskPresent(task, currentProjects["Today"]) && isTaskPresent(task, currentProjects["Upcomming"]))
+  if (task["checkboxStatus"]) {
+    return;
+  }
   if (isToday(task["date"]) && !isTaskPresent(task, currentProjects["Today"])) {
     currentProjects["Today"].push(task);
   } else if (
@@ -101,14 +103,12 @@ export function eraseTaskFromEverywhere(
   eraseTaskFromProjects(taskId);
 }
 
-function isTaskPresent(task, currentProject) {
-  return currentProject.includes(task);
-}
-
-export function eraseTaskFromProjects(taskId, currentProjects = categorize.getCurrentProjects()) {
+export function eraseTaskFromProjects(
+  taskId,
+  currentProjects = categorize.getCurrentProjects()
+) {
   console.log(taskId);
   Object.keys(currentProjects).forEach((project) => {
-    // currentProjects[project] = currentProjects[project].filter(task => task.id !== taskId)
     const projectArr = currentProjects[project];
 
     for (let i = projectArr.length - 1; i >= 0; i--) {
@@ -117,5 +117,16 @@ export function eraseTaskFromProjects(taskId, currentProjects = categorize.getCu
       }
     }
   });
-  console.log(currentProjects)
+  console.log(currentProjects);
 }
+
+export function eraseProject(keyToRemove, currentProjects = categorize.getCurrentProjects()) {
+  delete currentProjects[keyToRemove];
+}
+
+function isTaskPresent(task, currentProject) {
+  return currentProject.includes(task);
+}
+
+
+
