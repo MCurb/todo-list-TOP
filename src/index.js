@@ -1,16 +1,21 @@
 import "./styles.css";
 
-import { Task } from "./task-objects";
+import { Task } from "./task-object"
 
-import { categorize, eraseTaskFromEverywhere, eraseProject } from "./project-arrays";
+import { newProject, eraseProject } from "./projects";
 
-categorize.newProject("Today");
-categorize.newProject("Home");
-categorize.newProject("Work");
-categorize.newProject("Upcomming");
-categorize.newProject("Completed");
+import { newTask, eraseTaskFromEverywhere } from "./tasks";
 
-categorize.newTask(
+//Not so important now:
+import { getCurrentProjects, getCurrentTasks } from "./categorize-tasks";
+
+newProject("Home");
+newProject("Work");
+newProject("Today");
+newProject("Upcomming");
+newProject("Completed");
+
+newTask(
   new Task(
     true,
     new Date(),
@@ -21,7 +26,7 @@ categorize.newTask(
   )
 );
 
-categorize.newTask(
+newTask(
   new Task(
     false,
     new Date(),
@@ -31,8 +36,7 @@ categorize.newTask(
     crypto.randomUUID()
   )
 );
-
-categorize.newTask(
+newTask(
   new Task(
     true,
     new Date("2024-12-24"),
@@ -43,12 +47,10 @@ categorize.newTask(
   )
 );
 
-// categorize.findCorrectCategory();
-const actualProjects = categorize.getCurrentProjects();
-console.log(actualProjects);
-console.log(categorize.getCurrentTasks());
+console.log(getCurrentProjects());
+console.log(getCurrentTasks());
 
-eraseTaskFromEverywhere(categorize.getCurrentTasks()[1].id);
+eraseTaskFromEverywhere(getCurrentTasks()[1].id);
 eraseProject("Work")
-console.log(categorize.getCurrentProjects());
-console.log(categorize.getCurrentTasks());
+console.log(getCurrentProjects());
+console.log(getCurrentTasks());
