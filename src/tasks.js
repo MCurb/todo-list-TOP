@@ -1,11 +1,15 @@
 import {
   findCorrectCategory,
+  actuallyPast,
   getCurrentTasks,
   getCurrentProjects,
 } from "./categorize-tasks";
 
-export function newTask(taskObj) {
-  getCurrentTasks().push(taskObj);
+export function newTask(task) {
+  if (actuallyPast(task)) {
+    return
+  }
+  getCurrentTasks().push(task);
   findCorrectCategory();
 }
 

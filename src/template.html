@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do App</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Todo List</h1>
+    </header>
+    <div class="sidebar">Here goes the sidebar</div>
+    <div class="main">
+      <h3>Add new Tasks here</h3>
+      <div class="tasks-div">
         
-    </form>
-</body>
+      </div>
+      <form class="task-form">
+
+        <input type="text" placeholder="Buy some eggs" class="title-input" />
+
+        <input type="date" class="date-input"/>
+
+        <select class="select-project">
+          <option value="Home">Home</option>
+          <option value="Work" selected>Work</option>
+        </select>
+
+        <select class="select-priority">
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+
+        <button type="submit" class="add-task-btn">Add Task</button>
+      </form>
+    </div>
+  </body>
 </html>

@@ -2,7 +2,7 @@ import { getCurrentProjects } from "./categorize-tasks";
 
 export function newProject(projectName) {
   getCurrentProjects()[projectName] = [];
-};
+}
 
 export function eraseProject(
   keyToRemove,

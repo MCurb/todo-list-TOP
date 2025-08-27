@@ -15,23 +15,22 @@ export function findCorrectCategory() {
     ["checkboxStatus", "project", "date"].forEach((prop) => {
       if (prop === "checkboxStatus") {
         categorizeByCompletion(task, currentProjects);
-      }
-      if (prop === "project") {
+      } else if (prop === "project") {
         categorizeByProject(task, currentProjects);
       } else if (prop === "date") {
         categorizeByDate(task, currentProjects);
       }
     });
   });
-};
+}
 
 function categorizeByProject(task, currentProjects) {
   const key = task["project"];
-  if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"]) {
+  if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"] || actuallyPast(task)) {
     return;
   }
   currentProjects[key].push(task);
-};
+}
 
 function categorizeByDate(task, currentProjects) {
   if (task["checkboxStatus"]) {
@@ -44,18 +43,17 @@ function categorizeByDate(task, currentProjects) {
     !isTaskPresent(task, currentProjects["Upcomming"])
   ) {
     currentProjects["Upcomming"].push(task);
-  } else {
+  } else if (actuallyPast(task)) {
     console.log("You can only plan the present and future son");
   }
-};
+}
 
 function categorizeByCompletion(task, currentProjects) {
   if (task["checkboxStatus"]) {
-    console.log(task);
     eraseTaskFromProjects(task.id);
     currentProjects["Completed"].push(task);
   }
-};
+}
 
 function isTaskPresent(task, currentProject) {
   return currentProject.includes(task);
@@ -63,8 +61,16 @@ function isTaskPresent(task, currentProject) {
 
 export function getCurrentProjects() {
   return currentProjects;
-};
+}
 
 export function getCurrentTasks() {
   return tasks;
-};
+}
+
+export function actuallyPast(task) {
+  if (!isToday(task["date"]) && isPast(task["date"])) {
+    return true;
+  } else {
+    return false
+  }
+}
