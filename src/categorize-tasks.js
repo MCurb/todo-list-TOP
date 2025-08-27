@@ -26,7 +26,11 @@ export function findCorrectCategory() {
 
 function categorizeByProject(task, currentProjects) {
   const key = task["project"];
-  if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"] || actuallyPast(task)) {
+  if (
+    isTaskPresent(task, currentProjects[key]) ||
+    task["checkboxStatus"] ||
+    actuallyPast(task)
+  ) {
     return;
   }
   currentProjects[key].push(task);
@@ -52,6 +56,8 @@ function categorizeByCompletion(task, currentProjects) {
   if (task["checkboxStatus"]) {
     eraseTaskFromProjects(task.id);
     currentProjects["Completed"].push(task);
+  } else if (!task["checkboxStatus"]) {
+    eraseTaskFromProjects(task.id);
   }
 }
 
@@ -71,6 +77,6 @@ export function actuallyPast(task) {
   if (!isToday(task["date"]) && isPast(task["date"])) {
     return true;
   } else {
-    return false
+    return false;
   }
 }
