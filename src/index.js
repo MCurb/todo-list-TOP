@@ -6,6 +6,8 @@ import { newProject, eraseProject } from "./projects";
 
 import { newTask, eraseTaskFromEverywhere } from "./tasks";
 
+import { renderTasks } from "./dom";
+
 import { parseISO } from "date-fns";
 
 //Not so important now:
@@ -60,6 +62,8 @@ const selectProject = document.querySelector(".select-project");
 const selectPriority = document.querySelector(".select-priority");
 const taskForm = document.querySelector(".task-form");
 
+const tasksContainer = document.querySelector(".tasks-div");
+
 taskForm.addEventListener("submit", handleFormData);
 
 function handleFormData(e) {
@@ -74,7 +78,8 @@ function handleFormData(e) {
       crypto.randomUUID()
     )
   );
-  
+ 
+  renderTasks(tasksContainer, getCurrentTasks())
   console.log(getCurrentProjects());
   console.log(getCurrentTasks());
 }

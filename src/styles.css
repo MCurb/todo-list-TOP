@@ -75,3 +75,27 @@ body {
 .sidebar {
     grid-area: sidebar;
 }
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .checkbox.checked {
+    background: dodgerblue;
+    position: relative;
+  }
+
+  .checkbox.checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 4px;
+  }
