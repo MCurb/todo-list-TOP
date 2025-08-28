@@ -5,15 +5,14 @@ import {
 } from "./categorize-tasks";
 
 import { eraseTaskFromEverywhere } from "./tasks";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
+const editTaskForm = document.querySelector(".edit-task-form");
 const tasksContainer = document.querySelector(".tasks-div");
-
 const editTitle = document.querySelector(".title-edit-input");
 const editDueDate = document.querySelector(".date-edit-input");
 const editSelectProject = document.querySelector(".select-project-edit");
 const editSelectPriority = document.querySelector(".select-priority-edit");
-const editFormBtn = document.querySelector(".edit-task-form");
 
 export function renderTasks(tasksContainer, currentTasksArray) {
   tasksContainer.innerHTML = "";
@@ -32,7 +31,7 @@ export function renderTasks(tasksContainer, currentTasksArray) {
     taskDueDate.textContent = task.date;
 
     const taskContent = document.createElement("div");
-    taskContent.setAttribute("data-task-id", `${task.id}`);
+    taskContent.setAttribute("data-task-content-id", `${task.id}`);
     taskContent.append(
       taskCheckbox,
       taskTitle,
@@ -73,15 +72,15 @@ tasksContainer.addEventListener("click", (e) => {
     if (task) {
       //Make a form appear at the same place the task content was
       document
-        .querySelector(`[data-task-id="${taskId}"]`)
-        .insertAdjacentElement("afterend", editFormBtn);
-      editFormBtn.style.display = "block";
-
+        .querySelector(`[data-task-content-id="${taskId}"]`)
+        .insertAdjacentElement("afterend", editTaskForm);
+      editTaskForm.style.display = "block";
+      editTaskForm.setAttribute("data-task-form-id", `${taskId}`);
       //Make the task content disappear
-      document.querySelector(`[data-task-id="${taskId}"]`).remove();
+      document.querySelector(`[data-task-content-id="${taskId}"]`).remove();
 
       //The form inputs, should contain the values that the current task object has
-      refillEditForm(task);
+      populateEditForm(task);
     }
   }
 });
@@ -117,10 +116,33 @@ function createEditTaskBtn(task) {
   return taskEditBtn;
 }
 
-function refillEditForm(task) {
+function populateEditForm(task) {
   editTitle.value = task.description;
   editDueDate.value = format(task.date, "yyyy-MM-dd");
   editSelectProject.value = task.project;
   editSelectPriority.value = task.priority;
 }
 
+editTaskForm.addEventListener("submit", formEventHandler);
+
+function formEventHandler(e) {
+  e.preventDefault();
+  updateTaskObj();
+  editTaskForm.style.display = "none";
+  tasksContainer.innerHTML = "";
+  renderTasks(tasksContainer, getCurrentTasks());
+  console.log(getCurrentTasks());
+  console.log(getCurrentProjects());
+}
+
+function updateTaskObj() {
+  const taskId = editTaskForm.dataset.taskFormId;
+  const task = getCurrentTasks().find((task) => task.id === taskId);
+  if (task) {
+    task.description = editTitle.value;
+    task.date = parseISO(editDueDate.value);
+    task.project = editSelectProject.value;
+    task.priority = editSelectPriority.value;
+    findCorrectCategory()
+  }
+}
