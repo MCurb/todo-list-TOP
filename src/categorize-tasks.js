@@ -5,7 +5,11 @@ import { eraseTaskFromProjects } from "./tasks";
 let tasks = [];
 
 //projects object that holds all the array projects
-let currentProjects = {};
+let currentProjects = {
+  "Completed": [],
+  "Today": [],
+  "Upcomming": [],
+};
 
 //function that loops through the task objects
 //then loops though each object with an inner loop looking for important properties like date, project and priority

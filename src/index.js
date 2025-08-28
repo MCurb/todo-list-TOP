@@ -8,6 +8,8 @@ import { newTask, eraseTaskFromEverywhere } from "./tasks";
 
 import { renderTasks } from "./dom";
 
+import { renderProjects } from "./sidebar-ui";
+
 import { parseISO } from "date-fns";
 
 //Not so important now:
@@ -15,10 +17,8 @@ import { getCurrentProjects, getCurrentTasks } from "./categorize-tasks";
 
 newProject("Home");
 newProject("Work");
-newProject("Today");
-newProject("Upcomming");
-newProject("Completed");
-
+// Init
+renderProjects()
 const taskTitle = document.querySelector(".title-input");
 const dueDate = document.querySelector(".date-input");
 const selectProject = document.querySelector(".select-project");
