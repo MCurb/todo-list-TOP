@@ -19,43 +19,6 @@ newProject("Today");
 newProject("Upcomming");
 newProject("Completed");
 
-// newTask(
-//   new Task(
-//     true,
-//     new Date(),
-//     "do my homework",
-//     "Home",
-//     "High",
-//     crypto.randomUUID()
-//   )
-// );
-
-// newTask(
-//   new Task(
-//     false,
-//     new Date(),
-//     "do this today1",
-//     "Home",
-//     "High",
-//     crypto.randomUUID()
-//   )
-// );
-// newTask(
-//   new Task(
-//     true,
-//     new Date("2024-12-24"),
-//     "do this today2",
-//     "Work",
-//     "High",
-//     crypto.randomUUID()
-//   )
-// );
-
-// console.log(getCurrentProjects());
-// console.log(getCurrentTasks());
-
-// eraseTaskFromEverywhere(getCurrentTasks()[1].id);
-
 const taskTitle = document.querySelector(".title-input");
 const dueDate = document.querySelector(".date-input");
 const selectProject = document.querySelector(".select-project");
@@ -78,8 +41,8 @@ function handleFormData(e) {
       crypto.randomUUID()
     )
   );
- 
-  renderTasks(tasksContainer, getCurrentTasks())
+
+  renderTasks(tasksContainer, getCurrentTasks());
   console.log(getCurrentProjects());
   console.log(getCurrentTasks());
 }

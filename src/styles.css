@@ -76,6 +76,10 @@ body {
     grid-area: sidebar;
 }
 
+.edit-task-form {
+  display: none;
+}
+
 .checkbox {
     width: 20px;
     height: 20px;
