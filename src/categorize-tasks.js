@@ -6,6 +6,7 @@ let tasks = [];
 
 //projects object that holds all the array projects
 let currentProjects = {
+  "Inbox": [],
   "Completed": [],
   "Today": [],
   "Upcomming": [],

@@ -5,6 +5,7 @@ import {
 } from "./categorize-tasks";
 
 import { eraseTaskFromEverywhere } from "./tasks";
+import { getRenderedProject } from "./sidebar-ui";
 import { format, parseISO } from "date-fns";
 
 const editTaskForm = document.querySelector(".edit-task-form");
@@ -14,7 +15,7 @@ const editDueDate = document.querySelector(".date-edit-input");
 const editSelectProject = document.querySelector(".select-project-edit");
 const editSelectPriority = document.querySelector(".select-priority-edit");
 
-export function renderTasks(tasksContainer, currentTasksArray) {
+export function renderTasks(currentTasksArray) {
   tasksContainer.innerHTML = "";
   currentTasksArray.forEach((task) => {
     const taskCheckbox = createTaskCheckbox(task);
@@ -52,7 +53,7 @@ tasksContainer.addEventListener("click", (e) => {
       task.checkboxStatus = !task.checkboxStatus;
       findCorrectCategory();
       tasksContainer.innerHTML = "";
-      renderTasks(tasksContainer, getCurrentTasks());
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
       console.log(getCurrentTasks());
       console.log(getCurrentProjects());
     }
@@ -62,7 +63,7 @@ tasksContainer.addEventListener("click", (e) => {
     if (task) {
       eraseTaskFromEverywhere(task.id);
       tasksContainer.innerHTML = "";
-      renderTasks(tasksContainer, getCurrentTasks());
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
       console.log(getCurrentTasks());
       console.log(getCurrentProjects());
     }
@@ -130,7 +131,7 @@ function formEventHandler(e) {
   updateTaskObj();
   editTaskForm.style.display = "none";
   tasksContainer.innerHTML = "";
-  renderTasks(tasksContainer, getCurrentTasks());
+  renderTasks(getCurrentProjects()[getRenderedProject()]);
   console.log(getCurrentTasks());
   console.log(getCurrentProjects());
 }
@@ -146,3 +147,4 @@ function updateTaskObj() {
     findCorrectCategory()
   }
 }
+

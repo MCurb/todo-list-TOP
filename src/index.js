@@ -8,7 +8,7 @@ import { newTask, eraseTaskFromEverywhere } from "./tasks";
 
 import { renderTasks } from "./dom";
 
-import { renderProjects } from "./sidebar-ui";
+import { renderProjects, getRenderedProject } from "./sidebar-ui";
 
 import { parseISO } from "date-fns";
 
@@ -42,7 +42,7 @@ function handleFormData(e) {
     )
   );
 
-  renderTasks(tasksContainer, getCurrentTasks());
+  renderTasks(getCurrentProjects()[getRenderedProject()]);
   console.log(getCurrentProjects());
   console.log(getCurrentTasks());
 }
