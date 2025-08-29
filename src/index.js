@@ -17,8 +17,10 @@ import { getCurrentProjects, getCurrentTasks } from "./categorize-tasks";
 
 newProject("Home");
 newProject("Work");
+
 // Init
-renderProjects()
+renderProjects();
+
 const taskTitle = document.querySelector(".title-input");
 const dueDate = document.querySelector(".date-input");
 const selectProject = document.querySelector(".select-project");
@@ -46,3 +48,29 @@ function handleFormData(e) {
   console.log(getCurrentProjects());
   console.log(getCurrentTasks());
 }
+
+function dynamicProjectSelector() {
+  Object.keys(getCurrentProjects()).forEach((project) => {
+    if (
+      project !== "Today" &&
+      project !== "Upcomming" &&
+      project !== "Completed"
+    ) {
+      const newOption = document.createElement("option");
+      newOption.value = `${project}`;
+      newOption.textContent = `${project}`;
+      selectProject.append(newOption);
+    }
+  });
+}
+dynamicProjectSelector();
+
+export function dynamicDefaultProject() {
+  for (const option of selectProject.options) {
+    if (option.value === getRenderedProject()) {
+      option.selected = true;
+    }
+  }
+}
+
+dynamicDefaultProject();

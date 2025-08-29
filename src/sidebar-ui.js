@@ -2,9 +2,11 @@ import { getCurrentProjects } from "./categorize-tasks";
 
 import { renderTasks } from "./dom";
 
+import { dynamicDefaultProject } from ".";
+
 const sidebar = document.querySelector(".sidebar");
 
-let renderedProject = "Inbox"
+let renderedProject = "Inbox";
 
 export function renderProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
@@ -21,13 +23,14 @@ function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (e.target.classList.contains(`${project}`)) {
       const projectArr = getCurrentProjects();
-      renderTasks(projectArr[project])
+      renderTasks(projectArr[project]);
       renderedProject = project;
-      console.log(renderedProject)
+      dynamicDefaultProject();
+      console.log(renderedProject);
     }
   });
 }
 
 export function getRenderedProject() {
-    return renderedProject
+  return renderedProject;
 }
