@@ -4,6 +4,10 @@ import { renderTasks } from "./dom";
 
 import { dynamicDefaultProject } from ".";
 
+const editSelectProject = document.querySelector(".select-project-edit");
+const selectProject = document.querySelector(".select-project");
+
+
 const sidebar = document.querySelector(".sidebar");
 
 let renderedProject = "Inbox";
@@ -25,7 +29,9 @@ function onProjectSidebarClick(e) {
       const projectArr = getCurrentProjects();
       renderTasks(projectArr[project]);
       renderedProject = project;
-      dynamicDefaultProject();
+      //Change selected input option when user clicks another project
+      dynamicDefaultProject(selectProject);
+      dynamicDefaultProject(editSelectProject);
       console.log(renderedProject);
     }
   });

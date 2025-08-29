@@ -18,8 +18,12 @@ import { getCurrentProjects, getCurrentTasks } from "./categorize-tasks";
 newProject("Home");
 newProject("Work");
 
+
 // Init
 renderProjects();
+
+const editSelectProject = document.querySelector(".select-project-edit");
+
 
 const taskTitle = document.querySelector(".title-input");
 const dueDate = document.querySelector(".date-input");
@@ -49,7 +53,7 @@ function handleFormData(e) {
   console.log(getCurrentTasks());
 }
 
-function dynamicProjectSelector() {
+function dynamicProjectSelector(selectProjectForm) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (
       project !== "Today" &&
@@ -59,18 +63,17 @@ function dynamicProjectSelector() {
       const newOption = document.createElement("option");
       newOption.value = `${project}`;
       newOption.textContent = `${project}`;
-      selectProject.append(newOption);
+      selectProjectForm.append(newOption);
     }
   });
 }
-dynamicProjectSelector();
+dynamicProjectSelector(selectProject);
+dynamicProjectSelector(editSelectProject)
 
-export function dynamicDefaultProject() {
-  for (const option of selectProject.options) {
+export function dynamicDefaultProject(selectProjectForm) {
+  for (const option of selectProjectForm.options) {
     if (option.value === getRenderedProject()) {
       option.selected = true;
     }
   }
 }
-
-dynamicDefaultProject();
