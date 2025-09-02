@@ -2,78 +2,65 @@ import "./styles.css";
 
 import { Task } from "./task-object";
 
-import { newProject, eraseProject } from "./projects";
+import { newProject } from "./projects";
 
-import { newTask, eraseTaskFromEverywhere } from "./tasks";
+import { newTask } from "./tasks";
 
-import { renderTasks } from "./dom";
+import {
+  renderTasks,
+  getTaskFormData,
+  taskActionHandler,
+  editFormHandler,
+} from "./dom";
 
-import { renderProjects, getRenderedProject } from "./sidebar-ui";
-
-import { parseISO } from "date-fns";
+import {
+  renderProjects,
+  getRenderedProject,
+  onProjectSidebarClick,
+  dynamicProjectSelector,
+} from "./sidebar-ui";
 
 //Not so important now:
-import { getCurrentProjects, getCurrentTasks } from "./categorize-tasks";
+import { getCurrentProjects, getCurrentTasks } from "./state";
 
 newProject("Home");
 newProject("Work");
 
-
 // Init
 renderProjects();
+renderTasks(getCurrentProjects()[getRenderedProject()]);
 
-const editSelectProject = document.querySelector(".select-project-edit");
+const sidebar = document.querySelector(".sidebar");
+sidebar.addEventListener("click", onProjectSidebarClick);
 
-
-const taskTitle = document.querySelector(".title-input");
-const dueDate = document.querySelector(".date-input");
-const selectProject = document.querySelector(".select-project");
-const selectPriority = document.querySelector(".select-priority");
 const taskForm = document.querySelector(".task-form");
 
-const tasksContainer = document.querySelector(".tasks-div");
-
-taskForm.addEventListener("submit", handleFormData);
-
-function handleFormData(e) {
+taskForm.addEventListener("submit", taskFormHandler);
+function taskFormHandler(e) {
   e.preventDefault();
+  const taskData = getTaskFormData();
   newTask(
     new Task(
       false,
-      parseISO(dueDate.value),
-      taskTitle.value,
-      selectProject.value,
-      selectPriority.value,
-      crypto.randomUUID()
+      taskData.dueDate,
+      taskData.title,
+      taskData.project,
+      taskData.priority,
+      taskData.id
     )
   );
-
   renderTasks(getCurrentProjects()[getRenderedProject()]);
   console.log(getCurrentProjects());
   console.log(getCurrentTasks());
 }
 
-function dynamicProjectSelector(selectProjectForm) {
-  Object.keys(getCurrentProjects()).forEach((project) => {
-    if (
-      project !== "Today" &&
-      project !== "Upcomming" &&
-      project !== "Completed"
-    ) {
-      const newOption = document.createElement("option");
-      newOption.value = `${project}`;
-      newOption.textContent = `${project}`;
-      selectProjectForm.append(newOption);
-    }
-  });
-}
-dynamicProjectSelector(selectProject);
-dynamicProjectSelector(editSelectProject)
+const editTaskForm = document.querySelector(".edit-task-form");
+editTaskForm.addEventListener("submit", editFormHandler);
 
-export function dynamicDefaultProject(selectProjectForm) {
-  for (const option of selectProjectForm.options) {
-    if (option.value === getRenderedProject()) {
-      option.selected = true;
-    }
-  }
-}
+const tasksContainer = document.querySelector(".tasks-div");
+tasksContainer.addEventListener("click", taskActionHandler);
+
+const editSelectProject = document.querySelector(".select-project-edit");
+const selectProject = document.querySelector(".select-project");
+dynamicProjectSelector(selectProject);
+dynamicProjectSelector(editSelectProject);

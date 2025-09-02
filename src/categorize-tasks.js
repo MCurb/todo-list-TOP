@@ -1,16 +1,8 @@
-import { isToday, isFuture, isPast } from "date-fns";
-import { eraseTaskFromProjects } from "./tasks";
+import { isToday, isFuture } from "date-fns";
+import { getCurrentProjects, getCurrentTasks } from "./state";
 
-//tasks array that holds all task objects
-let tasks = [];
-
-//projects object that holds all the array projects
-let currentProjects = {
-  "Inbox": [],
-  "Completed": [],
-  "Today": [],
-  "Upcomming": [],
-};
+const currentProjects = getCurrentProjects();
+const tasks = getCurrentTasks();
 
 //function that loops through the task objects
 //then loops though each object with an inner loop looking for important properties like date, project and priority
@@ -29,13 +21,18 @@ export function findCorrectCategory() {
   });
 }
 
+function categorizeByCompletion(task, currentProjects) {
+  if (task["checkboxStatus"]) {
+    eraseTaskFromProjects(task.id);
+    currentProjects["Completed"].push(task);
+  } else if (!task["checkboxStatus"]) {
+    eraseTaskFromProjects(task.id);
+  }
+}
+
 function categorizeByProject(task, currentProjects) {
   const key = task["project"];
-  if (
-    isTaskPresent(task, currentProjects[key]) ||
-    task["checkboxStatus"] ||
-    actuallyPast(task)
-  ) {
+  if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"]) {
     return;
   }
   currentProjects[key].push(task);
@@ -52,17 +49,6 @@ function categorizeByDate(task, currentProjects) {
     !isTaskPresent(task, currentProjects["Upcomming"])
   ) {
     currentProjects["Upcomming"].push(task);
-  } else if (actuallyPast(task)) {
-    console.log("You can only plan the present and future son");
-  }
-}
-
-function categorizeByCompletion(task, currentProjects) {
-  if (task["checkboxStatus"]) {
-    eraseTaskFromProjects(task.id);
-    currentProjects["Completed"].push(task);
-  } else if (!task["checkboxStatus"]) {
-    eraseTaskFromProjects(task.id);
   }
 }
 
@@ -70,18 +56,19 @@ function isTaskPresent(task, currentProject) {
   return currentProject.includes(task);
 }
 
-export function getCurrentProjects() {
-  return currentProjects;
-}
+export function eraseTaskFromProjects(
+  taskId,
+  currentProjects = getCurrentProjects()
+) {
+  console.log(taskId);
+  Object.keys(currentProjects).forEach((project) => {
+    const projectArr = currentProjects[project];
 
-export function getCurrentTasks() {
-  return tasks;
-}
-
-export function actuallyPast(task) {
-  if (!isToday(task["date"]) && isPast(task["date"])) {
-    return true;
-  } else {
-    return false;
-  }
+    for (let i = projectArr.length - 1; i >= 0; i--) {
+      if (projectArr[i].id === taskId) {
+        projectArr.splice(i, 1);
+      }
+    }
+  });
+  console.log(currentProjects);
 }

@@ -10,7 +10,12 @@
       <h1>Todo List</h1>
     </header>
     <div class="sidebar">
-      <h3>Sidebar</h3>
+      <div class="task-categories">
+        <button class="add-task-btn">Add Task</button>
+      </div>
+      <div class="projects">
+        <h3>My Projects</h3>
+      </div>
     </div>
     <div class="main">
       <h3>Add new Tasks here</h3>
@@ -20,8 +25,7 @@
 
         <input type="date" class="date-input" />
 
-        <select class="select-project">
-        </select>
+        <select class="select-project"></select>
 
         <select class="select-priority">
           <option value="High">High</option>
@@ -32,14 +36,15 @@
         <button type="submit" class="add-task-btn">Add Task</button>
       </form>
       <form class="edit-task-form">
-        <input type="text" placeholder="Buy some eggs" class="title-edit-input" />
+        <input
+          type="text"
+          placeholder="Buy some eggs"
+          class="title-edit-input"
+        />
 
         <input type="date" class="date-edit-input" />
 
-        <select class="select-project-edit">
-          <!-- <option value="Home">Home</option>
-          <option value="Work" selected>Work</option> -->
-        </select>
+        <select class="select-project-edit"></select>
 
         <select class="select-priority-edit">
           <option value="High">High</option>

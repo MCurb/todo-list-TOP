@@ -1,4 +1,4 @@
-import { getCurrentProjects } from "./categorize-tasks";
+import { getCurrentProjects } from "./state";
 
 export function newProject(projectName) {
   getCurrentProjects()[projectName] = [];

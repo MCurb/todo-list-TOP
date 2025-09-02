@@ -1,7 +1,9 @@
 /* CSS Modern Reset */
 
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -25,18 +27,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -44,36 +59,71 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
+html {
+  height: 100%;
+}
 
 body {
-    display: grid;
-    grid-template-areas: 
-    "header header"
+  display: grid;
+  grid-template-columns: minmax(max-content, 16vw) 1fr;
+  grid-template-rows: 10% 90%;
+  grid-template-areas:
+    "sidebar header"
     "sidebar main";
+  height: 100%;
 }
 
 .header {
-    grid-area: header;
-    place-self: center;
+  grid-area: header;
+  place-self: center;
 }
 
 .main {
-    grid-area: main;
+  grid-area: main;
 }
 
 .sidebar {
-    grid-area: sidebar;
+  grid-area: sidebar;
+  display: grid;
+  grid-template-rows: max-content max-content;
+  row-gap: 20px;
+
+  background-color: hsl(30, 40%, 97%);
+}
+
+.projects, .task-categories {
+  display: grid;
+  padding: 0 12px 0 12px;
+}
+
+.task-categories div,
+.projects div {
+  font-size: 18px;
+  padding: 8px 0 8px 8px;
+  border-radius: 4px;
+}
+
+.task-categories div:hover,
+.projects div:hover {
+  background-color: hsl(0, 0%, 90%);
+  cursor: pointer;
 }
 
 .edit-task-form {
@@ -81,25 +131,25 @@ body {
 }
 
 .checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #555;
-    border-radius: 4px;
-    display: inline-block;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-  .checkbox.checked {
-    background: dodgerblue;
-    position: relative;
-  }
+.checkbox.checked {
+  background: dodgerblue;
+  position: relative;
+}
 
-  .checkbox.checked::after {
-    content: "✔";
-    color: white;
-    font-size: 14px;
-    position: absolute;
-    top: 0;
-    left: 4px;
-  }
+.checkbox.checked::after {
+  content: "✔";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  left: 4px;
+}

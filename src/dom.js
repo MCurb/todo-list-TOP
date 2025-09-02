@@ -1,15 +1,15 @@
-import {
-  getCurrentTasks,
-  getCurrentProjects,
-  findCorrectCategory,
-} from "./categorize-tasks";
+import { findCorrectCategory } from "./categorize-tasks";
+
+import { getCurrentProjects, getCurrentTasks } from "./state";
 
 import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
 import { format, parseISO } from "date-fns";
 
-const editTaskForm = document.querySelector(".edit-task-form");
 const tasksContainer = document.querySelector(".tasks-div");
+
+const editTaskForm = document.querySelector(".edit-task-form");
+
 const editTitle = document.querySelector(".title-edit-input");
 const editDueDate = document.querySelector(".date-edit-input");
 const editSelectProject = document.querySelector(".select-project-edit");
@@ -45,46 +45,74 @@ export function renderTasks(currentTasksArray) {
   });
 }
 
-tasksContainer.addEventListener("click", (e) => {
+//Event Listener Function Handlers
+
+export function taskActionHandler(e) {
   if (e.target.classList.contains("checkbox")) {
-    const taskId = e.target.dataset.taskId;
-    const task = getCurrentTasks().find((task) => task.id === taskId);
+    const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       task.checkboxStatus = !task.checkboxStatus;
       findCorrectCategory();
       tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
+
       console.log(getCurrentTasks());
       console.log(getCurrentProjects());
     }
   } else if (e.target.classList.contains("task-delete")) {
-    const taskId = e.target.dataset.taskId;
-    const task = getCurrentTasks().find((task) => task.id === taskId);
+    const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       eraseTaskFromEverywhere(task.id);
       tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
+
       console.log(getCurrentTasks());
       console.log(getCurrentProjects());
     }
   } else if (e.target.classList.contains("task-edit-btn")) {
-    const taskId = e.target.dataset.taskId;
-    const task = getCurrentTasks().find((task) => task.id === taskId);
+    const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       //Make a form appear at the same place the task content was
       document
-        .querySelector(`[data-task-content-id="${taskId}"]`)
+        .querySelector(`[data-task-content-id="${task.id}"]`)
         .insertAdjacentElement("afterend", editTaskForm);
+      editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
       editTaskForm.style.display = "block";
-      editTaskForm.setAttribute("data-task-form-id", `${taskId}`);
       //Make the task content disappear
-      document.querySelector(`[data-task-content-id="${taskId}"]`).remove();
+      document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
 
       //The form inputs, should contain the values that the current task object has
       populateEditForm(task);
     }
   }
-});
+}
+
+export function editFormHandler(e) {
+  e.preventDefault();
+  updateTaskObj();
+  editTaskForm.style.display = "none";
+  tasksContainer.innerHTML = "";
+  renderTasks(getCurrentProjects()[getRenderedProject()]);
+  console.log(getCurrentTasks());
+  console.log(getCurrentProjects());
+}
+
+//Helper Functions
+
+export function getTaskFormData() {
+  const taskTitle = document.querySelector(".title-input").value;
+  const dueDate = document.querySelector(".date-input").value;
+  const selectProject = document.querySelector(".select-project").value;
+  const selectPriority = document.querySelector(".select-priority").value;
+
+  return {
+    title: taskTitle,
+    dueDate: parseISO(dueDate),
+    project: selectProject,
+    priority: selectPriority,
+    id: crypto.randomUUID(),
+  };
+}
 
 function updateUiCheckbox(task, taskCheckbox) {
   if (task.checkboxStatus) {
@@ -124,27 +152,20 @@ function populateEditForm(task) {
   editSelectPriority.value = task.priority;
 }
 
-editTaskForm.addEventListener("submit", formEventHandler);
-
-function formEventHandler(e) {
-  e.preventDefault();
-  updateTaskObj();
-  editTaskForm.style.display = "none";
-  tasksContainer.innerHTML = "";
-  renderTasks(getCurrentProjects()[getRenderedProject()]);
-  console.log(getCurrentTasks());
-  console.log(getCurrentProjects());
-}
-
 function updateTaskObj() {
-  const taskId = editTaskForm.dataset.taskFormId;
-  const task = getCurrentTasks().find((task) => task.id === taskId);
+  const task = getTaskByElementId(editTaskForm, "taskFormId");
   if (task) {
     task.description = editTitle.value;
     task.date = parseISO(editDueDate.value);
     task.project = editSelectProject.value;
     task.priority = editSelectPriority.value;
-    findCorrectCategory()
+    findCorrectCategory();
   }
 }
 
+//Find the task with the same id of the DOM element
+function getTaskByElementId(element, key) {
+  const taskId = element.dataset[key];
+
+  return getCurrentTasks().find((task) => task.id === taskId);
+}

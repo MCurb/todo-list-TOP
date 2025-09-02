@@ -1,14 +1,12 @@
-import { getCurrentProjects } from "./categorize-tasks";
+import { getCurrentProjects } from "./state";
 
 import { renderTasks } from "./dom";
-
-import { dynamicDefaultProject } from ".";
 
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 
-
-const sidebar = document.querySelector(".sidebar");
+const taskCategories = document.querySelector(".task-categories");
+const projects = document.querySelector(".projects")
 
 let renderedProject = "Inbox";
 
@@ -17,13 +15,17 @@ export function renderProjects() {
     const projectContainer = document.createElement("div");
     projectContainer.textContent = `${project}`;
     projectContainer.classList.add(`${project}`);
-    sidebar.append(projectContainer);
+    const taskContainers = ["Inbox", "Completed", "Today", "Upcomming"];
+      if (taskContainers.includes(project)) {
+        taskCategories.appendChild(projectContainer);
+      } else {
+        projects.appendChild(projectContainer)
+      }
+    
   });
 }
 
-sidebar.addEventListener("click", onProjectSidebarClick);
-
-function onProjectSidebarClick(e) {
+export function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (e.target.classList.contains(`${project}`)) {
       const projectArr = getCurrentProjects();
@@ -33,6 +35,31 @@ function onProjectSidebarClick(e) {
       dynamicDefaultProject(selectProject);
       dynamicDefaultProject(editSelectProject);
       console.log(renderedProject);
+    }
+  });
+}
+
+//Update default select option from forms when changing projects
+function dynamicDefaultProject(selectProjectForm) {
+  for (const option of selectProjectForm.options) {
+    if (option.value === getRenderedProject()) {
+      option.selected = true;
+    }
+  }
+}
+
+//Add form select input options, dynamically, this should be called when adding new projects
+export function dynamicProjectSelector(selectProjectForm) {
+  Object.keys(getCurrentProjects()).forEach((project) => {
+    if (
+      project !== "Today" &&
+      project !== "Upcomming" &&
+      project !== "Completed"
+    ) {
+      const newOption = document.createElement("option");
+      newOption.value = `${project}`;
+      newOption.textContent = `${project}`;
+      selectProjectForm.append(newOption);
     }
   });
 }

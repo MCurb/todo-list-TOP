@@ -1,13 +1,12 @@
-import {
-  findCorrectCategory,
-  actuallyPast,
-  getCurrentTasks,
-  getCurrentProjects,
-} from "./categorize-tasks";
+import { findCorrectCategory, eraseTaskFromProjects } from "./categorize-tasks";
+
+import { getCurrentTasks } from "./state";
+
+import { isToday, isPast } from "date-fns";
 
 export function newTask(task) {
   if (actuallyPast(task)) {
-    return
+    return;
   }
   getCurrentTasks().push(task);
   findCorrectCategory();
@@ -25,19 +24,10 @@ export function eraseTaskFromEverywhere(
   eraseTaskFromProjects(taskId);
 }
 
-export function eraseTaskFromProjects(
-  taskId,
-  currentProjects = getCurrentProjects()
-) {
-  console.log(taskId);
-  Object.keys(currentProjects).forEach((project) => {
-    const projectArr = currentProjects[project];
-
-    for (let i = projectArr.length - 1; i >= 0; i--) {
-      if (projectArr[i].id === taskId) {
-        projectArr.splice(i, 1);
-      }
-    }
-  });
-  console.log(currentProjects);
+function actuallyPast(task) {
+  if (!isToday(task["date"]) && isPast(task["date"])) {
+    return true;
+  } else {
+    return false;
+  }
 }
