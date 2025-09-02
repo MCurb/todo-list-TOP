@@ -15,10 +15,11 @@ import {
 } from "./dom";
 
 import {
-  renderProjects,
   getRenderedProject,
   onProjectSidebarClick,
   dynamicProjectSelector,
+  renderNewProjects,
+  renderDefaultProjects,
 } from "./sidebar-ui";
 
 //Not so important now:
@@ -28,7 +29,8 @@ newProject("Home");
 newProject("Work");
 
 // Init
-renderProjects();
+renderDefaultProjects();
+renderNewProjects()
 renderTasks(getCurrentProjects()[getRenderedProject()]);
 
 const sidebar = document.querySelector(".sidebar");
@@ -71,13 +73,19 @@ function eventHandler(e) {
   }
 }
 
-newProjectForm.addEventListener("submit", newProjectFormData);
-function newProjectFormData(e) {
+newProjectForm.addEventListener("submit", projectFormHandler);
+function projectFormHandler(e) {
   e.preventDefault();
   const newProjectData = getProjectFormData();
-  newProject(newProjectData.projectName);
+  if (!newProject(newProjectData.projectName.trim())) {
+    alert("Project already exists")
+    return
+  };
   newProjectForm.style.display = "none";
-  renderProjects();
+  console.log(getCurrentProjects());
+  renderNewProjects();
+  dynamicProjectSelector(selectProject);
+  dynamicProjectSelector(editSelectProject);
 }
 
 const editSelectProject = document.querySelector(".select-project-edit");

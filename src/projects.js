@@ -1,7 +1,13 @@
 import { getCurrentProjects } from "./state";
 
 export function newProject(projectName) {
-  getCurrentProjects()[projectName] = [];
+  if(getCurrentProjects().hasOwnProperty(`${projectName}`)) {
+    return false
+  } else {
+    getCurrentProjects()[projectName] = [];
+    return true
+  }
+  
 }
 
 export function eraseProject(
