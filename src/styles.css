@@ -90,6 +90,15 @@ body {
   height: 100%;
 }
 
+.material-symbols-outlined {
+  line-height: 1.5;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 20
+}
+
 .header {
   grid-area: header;
   place-self: center;
@@ -124,6 +133,22 @@ body {
 .projects div:hover {
   background-color: hsl(0, 0%, 90%);
   cursor: pointer;
+}
+
+.flexbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-task-btn {
+  border: none;
+  background-color: hsl(30, 40%, 97%);
+}
+
+.add-task-btn:hover .hover {
+  font-variation-settings: 'FILL' 1, 'wght' 700;
+  color: hsl(0, 0%, 60%);
 }
 
 .edit-task-form {

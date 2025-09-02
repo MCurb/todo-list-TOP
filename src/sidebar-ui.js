@@ -5,23 +5,44 @@ import { renderTasks } from "./dom";
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 
-const taskCategories = document.querySelector(".task-categories");
-const projects = document.querySelector(".projects")
+const taskCategoryContainer = document.querySelector(".task-categories");
+const projectsSection = document.querySelector(".projects");
 
 let renderedProject = "Inbox";
 
 export function renderProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
-    const projectContainer = document.createElement("div");
-    projectContainer.textContent = `${project}`;
-    projectContainer.classList.add(`${project}`);
-    const taskContainers = ["Inbox", "Completed", "Today", "Upcomming"];
-      if (taskContainers.includes(project)) {
-        taskCategories.appendChild(projectContainer);
-      } else {
-        projects.appendChild(projectContainer)
+    const projectTaskContainer = document.createElement("div");
+    projectTaskContainer.textContent = `${project}`;
+    projectTaskContainer.classList.add(`${project}`, "flexbox");
+    const icon = document.createElement("span");
+    icon.classList.add("material-symbols-outlined");
+
+    const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
+    if (taskSections.includes(project)) {
+      switch (project) {
+        case "Inbox":
+          icon.textContent = "inbox";
+          break;
+        case "Completed":
+          icon.textContent = "check_circle";
+          break;
+        case "Today":
+          icon.textContent = "today";
+          break;
+        case "Upcomming":
+          icon.textContent = "calendar_month";
+          break;
+
+        default:
+          break;
       }
-    
+      taskCategoryContainer.appendChild(projectTaskContainer);
+    } else {
+      icon.textContent = "folder";
+      projectsSection.appendChild(projectTaskContainer);
+    }
+    projectTaskContainer.prepend(icon);
   });
 }
 
