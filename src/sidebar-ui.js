@@ -18,6 +18,10 @@ export function renderProjects() {
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined");
 
+    if (taskCategoryContainer.querySelector(`.${project}`) || projectsSection.querySelector(`.${project}`)) {
+      return;
+    }
+
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (taskSections.includes(project)) {
       switch (project) {
@@ -40,7 +44,7 @@ export function renderProjects() {
       taskCategoryContainer.appendChild(projectTaskContainer);
     } else {
       icon.textContent = "folder";
-      projectsSection.appendChild(projectTaskContainer);
+      projectsSection.appendChild(projectTaskContainer)
     }
     projectTaskContainer.prepend(icon);
   });

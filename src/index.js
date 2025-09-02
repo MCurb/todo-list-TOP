@@ -9,6 +9,7 @@ import { newTask } from "./tasks";
 import {
   renderTasks,
   getTaskFormData,
+  getProjectFormData,
   taskActionHandler,
   editFormHandler,
 } from "./dom";
@@ -59,6 +60,25 @@ editTaskForm.addEventListener("submit", editFormHandler);
 
 const tasksContainer = document.querySelector(".tasks-div");
 tasksContainer.addEventListener("click", taskActionHandler);
+
+const addProjectBtn = document.querySelector(".add-project");
+const newProjectForm = document.querySelector(".new-project-form");
+addProjectBtn.addEventListener("click", eventHandler);
+function eventHandler(e) {
+  if (e.target.matches(".material-symbols-outlined")) {
+    document.querySelector(".add-project").after(newProjectForm);
+    newProjectForm.style.display = "block";
+  }
+}
+
+newProjectForm.addEventListener("submit", newProjectFormData);
+function newProjectFormData(e) {
+  e.preventDefault();
+  const newProjectData = getProjectFormData();
+  newProject(newProjectData.projectName);
+  newProjectForm.style.display = "none";
+  renderProjects();
+}
 
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");

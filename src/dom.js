@@ -99,6 +99,14 @@ export function editFormHandler(e) {
 
 //Helper Functions
 
+export function getProjectFormData() {
+  const projectName = document.querySelector(".project-name-input").value;
+
+  return {
+    projectName: projectName,
+  }
+}
+
 export function getTaskFormData() {
   const taskTitle = document.querySelector(".title-input").value;
   const dueDate = document.querySelector(".date-input").value;
