@@ -104,7 +104,7 @@ export function getProjectFormData() {
 
   return {
     projectName: projectName,
-  }
+  };
 }
 
 export function getTaskFormData() {

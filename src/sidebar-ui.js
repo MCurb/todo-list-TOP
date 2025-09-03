@@ -15,9 +15,8 @@ let renderedProject = "Inbox";
 
 export function renderDefaultProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
-    const projectTaskContainer = document.createElement("div");
-    projectTaskContainer.textContent = `${project}`;
-    projectTaskContainer.classList.add(`${project}`, "flexbox");
+    const projectTaskContainer = createTaskContainer(project);
+
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined");
     projectTaskContainer.prepend(icon);
@@ -52,12 +51,14 @@ export function renderDefaultProjects() {
 export function renderNewProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
-    if (projectsSection.querySelector(`.${project}`) || taskSections.includes(project)) {
+    if (
+      projectsSection.querySelector(`.${project}`) ||
+      taskSections.includes(project)
+    ) {
       return;
     }
-    const projectTaskContainer = document.createElement("div");
-    projectTaskContainer.textContent = `${project}`;
-    projectTaskContainer.classList.add(`${project.replace(/ /g, "-")}`, "flexbox");
+
+    const projectTaskContainer = createTaskContainer(project);
 
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined");
@@ -65,52 +66,18 @@ export function renderNewProjects() {
 
     projectTaskContainer.prepend(icon);
     projectsSection.appendChild(projectTaskContainer);
-    
   });
 }
 
-// export function renderProjects() {
-//   Object.keys(getCurrentProjects()).forEach((project) => {
-//     const projectTaskContainer = document.createElement("div");
-//     projectTaskContainer.textContent = `${project}`;
-//     projectTaskContainer.classList.add(`${project}`, "flexbox");
-//     const icon = document.createElement("span");
-//     icon.classList.add("material-symbols-outlined");
-
-//     if (
-//       taskCategoryContainer.querySelector(`.${project}`) ||
-//       projectsSection.querySelector(`.${project}`)
-//     ) {
-//       return;
-//     }
-
-//     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
-//     if (taskSections.includes(project)) {
-//       switch (project) {
-//         case "Inbox":
-//           icon.textContent = "inbox";
-//           break;
-//         case "Completed":
-//           icon.textContent = "check_circle";
-//           break;
-//         case "Today":
-//           icon.textContent = "today";
-//           break;
-//         case "Upcomming":
-//           icon.textContent = "calendar_month";
-//           break;
-
-//         default:
-//           break;
-//       }
-//       taskCategoryContainer.appendChild(projectTaskContainer);
-//     } else {
-//       icon.textContent = "folder";
-//       projectsSection.appendChild(projectTaskContainer);
-//     }
-//     projectTaskContainer.prepend(icon);
-//   });
-// }
+function createTaskContainer(project) {
+  const projectTaskContainer = document.createElement("div");
+  projectTaskContainer.textContent = `${project}`;
+  projectTaskContainer.classList.add(
+    `${project.replace(/ /g, "-")}`,
+    "flexbox"
+  );
+  return projectTaskContainer;
+}
 
 export function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
@@ -138,19 +105,17 @@ function dynamicDefaultProject(selectProjectForm) {
 //Add form select input options, dynamically, this should be called when adding new projects
 export function dynamicProjectSelector(selectProjectForm) {
   Object.keys(getCurrentProjects()).forEach((project) => {
+    const defaultProjects = ["Today", "Upcomming", "Completed"];
     if (
-      project !== "Today" &&
-      project !== "Upcomming" &&
-      project !== "Completed"
+      defaultProjects.includes(project) ||
+      selectProjectForm.querySelector(`[value="${project}"]`)
     ) {
-      if (selectProjectForm.querySelector(`[value="${project}"]`)) {
-        return;
-      }
-      const newOption = document.createElement("option");
-      newOption.value = `${project}`;
-      newOption.textContent = `${project}`;
-      selectProjectForm.append(newOption);
+      return;
     }
+    const newOption = document.createElement("option");
+    newOption.value = `${project}`;
+    newOption.textContent = `${project}`;
+    selectProjectForm.append(newOption);
   });
 }
 

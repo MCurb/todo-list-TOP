@@ -30,7 +30,7 @@ newProject("Work");
 
 // Init
 renderDefaultProjects();
-renderNewProjects()
+renderNewProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
 
 const sidebar = document.querySelector(".sidebar");
@@ -77,15 +77,34 @@ newProjectForm.addEventListener("submit", projectFormHandler);
 function projectFormHandler(e) {
   e.preventDefault();
   const newProjectData = getProjectFormData();
-  if (!newProject(newProjectData.projectName.trim())) {
-    alert("Project already exists")
-    return
-  };
+  if (!newProject(newProjectData.projectName.trim().replace(/\s+/g, " "))) {
+    alert("Project already exists");
+    return;
+  }
   newProjectForm.style.display = "none";
   console.log(getCurrentProjects());
   renderNewProjects();
   dynamicProjectSelector(selectProject);
   dynamicProjectSelector(editSelectProject);
+}
+
+const header = document.querySelector(".header");
+const body = document.querySelector("body");
+const toggleSidebarBtn = document.querySelector(
+  ".top-sidebar .material-symbols-outlined"
+);
+const taskCategoryContainer = document.querySelector(".task-categories");
+
+const sidebarContainer = document.querySelector(".top-sidebar");
+toggleSidebarBtn.addEventListener("click", toggleSidebar);
+function toggleSidebar() {
+  body.classList.toggle("collapse-grid");
+  sidebar.classList.toggle("collapse-sidebar");
+  if (!header.querySelector(".top-sidebar")) {
+    header.appendChild(sidebarContainer);
+  } else {
+    sidebar.insertBefore(sidebarContainer, taskCategoryContainer )
+  }
 }
 
 const editSelectProject = document.querySelector(".select-project-edit");

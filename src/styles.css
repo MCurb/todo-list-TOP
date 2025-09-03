@@ -88,6 +88,7 @@ body {
     "sidebar header"
     "sidebar main";
   height: 100%;
+  transition: all 0.2s ease;
 }
 
 .material-symbols-outlined {
@@ -97,7 +98,20 @@ body {
 
 .header {
   grid-area: header;
-  place-self: center;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: 1fr;
+}
+
+.header .top-sidebar {
+  grid-column: 1 / 2;
+  grid-row: 1;
+  justify-self: start;
+}
+
+.header h1 {
+  grid-column: 2 / 3;
+  justify-self: center;
 }
 
 .main {
@@ -109,10 +123,20 @@ body {
 .sidebar {
   grid-area: sidebar;
   display: grid;
-  grid-template-rows: max-content max-content;
-  row-gap: 20px;
-
+  grid-template-rows: max-content max-content max-content;
+  row-gap: 16px;
+  width: 250px;
+  overflow: hidden;
   background-color: hsl(30, 40%, 97%);
+  transition: transform 0.2s ease;
+}
+
+.collapse-sidebar {
+  transform: translateX(-100%);
+}
+
+.collapse-grid {
+  grid-template-columns: 0 1fr;
 }
 
 /* Sidebar Containers */
@@ -124,6 +148,17 @@ body {
 }
 
 /* Sidebar Elements */
+
+.top-sidebar {
+  display: flex;
+  justify-content: end;
+  padding: 8px 16px 0 0;
+}
+
+.top-sidebar .material-symbols-outlined:hover {
+  color: gray;
+  cursor: pointer;
+}
 
 .task-categories div,
 .projects div {
