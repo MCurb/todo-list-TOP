@@ -167,8 +167,8 @@ body {
   border-radius: 4px;
 }
 
-.task-categories div:hover,
-.projects div:hover {
+.task-categories div:hover:not(.active-sidebar-project),
+.projects div:hover:not(.active-sidebar-project) {
   background-color: hsl(0, 0%, 90%);
   cursor: pointer;
 }
@@ -196,6 +196,11 @@ body {
 }
 
 /* Helper Classes */
+
+.active-sidebar-project {
+  color: hsl(5, 72%, 52%);
+  background-color: #ffefe5;
+}
 
 .flexbox {
   display: flex;

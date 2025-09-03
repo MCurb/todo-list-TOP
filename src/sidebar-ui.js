@@ -5,6 +5,7 @@ import { renderTasks } from "./dom";
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 
+const sidebar = document.querySelector(".sidebar")
 const taskCategoryContainer = document.querySelector(".task-categories");
 const projectsSection = document.querySelector(".projects");
 
@@ -85,6 +86,12 @@ export function onProjectSidebarClick(e) {
       const projectArr = getCurrentProjects();
       renderTasks(projectArr[project]);
       renderedProject = project;
+      //Make the clicked project and it's svg color red and background color a softer red
+      if (sidebar.querySelector(".active-sidebar-project")) {
+        sidebar.querySelector(".active-sidebar-project").classList.remove("active-sidebar-project")
+      }
+      e.target.classList.add("active-sidebar-project");
+
       //Change selected input option when user clicks another project
       dynamicDefaultProject(selectProject);
       dynamicDefaultProject(editSelectProject);
