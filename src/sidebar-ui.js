@@ -9,6 +9,8 @@ const sidebar = document.querySelector(".sidebar")
 const taskCategoryContainer = document.querySelector(".task-categories");
 const projectsSection = document.querySelector(".projects");
 
+const activeProjectName = document.querySelector(".active-project-name")
+
 let renderedProject = "Inbox";
 
 //Render default projects function:
@@ -93,6 +95,8 @@ export function onProjectSidebarClick(e) {
       }
       e.target.classList.add("active-sidebar-project");
 
+      renderActiveProjectName(renderedProject)
+
       //Change selected input option when user clicks another project
       dynamicDefaultProject(selectProject);
       dynamicDefaultProject(editSelectProject);
@@ -125,6 +129,10 @@ export function dynamicProjectSelector(selectProjectForm) {
     newOption.textContent = `${project}`;
     selectProjectForm.append(newOption);
   });
+}
+
+function renderActiveProjectName(activeProject) {
+  activeProjectName.textContent = activeProject;
 }
 
 export function getRenderedProject() {

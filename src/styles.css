@@ -269,6 +269,7 @@ body {
   font-size: 15px;
   padding: 4px 16px;
   border-radius: 6px;
+  transition: all 0.15s ease;
 }
 
 .cancel-btn {
@@ -276,9 +277,19 @@ body {
   color: rgb(80, 80, 80);
 }
 
+.cancel-btn:hover {
+  background-color: hsl(0, 0%, 86%);
+  cursor: pointer;
+}
+
 .add-task-btn {
   background-color: hsl(5, 72%, 52%);
   color: white;
+}
+
+.add-task-btn:hover {
+  background-color: hsl(5, 72%, 44%);
+  cursor: pointer;
 }
 
 /* SIDEBAR */
@@ -396,6 +407,6 @@ body {
   color: white;
   font-size: 14px;
   position: absolute;
-  top: 2px;
+  top: 1px;
   left: 4px;
 }
