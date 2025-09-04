@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-do App</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
   </head>
   <body>
     <header class="header">
@@ -15,29 +18,38 @@
         <span class="material-symbols-outlined">dock_to_right</span>
       </div>
       <div class="task-categories">
-        <button class="add-task-btn flexbox"><span class="material-symbols-outlined hover">add_circle</span>Add Task</button>
+        <button class="add-task-btn flexbox">
+          <span class="material-symbols-outlined hover">add_circle</span>Add
+          Task
+        </button>
       </div>
       <div class="projects">
-        <h3 class="add-project flexbox">My Projects <span class="material-symbols-outlined">add_circle</span></h3>
+        <h3 class="add-project flexbox">
+          My Projects <span class="material-symbols-outlined">add_circle</span>
+        </h3>
       </div>
     </div>
     <div class="main">
       <h3>Add new Tasks here</h3>
       <div class="tasks-div"></div>
       <form class="task-form">
-        <input type="text" placeholder="Buy some eggs" class="title-input" />
+        <input type="text" placeholder="Buy some eggs" class="title-input" autofocus />
 
-        <input type="date" class="date-input" />
-
+        <div class="task-actions">
+          <input type="date" class="date-input" required/>
+          <select class="select-priority">
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+        <div class="line"></div>
         <select class="select-project"></select>
 
-        <select class="select-priority">
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-
-        <button type="submit" class="add-task-btn">Add Task</button>
+        <div class="task-btns">
+          <button class="cancel-btn">Cancel</button>
+          <button type="submit" class="add-task-btn">Add Task</button>
+        </div>
       </form>
       <form class="edit-task-form">
         <input
@@ -59,7 +71,11 @@
         <button type="submit" class="save-task-btn">Save</button>
       </form>
       <form class="new-project-form">
-        <input type="text" placeholder="Project name" class="project-name-input">
+        <input
+          type="text"
+          placeholder="Project name"
+          class="project-name-input"
+        />
         <button type="submit">Add Project</button>
       </form>
     </div>

@@ -77,7 +77,7 @@ h6 {
 }
 
 html {
-  height: 100%;
+  height: 110vh;
 }
 
 body {
@@ -92,6 +92,7 @@ body {
 }
 
 .material-symbols-outlined {
+  font-size: 22px;
   line-height: 1.5;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
 }
@@ -114,8 +115,170 @@ body {
   justify-self: center;
 }
 
+/* MAIN */
+
 .main {
   grid-area: main;
+  display: grid;
+  grid-template-rows: max-content max-content max-content;
+  row-gap: 20px;
+  padding: 0 4vw;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+/* Tasks container */
+
+.tasks-div {
+  display: grid;
+  row-gap: 16px;
+  align-self: center;
+}
+
+/* Task Details */
+
+.task-details-container {
+  display: grid;
+  grid-template-columns: max-content minmax(max-content, 1fr) max-content max-content;
+  grid-template-rows: max-content max-content;
+  column-gap: 12px;
+  min-width: 100%;
+  width: 55vw;
+  padding: 8px 20px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.task-details-container:hover {
+  cursor: pointer;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.checkbox {
+  grid-area: 1 / 1 / 2 / 2;
+  align-self: center;
+}
+
+.task-title {
+  grid-area: 1 / 2 / 2 / 3;
+  align-self: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.task-date {
+  grid-area: 2 / 2 / 3 / 3;
+  font-size: 14px;
+  color: hsl(0, 0%, 50%);
+  font-style: italic;
+}
+
+.task-edit-btn,
+.task-delete {
+  color: hsl(0, 0%, 40%);
+}
+
+.task-edit-btn.material-symbols-outlined:hover,
+.task-delete:hover {
+  color: hsl(0, 0%, 65%);
+  cursor: pointer;
+}
+
+/* Task Forms */
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  grid-template-rows: max-content max-content max-content max-content;
+  grid-template-areas:
+    "title title"
+    "actions actions"
+    "line line"
+    "project buttons";
+  row-gap: 10px;
+  min-width: max-content;
+  width: 55vw;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+}
+
+.task-form input,
+.task-form select {
+  border: none;
+  outline: none;
+}
+
+.title-input {
+  grid-area: title;
+  justify-self: start;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.title-input::placeholder {
+  font-weight: 600;
+  font-size: 18px;
+  color: #9d9d9d;
+}
+
+.task-actions {
+  grid-area: actions;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 24px;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  margin-left: -12px;
+  padding: 0;
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #b0b0b0;
+  bottom: 40%;
+  z-index: 1;
+}
+
+.select-project {
+  grid-area: project;
+  justify-self: start;
+  background-color: white;
+}
+
+.select-priority {
+  background-color: white;
+}
+
+.task-btns {
+  grid-area: buttons;
+  display: flex;
+  gap: 8px;
+}
+
+.task-btns button {
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 4px 16px;
+  border-radius: 6px;
+}
+
+.cancel-btn {
+  background-color: hsl(0, 0%, 94%);
+  color: rgb(80, 80, 80);
+}
+
+.add-task-btn {
+  background-color: hsl(5, 72%, 52%);
+  color: white;
 }
 
 /* SIDEBAR */
@@ -144,7 +307,7 @@ body {
 .projects,
 .task-categories {
   display: grid;
-  padding: 0 12px 0 12px;
+  padding: 0 16px 0 16px;
 }
 
 /* Sidebar Elements */
@@ -173,7 +336,7 @@ body {
   cursor: pointer;
 }
 
-.add-task-btn {
+.sidebar .add-task-btn {
   border: none;
   background-color: hsl(30, 40%, 97%);
 }
@@ -185,6 +348,10 @@ body {
 
 .add-project:hover .material-symbols-outlined {
   cursor: pointer;
+}
+
+.add-project {
+  justify-content: space-between;
 }
 
 .edit-task-form {
@@ -211,15 +378,16 @@ body {
 .checkbox {
   width: 20px;
   height: 20px;
-  border: 2px solid #555;
-  border-radius: 4px;
+  border: 1.5px solid hsl(0, 0%, 65%);
+  border-radius: 10px;
   display: inline-block;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .checkbox.checked {
-  background: dodgerblue;
+  background: rgb(8, 55, 158);
+  border: none;
   position: relative;
 }
 
@@ -228,6 +396,6 @@ body {
   color: white;
   font-size: 14px;
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 4px;
 }

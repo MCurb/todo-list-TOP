@@ -26,13 +26,16 @@ export function renderTasks(currentTasksArray) {
     const taskEditBtn = createEditTaskBtn(task);
 
     const taskTitle = document.createElement("p");
+    taskTitle.classList.add("task-title");
     taskTitle.textContent = task.description;
 
     const taskDueDate = document.createElement("p");
-    taskDueDate.textContent = task.date;
+    taskDueDate.classList.add("task-date")
+    taskDueDate.textContent = `Due: ${format(task.date, "MMM d")}`;
 
     const taskContent = document.createElement("div");
     taskContent.setAttribute("data-task-content-id", `${task.id}`);
+    taskContent.classList.add("task-details-container")
     taskContent.append(
       taskCheckbox,
       taskTitle,
@@ -131,9 +134,9 @@ function updateUiCheckbox(task, taskCheckbox) {
 }
 
 function createTaskDeleteBtn(task) {
-  const taskDelete = document.createElement("div");
+  const taskDelete = document.createElement("span");
   taskDelete.setAttribute("data-task-id", `${task.id}`);
-  taskDelete.classList.add("task-delete");
+  taskDelete.classList.add("task-delete", "material-symbols-outlined");
   taskDelete.textContent = "delete";
   return taskDelete;
 }
@@ -146,10 +149,10 @@ function createTaskCheckbox(task) {
 }
 
 function createEditTaskBtn(task) {
-  const taskEditBtn = document.createElement("div");
+  const taskEditBtn = document.createElement("span");
   taskEditBtn.setAttribute("data-task-id", `${task.id}`);
-  taskEditBtn.classList.add("task-edit-btn");
-  taskEditBtn.textContent = "Edit Task";
+  taskEditBtn.classList.add("task-edit-btn", "material-symbols-outlined");
+  taskEditBtn.textContent = "edit";
   return taskEditBtn;
 }
 
