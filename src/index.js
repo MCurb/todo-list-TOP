@@ -32,6 +32,7 @@ newProject("Work");
 renderDefaultProjects();
 renderNewProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
+document.querySelector(".Inbox").classList.add("active-sidebar-project")
 
 const sidebar = document.querySelector(".sidebar");
 sidebar.addEventListener("click", onProjectSidebarClick);

@@ -86,6 +86,7 @@ export function onProjectSidebarClick(e) {
       const projectArr = getCurrentProjects();
       renderTasks(projectArr[project]);
       renderedProject = project;
+
       //Make the clicked project and it's svg color red and background color a softer red
       if (sidebar.querySelector(".active-sidebar-project")) {
         sidebar.querySelector(".active-sidebar-project").classList.remove("active-sidebar-project")
