@@ -18,9 +18,22 @@
         <span class="material-symbols-outlined">dock_to_right</span>
       </div>
       <div class="task-categories">
-        <button class="add-task-btn flexbox">
-          <span class="material-symbols-outlined hover">add_circle</span>Add
-          Task
+        <button class="add-task-btn-sidebar flexbox">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            width="28"
+            height="28"
+          >
+            <circle cx="24" cy="24" r="22" fill="hsl(5, 72%, 52%)" />
+            <path
+              d="M24 14v20M14 24h20"
+              stroke="#fff"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          </svg>
+          Add Task
         </button>
       </div>
       <div class="projects">
@@ -33,10 +46,15 @@
       <h2 class="active-project-name">Inbox</h2>
       <div class="tasks-div"></div>
       <form class="task-form">
-        <input type="text" placeholder="Buy some eggs" class="title-input" autofocus />
+        <input
+          type="text"
+          placeholder="Buy some eggs"
+          class="title-input"
+          autofocus
+        />
 
         <div class="task-actions">
-          <input type="date" class="date-input" required/>
+          <input type="date" class="date-input" required />
           <select class="select-priority">
             <option value="High">High</option>
             <option value="Medium" selected>Medium</option>
@@ -56,19 +74,24 @@
           type="text"
           placeholder="Buy some eggs"
           class="title-edit-input"
+          autofocus
         />
 
-        <input type="date" class="date-edit-input" />
+        <div class="edit-task-actions">
+          <input type="date" class="date-edit-input" />
 
+          <select class="select-priority-edit">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+        <div class="line"></div>
         <select class="select-project-edit"></select>
-
-        <select class="select-priority-edit">
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-
-        <button type="submit" class="save-task-btn">Save</button>
+        <div class="task-edit-btns">
+          <button type="button" class="cancel-edit-btn">Cancel</button>
+          <button type="submit" class="save-task-btn">Save</button>
+        </div>
       </form>
       <form class="new-project-form">
         <input

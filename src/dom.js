@@ -80,7 +80,7 @@ export function taskActionHandler(e) {
         .querySelector(`[data-task-content-id="${task.id}"]`)
         .insertAdjacentElement("afterend", editTaskForm);
       editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
-      editTaskForm.style.display = "block";
+      editTaskForm.style.display = "grid";
       //Make the task content disappear
       document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
 
