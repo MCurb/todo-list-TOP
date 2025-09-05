@@ -76,6 +76,30 @@ h6 {
   isolation: isolate;
 }
 
+/* Custom Styles */
+
+:root {
+  /* Accent Colors */
+  --color-accent: hsl(5, 72%, 52%);
+  --color-accent-hover: hsl(5, 72%, 44%);
+  --color-accent-bg: #ffefe5;
+
+  /* Sidebar */
+  --color-sidebar-bg: hsl(30, 40%, 97%);
+
+  /* Text */
+  --color-text: hsl(0, 0%, 40%);
+  --color-border: hsl(0, 0%, 65%);
+  --color-bg: hsl(0, 0%, 94%);
+  --color-hover: hsl(0, 0%, 90%);
+
+  /* Other */
+  --color-white: white;
+  --color-checkbox-checked: rgb(8, 55, 158);
+  --color-shadow: rgba(0, 0, 0, 0.15);
+  --color-btn-text: hsl(0, 0%, 31%);
+}
+
 html {
   height: 110vh;
 }
@@ -127,6 +151,14 @@ body {
   justify-content: center;
 }
 
+.add-task-btn-main {
+  border: none;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 8px 16px;
+  justify-self: start;
+}
+
 /* Tasks container */
 
 .tasks-div {
@@ -146,13 +178,13 @@ body {
   width: 55vw;
   padding: 8px 20px;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+  box-shadow: var(--color-shadow) 0px 2px 4px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .task-details-container:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--color-shadow);
 }
 
 .checkbox {
@@ -170,24 +202,25 @@ body {
 .task-date {
   grid-area: 2 / 2 / 3 / 3;
   font-size: 14px;
-  color: hsl(0, 0%, 50%);
+  color: var(--color-text);
   font-style: italic;
 }
 
 .task-edit-btn,
 .task-delete {
-  color: hsl(0, 0%, 40%);
+  color: var(--color-text);
 }
 
 .task-edit-btn.material-symbols-outlined:hover,
 .task-delete:hover {
-  color: hsl(0, 0%, 65%);
+  color: var(--color-border);
   cursor: pointer;
 }
 
 /* Task Forms */
 
-.task-form, .edit-task-form {
+.task-form,
+.edit-task-form {
   display: grid;
   grid-template-columns: 1fr max-content;
   grid-template-rows: max-content max-content max-content max-content;
@@ -199,11 +232,11 @@ body {
   row-gap: 10px;
   min-width: max-content;
   width: 55vw;
-  border: 1px solid #b0b0b0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+  box-shadow: var(--color-shadow) 0px 2px 4px;
 }
 
 .task-form input,
@@ -214,7 +247,8 @@ body {
   outline: none;
 }
 
-.title-input, .title-edit-input {
+.title-input,
+.title-edit-input {
   grid-area: title;
   justify-self: start;
   width: 100%;
@@ -223,13 +257,16 @@ body {
   padding: 4px 12px;
 }
 
-.title-input::placeholder, .title-edit-input::placeholder, .project-name-input::placeholder {
+.title-input::placeholder,
+.title-edit-input::placeholder,
+.project-name-input::placeholder {
   font-weight: 600;
   font-size: 18px;
-  color: #9d9d9d;
+  color: var(--color-border);
 }
 
-.task-actions, .edit-task-actions {
+.task-actions,
+.edit-task-actions {
   grid-area: actions;
   display: grid;
   grid-template-columns: max-content max-content;
@@ -247,8 +284,9 @@ body {
   cursor: pointer;
 }
 
-.date-input, .date-edit-input {
-  color: hsl(0, 0%, 40%);
+.date-input,
+.date-edit-input {
+  color: var(--color-text);
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 6px;
@@ -258,36 +296,40 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid #b0b0b0;
+  border-top: 1px solid var(--color-border);
   bottom: 35%;
   z-index: 1;
 }
 
-.select-project, .select-project-edit {
+.select-project,
+.select-project-edit {
   grid-area: project;
   justify-self: start;
-  background-color: white;
+  background-color: var(--color-white);
   font-weight: 600;
-  color: hsl(0, 0%, 40%);
+  color: var(--color-text);
   padding: 4px 8px;
   border-radius: 6px;
 }
 
-.select-priority, .select-priority-edit {
-  background-color: white;
+.select-priority,
+.select-priority-edit {
+  background-color: var(--color-white);
   font-weight: 600;
-  color: hsl(0, 0%, 40%);
+  color: var(--color-text);
   padding: 4px 12px;
   border-radius: 6px;
 }
 
-.task-btns, .task-edit-btns {
+.task-btns,
+.task-edit-btns {
   grid-area: buttons;
   display: flex;
   gap: 8px;
 }
 
-.task-btns button, .task-edit-btns button {
+.task-btns button,
+.task-edit-btns button {
   border: none;
   font-weight: 700;
   font-size: 15px;
@@ -296,23 +338,27 @@ body {
   transition: all 0.15s ease;
 }
 
-.cancel-btn, .cancel-edit-btn {
-  background-color: hsl(0, 0%, 94%);
-  color: rgb(80, 80, 80);
+.cancel-btn,
+.cancel-edit-btn {
+  background-color: var(--color-bg);
+  color: var(--color-btn-text);
 }
 
-.cancel-btn:hover, .cancel-edit-btn:hover {
-  background-color: hsl(0, 0%, 86%);
+.cancel-btn:hover,
+.cancel-edit-btn:hover {
+  background-color: var(--color-hover);
   cursor: pointer;
 }
 
-.add-task-btn, .save-task-btn {
-  background-color: hsl(5, 72%, 52%);
-  color: white;
+.add-task-btn,
+.save-task-btn {
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
-.add-task-btn:hover, .save-task-btn:hover {
-  background-color: hsl(5, 72%, 44%);
+.add-task-btn:hover,
+.save-task-btn:hover {
+  background-color: var(--color-accent-hover);
   cursor: pointer;
 }
 
@@ -323,7 +369,7 @@ body {
 .select-priority-edit:hover,
 .select-project-edit:hover {
   cursor: pointer;
-  background-color: hsl(0, 0%, 90%);
+  background-color: var(--color-hover);
   color: hsl(0, 0%, 20%);
 }
 
@@ -337,7 +383,7 @@ body {
   width: 260px;
   min-width: fit-content;
   overflow: hidden;
-  background-color: hsl(30, 40%, 97%);
+  background-color: var(--color-sidebar-bg);
   transition: transform 0.2s ease;
 }
 
@@ -366,7 +412,7 @@ body {
 }
 
 .top-sidebar .material-symbols-outlined:hover {
-  color: gray;
+  color: var(--color-text);
   cursor: pointer;
 }
 
@@ -378,30 +424,31 @@ body {
 }
 
 .projects .delete-project {
-  color: hsl(0, 0%, 40%);
+  color: var(--color-text);
 }
 
 .projects .delete-project:hover {
-  color: hsl(0, 0%, 65%);
+  color: var(--color-border);
   cursor: pointer;
 }
 
 .task-categories div:hover:not(.active-sidebar-project),
 .projects div:hover:not(.active-sidebar-project, .new-project-btns),
 .add-task-btn-sidebar:hover {
-  background-color: hsl(0, 0%, 90%);
+  background-color: var(--color-hover);
   cursor: pointer;
 }
 
 .add-task-btn-sidebar {
   border: none;
-  background-color: hsl(30, 40%, 97%);
-  color: hsl(5, 72%, 52%);
+  background-color: transparent;
+  color: var(--color-accent);
   border-radius: 4px;
   padding: 8px 0 8px 8px;
 }
 
 .add-project:hover .material-symbols-outlined {
+  color: var(--color-border);
   cursor: pointer;
 }
 
@@ -418,15 +465,15 @@ body {
   display: none;
   grid-template-rows: max-content max-content;
   row-gap: 8px;
-  border: 1px solid #b0b0b0;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 8px;
-  background-color: white;
+  background-color: var(--color-white);
 }
 
 .project-name-input {
   padding: 8px 8px;
-  border: 1px solid hsl(0, 0%, 80%);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   outline: none;
   font-weight: 600;
@@ -448,30 +495,30 @@ body {
 }
 
 .cancel-project-btn {
-  background-color: hsl(0, 0%, 94%);
-  color: rgb(80, 80, 80);
+  background-color: var(--color-bg);
+  color: var(--color-btn-text);
 }
 
 .cancel-project-btn:hover {
-  background-color: hsl(0, 0%, 86%);
+  background-color: var(--color-hover);
   cursor: pointer;
 }
 
 .add-project-btn {
-  background-color: hsl(5, 72%, 52%);
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .add-project-btn:hover {
-  background-color: hsl(5, 72%, 44%);
+  background-color: var(--color-accent-hover);
   cursor: pointer;
 }
 
 /* Helper Classes */
 
 .active-sidebar-project {
-  color: hsl(5, 72%, 52%);
-  background-color: #ffefe5;
+  color: var(--color-accent);
+  background-color: var(--color-accent-bg);
 }
 
 .flexbox {
@@ -483,7 +530,7 @@ body {
 .checkbox {
   width: 20px;
   height: 20px;
-  border: 1.5px solid hsl(0, 0%, 65%);
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   display: inline-block;
   cursor: pointer;
@@ -491,14 +538,14 @@ body {
 }
 
 .checkbox.checked {
-  background: rgb(8, 55, 158);
+  background: var(--color-checkbox-checked);
   border: none;
   position: relative;
 }
 
 .checkbox.checked::after {
   content: "✔";
-  color: white;
+  color: var(--color-white);
   font-size: 14px;
   position: absolute;
   top: 1px;
