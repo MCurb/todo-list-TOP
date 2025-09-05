@@ -45,7 +45,22 @@
     <div class="main">
       <h2 class="active-project-name">Inbox</h2>
       <div class="tasks-div"></div>
-      <!-- <button class="add-task-btn-main">Add Task</button> -->
+      <button class="add-task-btn-main flexbox">
+        <svg
+          class="add-btn-svg-main"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 48 48"
+          width="24"
+          height="24"
+        >
+          <!-- Circle (hidden by default) -->
+          <circle class="circle" cx="24" cy="24" r="20" />
+
+          <!-- Plus -->
+          <path class="plus" d="M24 14v20M14 24h20" />
+        </svg>
+        Add Task
+      </button>
       <form class="task-form">
         <input
           type="text"
