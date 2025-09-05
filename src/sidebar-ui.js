@@ -5,11 +5,11 @@ import { renderTasks } from "./dom";
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 
-const sidebar = document.querySelector(".sidebar")
+const sidebar = document.querySelector(".sidebar");
 const taskCategoryContainer = document.querySelector(".task-categories");
 const projectsSection = document.querySelector(".projects");
 
-const activeProjectName = document.querySelector(".active-project-name")
+const activeProjectName = document.querySelector(".active-project-name");
 
 let renderedProject = "Inbox";
 
@@ -67,7 +67,13 @@ export function renderNewProjects() {
     icon.classList.add("material-symbols-outlined");
     icon.textContent = "folder";
 
+    const deleteIcon = document.createElement("span");
+    deleteIcon.classList.add("material-symbols-outlined", "delete-project");
+    deleteIcon.textContent = "delete";
+    deleteIcon.style.marginLeft = "auto"
+
     projectTaskContainer.prepend(icon);
+    projectTaskContainer.appendChild(deleteIcon);
     projectsSection.appendChild(projectTaskContainer);
   });
 }
@@ -91,11 +97,13 @@ export function onProjectSidebarClick(e) {
 
       //Make the clicked project and it's svg color red and background color a softer red
       if (sidebar.querySelector(".active-sidebar-project")) {
-        sidebar.querySelector(".active-sidebar-project").classList.remove("active-sidebar-project")
+        sidebar
+          .querySelector(".active-sidebar-project")
+          .classList.remove("active-sidebar-project");
       }
       e.target.classList.add("active-sidebar-project");
 
-      renderActiveProjectName(renderedProject)
+      renderActiveProjectName(renderedProject);
 
       //Change selected input option when user clicks another project
       dynamicDefaultProject(selectProject);

@@ -373,8 +373,17 @@ body {
 .task-categories div,
 .projects div {
   font-size: 18px;
-  padding: 8px 0 8px 8px;
+  padding: 8px;
   border-radius: 4px;
+}
+
+.projects .delete-project {
+  color: hsl(0, 0%, 40%);
+}
+
+.projects .delete-project:hover {
+  color: hsl(0, 0%, 65%);
+  cursor: pointer;
 }
 
 .task-categories div:hover:not(.active-sidebar-project),
@@ -398,6 +407,7 @@ body {
 
 .add-project {
   justify-content: space-between;
+  padding: 8px;
 }
 
 .edit-task-form {
@@ -405,7 +415,7 @@ body {
 }
 
 .new-project-form {
-  display: grid;
+  display: none;
   grid-template-rows: max-content max-content;
   row-gap: 8px;
   border: 1px solid #b0b0b0;
