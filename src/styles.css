@@ -223,7 +223,7 @@ body {
   padding: 4px 12px;
 }
 
-.title-input::placeholder, .title-edit-input::placeholder {
+.title-input::placeholder, .title-edit-input::placeholder, .project-name-input::placeholder {
   font-weight: 600;
   font-size: 18px;
   color: #9d9d9d;
@@ -334,7 +334,8 @@ body {
   display: grid;
   grid-template-rows: max-content max-content max-content;
   row-gap: 16px;
-  width: 250px;
+  width: 260px;
+  min-width: fit-content;
   overflow: hidden;
   background-color: hsl(30, 40%, 97%);
   transition: transform 0.2s ease;
@@ -377,7 +378,7 @@ body {
 }
 
 .task-categories div:hover:not(.active-sidebar-project),
-.projects div:hover:not(.active-sidebar-project),
+.projects div:hover:not(.active-sidebar-project, .new-project-btns),
 .add-task-btn-sidebar:hover {
   background-color: hsl(0, 0%, 90%);
   cursor: pointer;
@@ -404,7 +405,56 @@ body {
 }
 
 .new-project-form {
-  display: none;
+  display: grid;
+  grid-template-rows: max-content max-content;
+  row-gap: 8px;
+  border: 1px solid #b0b0b0;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: white;
+}
+
+.project-name-input {
+  padding: 8px 8px;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
+  outline: none;
+  font-weight: 600;
+}
+
+.new-project-form .new-project-btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.new-project-btns button {
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.cancel-project-btn {
+  background-color: hsl(0, 0%, 94%);
+  color: rgb(80, 80, 80);
+}
+
+.cancel-project-btn:hover {
+  background-color: hsl(0, 0%, 86%);
+  cursor: pointer;
+}
+
+.add-project-btn {
+  background-color: hsl(5, 72%, 52%);
+  color: white;
+}
+
+.add-project-btn:hover {
+  background-color: hsl(5, 72%, 44%);
+  cursor: pointer;
 }
 
 /* Helper Classes */

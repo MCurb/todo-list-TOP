@@ -70,7 +70,7 @@ addProjectBtn.addEventListener("click", eventHandler);
 function eventHandler(e) {
   if (e.target.matches(".material-symbols-outlined")) {
     document.querySelector(".add-project").after(newProjectForm);
-    newProjectForm.style.display = "block";
+    newProjectForm.style.display = "grid";
   }
 }
 
