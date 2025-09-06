@@ -70,7 +70,7 @@ export function renderNewProjects() {
     const deleteIcon = document.createElement("span");
     deleteIcon.classList.add("material-symbols-outlined", "delete-project");
     deleteIcon.textContent = "delete";
-    deleteIcon.style.marginLeft = "auto"
+    deleteIcon.style.marginLeft = "auto";
 
     projectTaskContainer.prepend(icon);
     projectTaskContainer.appendChild(deleteIcon);
@@ -137,6 +137,19 @@ export function dynamicProjectSelector(selectProjectForm) {
     newOption.textContent = `${project}`;
     selectProjectForm.append(newOption);
   });
+}
+
+//Delete unexisting projects
+
+export function deleteProjectFromSelector(selectProjectForm) {
+  //If a project is in selectProjectForm options, but it's not on the projects array, then delete it form selectProjectForm options
+  const projects = Object.keys(getCurrentProjects());
+  for (let i = selectProjectForm.children.length - 1; i >= 0; i--) {
+    const option = selectProjectForm.children[i];
+    if (!projects.includes(option.value)) {
+      option.remove();
+    }
+  }
 }
 
 function renderActiveProjectName(activeProject) {

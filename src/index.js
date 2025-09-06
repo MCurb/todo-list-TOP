@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { Task } from "./task-object";
 
-import { newProject } from "./projects";
+import { eraseProject, newProject } from "./projects";
 
 import { newTask } from "./tasks";
 
@@ -20,6 +20,7 @@ import {
   dynamicProjectSelector,
   renderNewProjects,
   renderDefaultProjects,
+  deleteProjectFromSelector,
 } from "./sidebar-ui";
 
 //Not so important now:
@@ -105,6 +106,16 @@ function eventHandler(e) {
     newProjectForm.querySelector(".project-name-input").focus();
   }
 }
+
+const projectsSection = document.querySelector(".projects");
+projectsSection.addEventListener("click", (e) => {
+  if (e.target.classList.contains("delete-project")) {
+    eraseProject(e.target.parentElement.classList[0].replace(/-/g, " "));
+    e.target.parentElement.remove();
+    deleteProjectFromSelector(selectProject);
+    deleteProjectFromSelector(editSelectProject);
+  }
+});
 
 newProjectForm.addEventListener("submit", projectFormHandler);
 function projectFormHandler(e) {
