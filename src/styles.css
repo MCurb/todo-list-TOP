@@ -144,12 +144,15 @@ body {
 .main {
   grid-area: main;
   display: grid;
-  grid-template-rows: max-content max-content max-content;
+  grid-template-rows: repeat(3, max-content);
+  grid-template-columns: auto;
   row-gap: 20px;
   padding: 0 4vw;
   margin-bottom: 20px;
-  justify-content: center;
+  margin-left: 10vw;
 }
+
+
 
 /* Add Task Button */
 
@@ -158,7 +161,6 @@ body {
   background-color: transparent;
   border-radius: 4px;
   padding: 8px 16px;
-  justify-self: start;
   transition: all 0.15s ease;
 }
 
@@ -200,7 +202,6 @@ body {
 .tasks-div {
   display: grid;
   row-gap: 16px;
-  align-self: center;
 }
 
 /* Task Details */
@@ -210,7 +211,6 @@ body {
   grid-template-columns: max-content minmax(max-content, 1fr) max-content max-content;
   grid-template-rows: max-content max-content;
   column-gap: 12px;
-  min-width: 100%;
   width: 55vw;
   padding: 8px 20px;
   border-radius: 8px;
@@ -233,6 +233,7 @@ body {
   align-self: center;
   font-size: 18px;
   font-weight: 700;
+  text-wrap: wrap;
 }
 
 .task-date {
@@ -306,7 +307,7 @@ body {
   grid-area: actions;
   display: grid;
   grid-template-columns: max-content max-content;
-  column-gap: 24px;
+  column-gap: 4px;
 }
 
 .date-input::-webkit-calendar-picker-indicator,
