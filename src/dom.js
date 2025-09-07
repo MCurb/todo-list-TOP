@@ -110,6 +110,21 @@ export function getProjectFormData() {
   };
 }
 
+export function getDialogFormData() {
+  const taskTitle = document.querySelector(".title-input-dialog").value;
+  const dueDate = document.querySelector(".date-input-dialog").value;
+  const selectProject = document.querySelector(".select-project-dialog").value;
+  const selectPriority = document.querySelector(".select-priority-dialog").value;
+
+  return {
+    title: taskTitle,
+    dueDate: parseISO(dueDate),
+    project: selectProject,
+    priority: selectPriority,
+    id: crypto.randomUUID(),
+  };
+}
+
 export function getTaskFormData() {
   const taskTitle = document.querySelector(".title-input").value;
   const dueDate = document.querySelector(".date-input").value;

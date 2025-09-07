@@ -4,6 +4,7 @@ import { renderTasks } from "./dom";
 
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
+const selectProjectDialog = document.querySelector(".select-project-dialog");
 
 const sidebar = document.querySelector(".sidebar");
 const taskCategoryContainer = document.querySelector(".task-categories");
@@ -108,6 +109,7 @@ export function onProjectSidebarClick(e) {
       //Change selected input option when user clicks another project
       dynamicDefaultProject(selectProject);
       dynamicDefaultProject(editSelectProject);
+      dynamicDefaultProject(selectProjectDialog);
       console.log(renderedProject);
     }
   });

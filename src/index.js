@@ -12,6 +12,7 @@ import {
   getProjectFormData,
   taskActionHandler,
   editFormHandler,
+  getDialogFormData,
 } from "./dom";
 
 import {
@@ -38,6 +39,62 @@ document.querySelector(".Inbox").classList.add("active-sidebar-project");
 const sidebar = document.querySelector(".sidebar");
 sidebar.addEventListener("click", onProjectSidebarClick);
 
+const addTaskSidebar = document.querySelector(".add-task-btn-sidebar");
+const formDialogContainer = document.querySelector(
+  ".task-form-dialog-container"
+);
+const taskDialogForm = document.querySelector(".task-form-dialog");
+const cancelDialogBtn = document.querySelector(".cancel-btn-dialog");
+const selectProjectDialog = document.querySelector(".select-project-dialog");
+
+formDialogContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("task-form-dialog-container")) {
+    formDialogContainer.close();
+    taskDialogForm.style.display = "none";
+    formDialogContainer.style.display = "none";
+    taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
+    taskDialogForm.querySelector(".title-input-dialog").value = "";
+  }
+});
+
+addTaskSidebar.addEventListener("click", () => {
+  taskDialogForm.style.display = "grid";
+  formDialogContainer.style.display = "flex";
+  formDialogContainer.showModal();
+  taskDialogForm.querySelector(".title-input-dialog").focus();
+});
+
+taskDialogForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const taskData = getDialogFormData();
+  newTask(
+    new Task(
+      false,
+      taskData.dueDate,
+      taskData.title,
+      taskData.project,
+      taskData.priority,
+      taskData.id
+    )
+  );
+  formDialogContainer.close();
+  taskDialogForm.style.display = "none";
+  formDialogContainer.style.display = "none";
+  renderTasks(getCurrentProjects()[getRenderedProject()]);
+  taskDialogForm.querySelector(".title-input-dialog").value = "";
+  taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
+  console.log(getCurrentProjects());
+  console.log(getCurrentTasks());
+});
+
+cancelDialogBtn.addEventListener("click", () => {
+  formDialogContainer.close();
+  taskDialogForm.style.display = "none";
+  formDialogContainer.style.display = "none";
+  taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
+  taskDialogForm.querySelector(".title-input-dialog").value = "";
+});
+
 const taskForm = document.querySelector(".task-form");
 
 taskForm.addEventListener("submit", taskFormHandler);
@@ -56,7 +113,6 @@ function taskFormHandler(e) {
   );
   renderTasks(getCurrentProjects()[getRenderedProject()]);
   taskForm.querySelector(".title-input").value = "";
-  dynamicProjectSelector(selectProject);
   taskForm.querySelector(".select-priority").value = "Medium";
   taskForm.querySelector(".title-input").focus();
   console.log(getCurrentProjects());
@@ -114,6 +170,7 @@ projectsSection.addEventListener("click", (e) => {
     e.target.parentElement.remove();
     deleteProjectFromSelector(selectProject);
     deleteProjectFromSelector(editSelectProject);
+    deleteProjectFromSelector(selectProjectDialog);
   }
 });
 
@@ -131,6 +188,7 @@ function projectFormHandler(e) {
   renderNewProjects();
   dynamicProjectSelector(selectProject);
   dynamicProjectSelector(editSelectProject);
+  dynamicProjectSelector(selectProjectDialog);
 }
 
 const cancelProjectBtn = document.querySelector(".cancel-project-btn");
@@ -165,3 +223,4 @@ const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 dynamicProjectSelector(selectProject);
 dynamicProjectSelector(editSelectProject);
+dynamicProjectSelector(selectProjectDialog);

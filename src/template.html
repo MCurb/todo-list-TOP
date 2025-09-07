@@ -44,6 +44,7 @@
     </div>
     <div class="main">
       <h2 class="active-project-name">Inbox</h2>
+      <!-- Main Tasks -->
       <div class="tasks-div"></div>
       <button class="add-task-btn-main flexbox">
         <svg
@@ -61,6 +62,8 @@
         </svg>
         Add Task
       </button>
+
+      <!-- Main Task Form -->
       <form class="task-form">
         <input
           type="text"
@@ -85,6 +88,35 @@
           <button type="submit" class="add-task-btn">Add Task</button>
         </div>
       </form>
+      <!-- Dialog Task Form -->
+      <dialog class="task-form-dialog-container" closedby="any">
+        <form class="task-form-dialog">
+          <input
+            type="text"
+            placeholder="Buy some eggs"
+            class="title-input-dialog"
+            maxlength="80"
+          />
+
+          <div class="task-actions-dialog">
+            <input type="date" class="date-input-dialog" required />
+            <select class="select-priority-dialog">
+              <option value="High">High</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+          <div class="line"></div>
+          <select class="select-project-dialog"></select>
+
+          <div class="task-btns-dialog">
+            <button class="cancel-btn-dialog" type="button">Cancel</button>
+            <button type="submit" class="add-task-btn-dialog">Add Task</button>
+          </div>
+        </form>
+      </dialog>
+
+      <!-- Edit Task Form -->
       <form class="edit-task-form">
         <input
           type="text"
@@ -109,6 +141,8 @@
           <button type="submit" class="save-task-btn">Save</button>
         </div>
       </form>
+
+      <!-- New Project Form -->
       <form class="new-project-form">
         <input
           type="text"

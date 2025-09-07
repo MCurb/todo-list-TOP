@@ -152,8 +152,6 @@ body {
   margin-left: 10vw;
 }
 
-
-
 /* Add Task Button */
 
 .add-task-btn-main {
@@ -257,7 +255,8 @@ body {
 /* Task Forms */
 
 .task-form,
-.edit-task-form {
+.edit-task-form,
+.task-form-dialog {
   display: none;
   grid-template-columns: 1fr max-content;
   grid-template-rows: max-content max-content max-content max-content;
@@ -274,18 +273,22 @@ body {
   padding: 12px;
   position: relative;
   box-shadow: var(--color-shadow) 0px 2px 4px;
+  background-color: var(--color-white);
 }
 
 .task-form input,
 .task-form select,
 .edit-task-form input,
-.edit-task-form select {
+.edit-task-form select,
+.task-form-dialog input,
+.task-form-dialog select {
   border: none;
   outline: none;
 }
 
 .title-input,
-.title-edit-input {
+.title-edit-input,
+.title-input-dialog {
   grid-area: title;
   justify-self: start;
   width: 100%;
@@ -296,14 +299,16 @@ body {
 
 .title-input::placeholder,
 .title-edit-input::placeholder,
-.project-name-input::placeholder {
+.project-name-input::placeholder,
+.title-input-dialog::placeholder {
   font-weight: 600;
   font-size: 18px;
   color: var(--color-border);
 }
 
 .task-actions,
-.edit-task-actions {
+.edit-task-actions,
+.task-actions-dialog {
   grid-area: actions;
   display: grid;
   grid-template-columns: max-content max-content;
@@ -311,18 +316,21 @@ body {
 }
 
 .date-input::-webkit-calendar-picker-indicator,
-.date-edit-input::-webkit-calendar-picker-indicator {
+.date-edit-input::-webkit-calendar-picker-indicator,
+.date-input-dialog::-webkit-calendar-picker-indicator {
   margin-left: -12px;
   padding: 0;
 }
 
 .date-input::-webkit-calendar-picker-indicator:hover,
-.date-edit-input::-webkit-calendar-picker-indicator:hover {
+.date-edit-input::-webkit-calendar-picker-indicator:hover,
+.date-input-dialog::-webkit-calendar-picker-indicator:hover {
   cursor: pointer;
 }
 
 .date-input,
-.date-edit-input {
+.date-edit-input,
+.date-input-dialog {
   color: var(--color-text);
   font-weight: 600;
   padding: 4px 12px;
@@ -339,7 +347,8 @@ body {
 }
 
 .select-project,
-.select-project-edit {
+.select-project-edit,
+.select-project-dialog {
   grid-area: project;
   justify-self: start;
   background-color: var(--color-white);
@@ -350,7 +359,8 @@ body {
 }
 
 .select-priority,
-.select-priority-edit {
+.select-priority-edit,
+.select-priority-dialog {
   background-color: var(--color-white);
   font-weight: 600;
   color: var(--color-text);
@@ -359,14 +369,16 @@ body {
 }
 
 .task-btns,
-.task-edit-btns {
+.task-edit-btns,
+.task-btns-dialog {
   grid-area: buttons;
   display: flex;
   gap: 8px;
 }
 
 .task-btns button,
-.task-edit-btns button {
+.task-edit-btns button,
+.task-btns-dialog button {
   border: none;
   font-weight: 700;
   font-size: 15px;
@@ -376,25 +388,29 @@ body {
 }
 
 .cancel-btn,
-.cancel-edit-btn {
+.cancel-edit-btn,
+.cancel-btn-dialog {
   background-color: var(--color-bg);
   color: var(--color-btn-text);
 }
 
 .cancel-btn:hover,
-.cancel-edit-btn:hover {
+.cancel-edit-btn:hover,
+.cancel-btn-dialog:hover {
   background-color: var(--color-hover);
   cursor: pointer;
 }
 
 .add-task-btn,
-.save-task-btn {
+.save-task-btn,
+.add-task-btn-dialog {
   background-color: var(--color-accent);
   color: var(--color-white);
 }
 
 .add-task-btn:hover,
-.save-task-btn:hover {
+.save-task-btn:hover,
+.add-task-btn-dialog:hover {
   background-color: var(--color-accent-hover);
   cursor: pointer;
 }
@@ -404,10 +420,29 @@ body {
 .select-project:hover,
 .date-edit-input:hover,
 .select-priority-edit:hover,
-.select-project-edit:hover {
+.select-project-edit:hover,
+.date-input-dialog:hover,
+.select-priority-dialog:hover,
+.select-project-dialog:hover {
   cursor: pointer;
   background-color: var(--color-hover);
   color: hsl(0, 0%, 20%);
+}
+
+/* Dialog Modal */
+
+.task-form-dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
 }
 
 /* SIDEBAR */
