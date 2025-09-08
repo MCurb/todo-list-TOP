@@ -2,6 +2,8 @@ import { getCurrentProjects } from "./state";
 
 import { renderTasks } from "./dom";
 
+const addTaskBtnMain = document.querySelector(".add-task-btn-main");
+
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 const selectProjectDialog = document.querySelector(".select-project-dialog");
@@ -103,8 +105,14 @@ export function onProjectSidebarClick(e) {
           .classList.remove("active-sidebar-project");
       }
       e.target.classList.add("active-sidebar-project");
-
       renderActiveProjectName(renderedProject);
+      
+      const taskSections = ["Completed", "Today", "Upcomming"];
+      if (taskSections.includes(project)) {
+        addTaskBtnMain.style.display = "none";
+      } else {
+        addTaskBtnMain.style.display = "flex";
+      }
 
       //Change selected input option when user clicks another project
       dynamicDefaultProject(selectProject);
