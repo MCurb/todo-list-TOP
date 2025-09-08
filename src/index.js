@@ -25,12 +25,17 @@ import {
 } from "./sidebar-ui";
 
 //Not so important now:
-import { getCurrentProjects, getCurrentTasks } from "./state";
-
-newProject("Home");
-newProject("Work");
+import {
+  getCurrentProjects,
+  getCurrentTasks,
+  loadData,
+  saveData,
+} from "./state";
+import { findCorrectCategory } from "./categorize-tasks";
 
 // Init
+loadData();
+findCorrectCategory()
 renderDefaultProjects();
 renderNewProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
@@ -77,6 +82,7 @@ taskDialogForm.addEventListener("submit", (e) => {
       taskData.id
     )
   );
+  saveData()
   formDialogContainer.close();
   taskDialogForm.style.display = "none";
   formDialogContainer.style.display = "none";
@@ -111,6 +117,7 @@ function taskFormHandler(e) {
       taskData.id
     )
   );
+  saveData()
   renderTasks(getCurrentProjects()[getRenderedProject()]);
   taskForm.querySelector(".title-input").value = "";
   taskForm.querySelector(".select-priority").value = "Medium";

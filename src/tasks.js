@@ -1,6 +1,6 @@
 import { findCorrectCategory, eraseTaskFromProjects } from "./categorize-tasks";
 
-import { getCurrentTasks } from "./state";
+import { getCurrentTasks, saveData } from "./state";
 
 import { isToday, isPast } from "date-fns";
 
@@ -9,6 +9,7 @@ export function newTask(task) {
     return;
   }
   getCurrentTasks().push(task);
+  saveData();
   findCorrectCategory();
 }
 
@@ -19,6 +20,7 @@ export function eraseTaskFromEverywhere(
   for (let i = 0; i < currentTasks.length; i++) {
     if (currentTasks[i].id === taskId) {
       currentTasks.splice(i, 1);
+      saveData()
     }
   }
   eraseTaskFromProjects(taskId);

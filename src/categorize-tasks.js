@@ -1,5 +1,5 @@
 import { isToday, isFuture } from "date-fns";
-import { getCurrentProjects, getCurrentTasks } from "./state";
+import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 
 const currentProjects = getCurrentProjects();
 const tasks = getCurrentTasks();
@@ -25,6 +25,7 @@ function categorizeByCompletion(task, currentProjects) {
   if (task["checkboxStatus"]) {
     eraseTaskFromProjects(task.id);
     currentProjects["Completed"].push(task);
+    saveData()
   } else if (!task["checkboxStatus"]) {
     eraseTaskFromProjects(task.id);
   }
@@ -36,6 +37,7 @@ function categorizeByProject(task, currentProjects) {
     return;
   }
   currentProjects[key].push(task);
+  saveData()
 }
 
 function categorizeByDate(task, currentProjects) {
@@ -44,11 +46,13 @@ function categorizeByDate(task, currentProjects) {
   }
   if (isToday(task["date"]) && !isTaskPresent(task, currentProjects["Today"])) {
     currentProjects["Today"].push(task);
+    saveData()
   } else if (
     isFuture(task["date"]) &&
     !isTaskPresent(task, currentProjects["Upcomming"])
   ) {
     currentProjects["Upcomming"].push(task);
+    saveData()
   }
 }
 
@@ -67,6 +71,7 @@ export function eraseTaskFromProjects(
     for (let i = projectArr.length - 1; i >= 0; i--) {
       if (projectArr[i].id === taskId) {
         projectArr.splice(i, 1);
+        saveData()
       }
     }
   });

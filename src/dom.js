@@ -1,6 +1,6 @@
 import { findCorrectCategory } from "./categorize-tasks";
 
-import { getCurrentProjects, getCurrentTasks } from "./state";
+import { getCurrentProjects, getCurrentTasks, saveData, } from "./state";
 
 import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
@@ -55,6 +55,7 @@ export function taskActionHandler(e) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       task.checkboxStatus = !task.checkboxStatus;
+      saveData()
       findCorrectCategory();
       tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
@@ -186,6 +187,7 @@ function updateTaskObj() {
     task.project = editSelectProject.value;
     task.priority = editSelectPriority.value;
     findCorrectCategory();
+    saveData()
   }
 }
 
