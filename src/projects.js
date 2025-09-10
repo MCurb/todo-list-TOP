@@ -1,26 +1,35 @@
 import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 import { eraseTaskFromEverywhere } from "./tasks";
 
+const projects = getCurrentProjects();
+const tasksArray = getCurrentTasks();
+
 export function newProject(projectName) {
-  if(getCurrentProjects().hasOwnProperty(`${projectName}`)) {
+  if(projects.hasOwnProperty(`${projectName}`)) {
     return false
   } else {
-    getCurrentProjects()[projectName] = [];
+    projects[projectName] = [];
     saveData()
     return true
   }
   
 }
 
+//Erase projects and its tasks
 export function eraseProject(
-  keyToRemove,
+  projectToRemove,
   currentProjects = getCurrentProjects()
 ) {
-  for (let i = getCurrentTasks().length - 1; i >= 0; i--) {
-    if(getCurrentTasks()[i].project === keyToRemove) {
-      eraseTaskFromEverywhere(getCurrentTasks()[i].id)
+  deleteTasksByProject(projectToRemove);
+  delete currentProjects[projectToRemove];
+  saveData()
+}
+
+//Delete project tasks from everywhere
+function deleteTasksByProject(projectToRemove) {
+for (let i = tasksArray.length - 1; i >= 0; i--) {
+    if(tasksArray[i].project === projectToRemove) {
+      eraseTaskFromEverywhere(tasksArray[i].id)
     }
   }
-  delete currentProjects[keyToRemove];
-  saveData()
 }

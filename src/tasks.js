@@ -9,8 +9,8 @@ export function newTask(task) {
     return;
   }
   getCurrentTasks().push(task);
-  saveData();
   findCorrectCategory();
+  saveData();
 }
 
 export function eraseTaskFromEverywhere(
@@ -20,10 +20,10 @@ export function eraseTaskFromEverywhere(
   for (let i = currentTasks.length - 1; i >= 0; i--) {
     if (currentTasks[i].id === taskId) {
       currentTasks.splice(i, 1);
-      saveData()
     }
   }
   eraseTaskFromProjects(taskId);
+  saveData();
 }
 
 function actuallyPast(task) {
