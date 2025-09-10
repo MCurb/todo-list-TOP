@@ -4,9 +4,7 @@ import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 const projectList = getCurrentProjects();
 const activeTasks = getCurrentTasks();
 
-//function that loops through the task objects
-//then loops though each object with an inner loop looking for important properties like date, project and priority
-//then adds each task object to all the categories that match those property values
+//Loop through each task and categorize them by completion, project type and date
 export function findCorrectCategory() {
   activeTasks.forEach((task) => {
     ["checkboxStatus", "project", "date"].forEach((prop) => {
@@ -17,57 +15,64 @@ export function findCorrectCategory() {
       } else if (prop === "date") {
         categorizeByDate(task, projectList);
       }
+      saveData()
     });
   });
 }
 
+//Add completed task to the completed project
+//and remove it from the other projects
 function categorizeByCompletion(task, currentProjects) {
   if (task["checkboxStatus"]) {
     eraseTaskFromProjects(task.id);
     currentProjects["Completed"].push(task);
-    saveData()
   } else if (!task["checkboxStatus"]) {
     eraseTaskFromProjects(task.id);
   }
 }
 
+
+//Move task to its project container
 function categorizeByProject(task, currentProjects) {
   const key = task["project"];
   if (isTaskPresent(task, currentProjects[key]) || task["checkboxStatus"]) {
     return;
   }
   currentProjects[key].push(task);
-  saveData()
 }
 
+
+//Send task to related containers according to its date
 function categorizeByDate(task, currentProjects) {
   if (task["checkboxStatus"]) {
     return;
   }
   if (isToday(task["date"]) && !isTaskPresent(task, currentProjects["Today"])) {
     currentProjects["Today"].push(task);
-    saveData()
   } else if (
     isFuture(task["date"]) &&
     !isTaskPresent(task, currentProjects["Upcomming"])
   ) {
     currentProjects["Upcomming"].push(task);
-    saveData()
   }
 }
 
-// If the project of the task is an unexisting project, it will throw an error
+//Helper functions:
+
 function isTaskPresent(task, currentProject) {
   return currentProject.includes(task);
 }
 
+//Erase the given task from every project it is in
 export function eraseTaskFromProjects(
   taskId,
   currentProjects = getCurrentProjects()
 ) {
-  console.log(taskId);
   Object.keys(currentProjects).forEach((project) => {
     const projectArr = currentProjects[project];
+    if(projectArr.length === 0) {
+      return
+    }
 
     for (let i = projectArr.length - 1; i >= 0; i--) {
       if (projectArr[i].id === taskId) {
@@ -76,5 +81,4 @@ export function eraseTaskFromProjects(
       }
     }
   });
-  console.log(currentProjects);
 }

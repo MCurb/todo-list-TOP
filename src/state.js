@@ -45,10 +45,11 @@ export function loadData() {
 
     // Reset currentProjects completely
     for (const key in currentProjects) {
-  if (Object.prototype.hasOwnProperty.call(currentProjects, key)) { // Important for safety
-    delete currentProjects[key];
-  }
-}
+      // Important for safety
+      if (Object.prototype.hasOwnProperty.call(currentProjects, key)) {
+        delete currentProjects[key];
+      }
+    }
 
     // Rebuild from parsedProjects
     for (let projectName in parsedProjects) {
