@@ -1,6 +1,6 @@
 import { findCorrectCategory } from "./categorize-tasks";
 
-import { getCurrentProjects, getCurrentTasks, saveData, } from "./state";
+import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 
 import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
@@ -18,33 +18,10 @@ const editSelectPriority = document.querySelector(".select-priority-edit");
 export function renderTasks(currentTasksArray) {
   tasksContainer.innerHTML = "";
   currentTasksArray.forEach((task) => {
-    const taskCheckbox = createTaskCheckbox(task);
-    updateUiCheckbox(task, taskCheckbox);
-
-    const taskDelete = createTaskDeleteBtn(task);
-
-    const taskEditBtn = createEditTaskBtn(task);
-
-    const taskTitle = document.createElement("p");
-    taskTitle.classList.add("task-title");
-    taskTitle.textContent = task.description;
-
-    const taskDueDate = document.createElement("p");
-    taskDueDate.classList.add("task-date")
-    taskDueDate.textContent = `Due: ${format(task.date, "MMM d")}`;
-
-    const taskContent = document.createElement("div");
-    taskContent.setAttribute("data-task-content-id", `${task.id}`);
-    taskContent.classList.add("task-details-container")
-    taskContent.append(
-      taskCheckbox,
-      taskTitle,
-      taskDueDate,
-      taskEditBtn,
-      taskDelete
-    );
-
-    tasksContainer.append(taskContent);
+    
+    const taskContainer = createTaskContent(task)
+    
+    tasksContainer.append(taskContainer);
   });
 }
 
@@ -55,7 +32,7 @@ export function taskActionHandler(e) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       task.checkboxStatus = !task.checkboxStatus;
-      saveData()
+      saveData();
       findCorrectCategory();
       tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
@@ -115,7 +92,9 @@ export function getDialogFormData() {
   const taskTitle = document.querySelector(".title-input-dialog").value;
   const dueDate = document.querySelector(".date-input-dialog").value;
   const selectProject = document.querySelector(".select-project-dialog").value;
-  const selectPriority = document.querySelector(".select-priority-dialog").value;
+  const selectPriority = document.querySelector(
+    ".select-priority-dialog"
+  ).value;
 
   return {
     title: taskTitle,
@@ -141,37 +120,6 @@ export function getTaskFormData() {
   };
 }
 
-function updateUiCheckbox(task, taskCheckbox) {
-  if (task.checkboxStatus) {
-    taskCheckbox.classList.add("checked");
-  } else {
-    taskCheckbox.classList.remove("checked");
-  }
-}
-
-function createTaskDeleteBtn(task) {
-  const taskDelete = document.createElement("span");
-  taskDelete.setAttribute("data-task-id", `${task.id}`);
-  taskDelete.classList.add("task-delete", "material-symbols-outlined");
-  taskDelete.textContent = "delete";
-  return taskDelete;
-}
-
-function createTaskCheckbox(task) {
-  const taskCheckbox = document.createElement("div");
-  taskCheckbox.setAttribute("data-task-id", `${task.id}`);
-  taskCheckbox.classList.add("checkbox");
-  return taskCheckbox;
-}
-
-function createEditTaskBtn(task) {
-  const taskEditBtn = document.createElement("span");
-  taskEditBtn.setAttribute("data-task-id", `${task.id}`);
-  taskEditBtn.classList.add("task-edit-btn", "material-symbols-outlined");
-  taskEditBtn.textContent = "edit";
-  return taskEditBtn;
-}
-
 function populateEditForm(task) {
   editTitle.value = task.description;
   editDueDate.value = format(task.date, "yyyy-MM-dd");
@@ -187,7 +135,7 @@ function updateTaskObj() {
     task.project = editSelectProject.value;
     task.priority = editSelectPriority.value;
     findCorrectCategory();
-    saveData()
+    saveData();
   }
 }
 
@@ -196,4 +144,77 @@ function getTaskByElementId(element, key) {
   const taskId = element.dataset[key];
 
   return getCurrentTasks().find((task) => task.id === taskId);
+}
+
+//Create task content and append to container
+
+function createTaskContent(task) {
+  const taskCheckbox = createTaskCheckbox(task);
+  updateUiCheckbox(task, taskCheckbox);
+
+  const taskDate = createTaskDate(task);
+
+  const taskTitle = createTaskTitle(task);
+
+  const taskEditBtn = createEditTaskBtn(task);
+
+  const taskDelete = createTaskDeleteBtn(task);
+
+  const taskContainer = createTaskContainer(task);
+
+  taskContainer.append(taskCheckbox, taskDate, taskTitle, taskEditBtn, taskDelete)
+
+  return taskContainer
+}
+
+function createTaskCheckbox(task) {
+  const taskCheckbox = document.createElement("div");
+  taskCheckbox.setAttribute("data-task-id", `${task.id}`);
+  taskCheckbox.classList.add("checkbox");
+  return taskCheckbox;
+}
+
+function updateUiCheckbox(task, taskCheckbox) {
+  if (task.checkboxStatus) {
+    taskCheckbox.classList.add("checked");
+  } else {
+    taskCheckbox.classList.remove("checked");
+  }
+}
+
+function createTaskDate(task) {
+  const taskDueDate = document.createElement("p");
+  taskDueDate.classList.add("task-date");
+  taskDueDate.textContent = `Due: ${format(task.date, "MMM d")}`;
+  return taskDueDate
+}
+
+function createTaskTitle(task) {
+  const taskTitle = document.createElement("p");
+  taskTitle.classList.add("task-title");
+  taskTitle.textContent = task.description;
+  return taskTitle
+}
+
+function createTaskDeleteBtn(task) {
+  const taskDelete = document.createElement("span");
+  taskDelete.setAttribute("data-task-id", `${task.id}`);
+  taskDelete.classList.add("task-delete", "material-symbols-outlined");
+  taskDelete.textContent = "delete";
+  return taskDelete;
+}
+
+function createEditTaskBtn(task) {
+  const taskEditBtn = document.createElement("span");
+  taskEditBtn.setAttribute("data-task-id", `${task.id}`);
+  taskEditBtn.classList.add("task-edit-btn", "material-symbols-outlined");
+  taskEditBtn.textContent = "edit";
+  return taskEditBtn;
+}
+
+function createTaskContainer(task) {
+  const taskContent = document.createElement("div");
+  taskContent.setAttribute("data-task-content-id", `${task.id}`);
+  taskContent.classList.add("task-details-container");
+  return taskContent
 }
