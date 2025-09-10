@@ -1,21 +1,21 @@
 import { isToday, isFuture } from "date-fns";
 import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 
-const currentProjects = getCurrentProjects();
-const tasks = getCurrentTasks();
+const projectList = getCurrentProjects();
+const activeTasks = getCurrentTasks();
 
 //function that loops through the task objects
 //then loops though each object with an inner loop looking for important properties like date, project and priority
 //then adds each task object to all the categories that match those property values
 export function findCorrectCategory() {
-  tasks.forEach((task) => {
+  activeTasks.forEach((task) => {
     ["checkboxStatus", "project", "date"].forEach((prop) => {
       if (prop === "checkboxStatus") {
-        categorizeByCompletion(task, currentProjects);
+        categorizeByCompletion(task, projectList);
       } else if (prop === "project") {
-        categorizeByProject(task, currentProjects);
+        categorizeByProject(task, projectList);
       } else if (prop === "date") {
-        categorizeByDate(task, currentProjects);
+        categorizeByDate(task, projectList);
       }
     });
   });
@@ -56,6 +56,7 @@ function categorizeByDate(task, currentProjects) {
   }
 }
 
+// If the project of the task is an unexisting project, it will throw an error
 function isTaskPresent(task, currentProject) {
   return currentProject.includes(task);
 }

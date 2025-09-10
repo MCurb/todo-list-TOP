@@ -17,7 +17,7 @@ export function eraseTaskFromEverywhere(
   taskId,
   currentTasks = getCurrentTasks()
 ) {
-  for (let i = 0; i < currentTasks.length; i++) {
+  for (let i = currentTasks.length - 1; i >= 0; i--) {
     if (currentTasks[i].id === taskId) {
       currentTasks.splice(i, 1);
       saveData()

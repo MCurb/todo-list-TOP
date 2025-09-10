@@ -41,21 +41,27 @@ export function loadData() {
     );
   }
   if (storedProjects) {
-    for (let projectName in currentProjects) {
-      currentProjects[projectName].length = 0; // clear each project array
-      const loadedTasks = JSON.parse(storedProjects)[projectName];
-      currentProjects[projectName].push(
-        ...loadedTasks.map(
-          (taskObj) =>
-            new Task(
-              taskObj.checkboxStatus,
-              parseISO(taskObj.date),
-              taskObj.description,
-              taskObj.project,
-              taskObj.priority,
-              taskObj.id
-            )
-        )
+    const parsedProjects = JSON.parse(storedProjects);
+
+    // Reset currentProjects completely
+    for (const key in currentProjects) {
+  if (Object.prototype.hasOwnProperty.call(currentProjects, key)) { // Important for safety
+    delete currentProjects[key];
+  }
+}
+
+    // Rebuild from parsedProjects
+    for (let projectName in parsedProjects) {
+      currentProjects[projectName] = parsedProjects[projectName].map(
+        (taskObj) =>
+          new Task(
+            taskObj.checkboxStatus,
+            parseISO(taskObj.date),
+            taskObj.description,
+            taskObj.project,
+            taskObj.priority,
+            taskObj.id
+          )
       );
     }
   }

@@ -21,7 +21,7 @@ let renderedProject = "Inbox";
 
 export function renderDefaultProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
-    const projectTaskContainer = createTaskContainer(project);
+    const projectTaskContainer = createProject(project);
 
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined");
@@ -58,13 +58,13 @@ export function renderNewProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (
-      projectsSection.querySelector(`.${project}`) ||
+      projectsSection.querySelector(`.${encodeClassName(project)}`) ||
       taskSections.includes(project)
     ) {
       return;
     }
 
-    const projectTaskContainer = createTaskContainer(project);
+    const projectTaskContainer = createProject(project);
 
     const icon = document.createElement("span");
     icon.classList.add("material-symbols-outlined");
@@ -81,11 +81,11 @@ export function renderNewProjects() {
   });
 }
 
-function createTaskContainer(project) {
+function createProject(project) {
   const projectTaskContainer = document.createElement("div");
   projectTaskContainer.textContent = `${project}`;
   projectTaskContainer.classList.add(
-    `${project.replace(/ /g, "-")}`,
+    `${encodeClassName(project)}`,
     "flexbox"
   );
   return projectTaskContainer;
@@ -93,7 +93,7 @@ function createTaskContainer(project) {
 
 export function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
-    if (e.target.classList.contains(`${project.replace(/ /g, "-")}`)) {
+    if (e.target.classList.contains(`${encodeClassName(project)}`)) {
       const projectArr = getCurrentProjects();
       renderTasks(projectArr[project]);
       renderedProject = project;
@@ -106,7 +106,7 @@ export function onProjectSidebarClick(e) {
       }
       e.target.classList.add("active-sidebar-project");
       renderActiveProjectName(renderedProject);
-      
+
       const taskSections = ["Completed", "Today", "Upcomming"];
       if (taskSections.includes(project)) {
         addTaskBtnMain.style.display = "none";
@@ -162,10 +162,23 @@ export function deleteProjectFromSelector(selectProjectForm) {
   }
 }
 
-function renderActiveProjectName(activeProject) {
+export function renderActiveProjectName(activeProject) {
   activeProjectName.textContent = activeProject;
 }
 
 export function getRenderedProject() {
   return renderedProject;
+}
+
+export function encodeClassName(str) {
+  return str
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9_-]/g, (ch) => "_" + ch.charCodeAt(0) + "_");
+}
+
+export function decodeClassName(encoded) {
+  return encoded
+    .replace(/_(\d+)_/g, (_, code) => String.fromCharCode(code)) // convert codes to chars
+    .replace(/-/g, " "); // all remaining dashes → spaces
 }

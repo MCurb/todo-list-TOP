@@ -22,6 +22,8 @@ import {
   renderNewProjects,
   renderDefaultProjects,
   deleteProjectFromSelector,
+  renderActiveProjectName,
+  decodeClassName,
 } from "./sidebar-ui";
 
 //Not so important now:
@@ -35,7 +37,7 @@ import { findCorrectCategory } from "./categorize-tasks";
 
 // Init
 loadData();
-findCorrectCategory()
+findCorrectCategory();
 renderDefaultProjects();
 renderNewProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
@@ -82,7 +84,7 @@ taskDialogForm.addEventListener("submit", (e) => {
       taskData.id
     )
   );
-  saveData()
+  saveData();
   formDialogContainer.close();
   taskDialogForm.style.display = "none";
   formDialogContainer.style.display = "none";
@@ -117,7 +119,7 @@ function taskFormHandler(e) {
       taskData.id
     )
   );
-  saveData()
+  saveData();
   renderTasks(getCurrentProjects()[getRenderedProject()]);
   taskForm.querySelector(".title-input").value = "";
   taskForm.querySelector(".select-priority").value = "Medium";
@@ -173,8 +175,17 @@ function eventHandler(e) {
 const projectsSection = document.querySelector(".projects");
 projectsSection.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete-project")) {
-    eraseProject(e.target.parentElement.classList[0].replace(/-/g, " "));
+    eraseProject(decodeClassName(e.target.parentElement.classList[0]));
     e.target.parentElement.remove();
+    renderTasks(getCurrentProjects()["Inbox"]);
+    if (sidebar.querySelector(".active-sidebar-project")) {
+        sidebar
+          .querySelector(".active-sidebar-project")
+          .classList.remove("active-sidebar-project");
+      }
+    document.querySelector(".Inbox").classList.add("active-sidebar-project");
+    renderActiveProjectName("Inbox")
+
     deleteProjectFromSelector(selectProject);
     deleteProjectFromSelector(editSelectProject);
     deleteProjectFromSelector(selectProjectDialog);
@@ -189,6 +200,7 @@ function projectFormHandler(e) {
     alert("Project already exists");
     return;
   }
+  saveData();
   document.querySelector(".project-name-input").value = "";
   document.querySelector(".project-name-input").focus();
   console.log(getCurrentProjects());
