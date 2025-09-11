@@ -62,8 +62,7 @@ initApp();
 
 
 
-const tasksContainer = document.querySelector(".tasks-div");
-tasksContainer.addEventListener("click", taskActionHandler);
+
 
 const addProjectBtn = document.querySelector(".add-project");
 const newProjectForm = document.querySelector(".new-project-form");

@@ -3,12 +3,6 @@ import { format, parseISO } from "date-fns";
 import { Task } from "./task-object";
 
 import {
-  getProjectFormData,
-  taskActionHandler,
-  getTaskByElementId,
-} from "./dom";
-
-import {
   getRenderedProject,
   populateProjectSelectors,
   updateSelectInputs,
@@ -137,6 +131,9 @@ const formDialogContainer = document.querySelector(
 const addTaskSidebar = document.querySelector(".add-task-btn-sidebar");
 const addTaskBtnMain = document.querySelector(".add-task-btn-main");
 
+//Task Content
+const tasksContainer = document.querySelector(".tasks-div");
+
 // Dialog Form
 const taskDialogForm = document.querySelector(".task-form-dialog");
 const cancelDialogBtn = document.querySelector(".cancel-btn-dialog");
@@ -159,6 +156,9 @@ export function setupTaskListeners() {
 
   addTaskSidebar.addEventListener("click", handleAddTaskSidebarBtn);
   addTaskBtnMain.addEventListener("click", handleAddTaskMainBtn);
+
+  //Task Content
+  tasksContainer.addEventListener("click", handleTaskActionClicks);
 
   //Dialog Form
   taskDialogForm.addEventListener("submit", handleDialogFormSubmit);
@@ -197,6 +197,59 @@ function handleAddTaskMainBtn() {
   taskForm.style.display = "grid";
   addTaskBtnMain.style.display = "none";
   taskForm.querySelector(".title-input").focus();
+}
+
+//Task Content
+function handleTaskActionClicks(e) {
+  if (e.target.classList.contains("checkbox")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      task.checkboxStatus = !task.checkboxStatus;
+      saveData();
+      findCorrectCategory();
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
+    }
+  } else if (e.target.classList.contains("task-delete")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      eraseTaskFromEverywhere(task.id);
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
+    }
+  } else if (e.target.classList.contains("task-edit-btn")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      //Make the edit form appear at the same place of the task content
+      renderEditTaskForm(task);
+      //Populate edit form with the values of the current task object
+      populateEditForm(task);
+    }
+  }
+}
+
+//Helpers
+
+function populateEditForm(task) {
+  editTitle.value = task.description;
+  editDueDate.value = format(task.date, "yyyy-MM-dd");
+  editSelectProject.value = task.project;
+  editSelectPriority.value = task.priority;
+}
+
+function renderEditTaskForm(task) {
+  document
+    .querySelector(`[data-task-content-id="${task.id}"]`)
+    .insertAdjacentElement("afterend", editTaskForm);
+  editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
+  editTaskForm.style.display = "grid";
+  //Remove the task content
+  document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
+}
+
+//Find the task with the same id of the DOM element
+function getTaskByElementId(element, key) {
+  const taskId = element.dataset[key];
+
+  return getCurrentTasks().find((task) => task.id === taskId);
 }
 
 // Dialog Form
@@ -280,6 +333,8 @@ function handleMainFormCancel() {
   taskForm.querySelector(".select-priority").value = "Medium";
 }
 
+//Helper
+
 function getTaskFormData() {
   const taskTitle = document.querySelector(".title-input").value;
   const dueDate = document.querySelector(".date-input").value;
@@ -308,6 +363,8 @@ function handleEditFormCancel() {
   tasksContainer.innerHTML = "";
   renderTasks(getCurrentProjects()[getRenderedProject()]);
 }
+
+//Helper
 
 function updateTaskObj() {
   const task = getTaskByElementId(editTaskForm, "taskFormId");
