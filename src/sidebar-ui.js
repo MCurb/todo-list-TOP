@@ -113,7 +113,7 @@ export function setActiveSidebarProject(sidebarElem) {
   sidebarElem.classList.add("active-sidebar-project");
 }
 
-//State
+// State
 
 export function resetRenderedProject() {
   renderedProject = "Inbox";

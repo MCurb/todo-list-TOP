@@ -4,12 +4,20 @@ import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
 import { format, parseISO } from "date-fns";
 
+// --- Cached DOM elements (static ones) ---
+
 const editTaskForm = document.querySelector(".edit-task-form");
 
 const editTitle = document.querySelector(".title-edit-input");
 const editDueDate = document.querySelector(".date-edit-input");
 const editSelectProject = document.querySelector(".select-project-edit");
 const editSelectPriority = document.querySelector(".select-priority-edit");
+
+// ========================
+// PUBLIC API (exports)
+// ========================
+
+// Rendering
 
 export function renderTasks(currentTasksArray) {
   const tasksContainer = document.querySelector(".tasks-div");
@@ -22,42 +30,7 @@ export function renderTasks(currentTasksArray) {
   });
 }
 
-//Event Listener Function Handlers
-
-export function taskActionHandler(e) {
-  if (e.target.classList.contains("checkbox")) {
-    const task = getTaskByElementId(e.target, "taskId");
-    if (task) {
-      task.checkboxStatus = !task.checkboxStatus;
-      saveData();
-      findCorrectCategory();
-      renderTasks(getCurrentProjects()[getRenderedProject()]);
-    }
-  } else if (e.target.classList.contains("task-delete")) {
-    const task = getTaskByElementId(e.target, "taskId");
-    if (task) {
-      eraseTaskFromEverywhere(task.id);
-      renderTasks(getCurrentProjects()[getRenderedProject()]);
-    }
-  } else if (e.target.classList.contains("task-edit-btn")) {
-    const task = getTaskByElementId(e.target, "taskId");
-    if (task) {
-      //Make the edit form appear at the same place of the task content
-      renderEditTaskForm(task);
-      //Populate edit form with the values of the current task object
-      populateEditForm(task);
-    }
-  }
-}
-
-export function editFormHandler(e) {
-  e.preventDefault();
-  updateTaskObj();
-  editTaskForm.style.display = "none";
-  renderTasks(getCurrentProjects()[getRenderedProject()]);
-}
-
-//Helper Functions
+// State
 
 export function getProjectFormData() {
   const projectName = document.querySelector(".project-name-input").value;
@@ -99,6 +72,47 @@ export function getTaskFormData() {
   };
 }
 
+// ========================
+// EVENT HANDLERS
+// ========================
+
+export function taskActionHandler(e) {
+  if (e.target.classList.contains("checkbox")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      task.checkboxStatus = !task.checkboxStatus;
+      saveData();
+      findCorrectCategory();
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
+    }
+  } else if (e.target.classList.contains("task-delete")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      eraseTaskFromEverywhere(task.id);
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
+    }
+  } else if (e.target.classList.contains("task-edit-btn")) {
+    const task = getTaskByElementId(e.target, "taskId");
+    if (task) {
+      //Make the edit form appear at the same place of the task content
+      renderEditTaskForm(task);
+      //Populate edit form with the values of the current task object
+      populateEditForm(task);
+    }
+  }
+}
+
+export function editFormHandler(e) {
+  e.preventDefault();
+  updateTaskObj();
+  editTaskForm.style.display = "none";
+  renderTasks(getCurrentProjects()[getRenderedProject()]);
+}
+
+// ========================
+// PRIVATE HELPERS
+// ========================
+
 function populateEditForm(task) {
   editTitle.value = task.description;
   editDueDate.value = format(task.date, "yyyy-MM-dd");
@@ -135,7 +149,7 @@ function getTaskByElementId(element, key) {
   return getCurrentTasks().find((task) => task.id === taskId);
 }
 
-//Create task content and append to container
+//Create the task content and append it to container
 
 function createTaskContent(task) {
   const taskCheckbox = createTaskCheckbox(task);

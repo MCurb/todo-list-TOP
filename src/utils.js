@@ -1,3 +1,7 @@
+// ========================
+// PUBLIC API (exports)
+// ========================
+
 export function encodeClassName(str) {
   return str
     .trim()

@@ -1,6 +1,8 @@
 import { parseISO } from "date-fns";
 import { Task } from "./task-object";
 
+// --- Module state ---
+
 //tasks array that holds all task objects
 let tasks = [];
 
@@ -13,6 +15,10 @@ let currentProjects = {
   Work: [],
   Home: [],
 };
+
+// ========================
+// PUBLIC API (exports)
+// ========================
 
 export function saveData() {
   localStorage.setItem("tasks", JSON.stringify(tasks));

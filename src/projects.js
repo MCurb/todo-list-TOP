@@ -1,8 +1,13 @@
 import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 import { eraseTaskFromEverywhere } from "./tasks";
 
+// --- Module state ---
 const projects = getCurrentProjects();
 const tasksArray = getCurrentTasks();
+
+// ========================
+// PUBLIC API (exports)
+// ========================
 
 export function newProject(projectName) {
   if(projects.hasOwnProperty(`${projectName}`)) {
@@ -24,6 +29,10 @@ export function eraseProject(
   delete currentProjects[projectToRemove];
   saveData()
 }
+
+// ========================
+// PRIVATE HELPERS
+// ========================
 
 //Delete project tasks from everywhere
 function deleteTasksByProject(projectToRemove) {

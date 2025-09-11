@@ -1,5 +1,6 @@
-//class that creates task objects
-//it takes checkbox status, description, date, project, priority
+// ========================
+// PUBLIC API (exports)
+// ========================
 
 export class Task {
   constructor(checkboxStatus, date, description, project, priority, id) {

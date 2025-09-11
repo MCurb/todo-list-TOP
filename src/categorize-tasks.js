@@ -1,8 +1,14 @@
 import { isToday, isFuture } from "date-fns";
 import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 
+// --- Module state ---
 const projectList = getCurrentProjects();
 const activeTasks = getCurrentTasks();
+
+
+// ========================
+// PUBLIC API (exports)
+// ========================
 
 //Loop through each task and categorize them by completion, project type and date
 export function findCorrectCategory() {
@@ -19,6 +25,30 @@ export function findCorrectCategory() {
     });
   });
 }
+
+//Erase the given task from every project it is in
+export function eraseTaskFromProjects(
+  taskId,
+  currentProjects = getCurrentProjects()
+) {
+  Object.keys(currentProjects).forEach((project) => {
+    const projectArr = currentProjects[project];
+    if(projectArr.length === 0) {
+      return
+    }
+
+    for (let i = projectArr.length - 1; i >= 0; i--) {
+      if (projectArr[i].id === taskId) {
+        projectArr.splice(i, 1);
+        saveData()
+      }
+    }
+  });
+}
+
+// ========================
+// PRIVATE HELPERS
+// ========================
 
 //Add completed task to the completed project
 //and remove it from the other projects
@@ -63,22 +93,4 @@ function isTaskPresent(task, currentProject) {
   return currentProject.includes(task);
 }
 
-//Erase the given task from every project it is in
-export function eraseTaskFromProjects(
-  taskId,
-  currentProjects = getCurrentProjects()
-) {
-  Object.keys(currentProjects).forEach((project) => {
-    const projectArr = currentProjects[project];
-    if(projectArr.length === 0) {
-      return
-    }
 
-    for (let i = projectArr.length - 1; i >= 0; i--) {
-      if (projectArr[i].id === taskId) {
-        projectArr.splice(i, 1);
-        saveData()
-      }
-    }
-  });
-}

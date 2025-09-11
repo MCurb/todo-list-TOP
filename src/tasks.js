@@ -4,6 +4,10 @@ import { getCurrentTasks, saveData } from "./state";
 
 import { isToday, isPast } from "date-fns";
 
+// ========================
+// PUBLIC API (exports)
+// ========================
+
 export function newTask(task) {
   if (actuallyPast(task)) {
     return;
@@ -25,6 +29,10 @@ export function eraseTaskFromEverywhere(
   eraseTaskFromProjects(taskId);
   saveData();
 }
+
+// ========================
+// PRIVATE HELPERS
+// ========================
 
 function actuallyPast(task) {
   if (!isToday(task["date"]) && isPast(task["date"])) {

@@ -44,7 +44,9 @@ findCorrectCategory();
 renderDefaultProjects();
 renderCustomProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
-document.querySelector(".Inbox").classList.add("active-sidebar-project");
+setActiveSidebarProject(document.querySelector(".Inbox"))
+
+
 
 const sidebar = document.querySelector(".sidebar");
 sidebar.addEventListener("click", onProjectSidebarClick);
