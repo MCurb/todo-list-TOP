@@ -1,12 +1,8 @@
-import { findCorrectCategory } from "./categorize-tasks";
-
 import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
-
+import { findCorrectCategory } from "./categorize-tasks";
 import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
 import { format, parseISO } from "date-fns";
-
-const tasksContainer = document.querySelector(".tasks-div");
 
 const editTaskForm = document.querySelector(".edit-task-form");
 
@@ -16,6 +12,8 @@ const editSelectProject = document.querySelector(".select-project-edit");
 const editSelectPriority = document.querySelector(".select-priority-edit");
 
 export function renderTasks(currentTasksArray) {
+  const tasksContainer = document.querySelector(".tasks-div");
+
   tasksContainer.innerHTML = "";
   currentTasksArray.forEach((task) => {
     const taskContainer = createTaskContent(task);
@@ -45,7 +43,7 @@ export function taskActionHandler(e) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       //Make the edit form appear at the same place of the task content
-      renderEditTaskForm(task)
+      renderEditTaskForm(task);
       //Populate edit form with the values of the current task object
       populateEditForm(task);
     }
@@ -126,7 +124,7 @@ function renderEditTaskForm(task) {
     .insertAdjacentElement("afterend", editTaskForm);
   editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
   editTaskForm.style.display = "grid";
-  //Make the task content disappear
+  //Remove the task content
   document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
 }
 
