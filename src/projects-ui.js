@@ -91,3 +91,8 @@ function setProjectIcon(project, projecIcon) {
   }
 }
 
+//Project Event Listeners
+
+export function setupProjectListeners() {
+
+}

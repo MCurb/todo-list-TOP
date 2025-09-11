@@ -28,37 +28,9 @@ export function getProjectFormData() {
   };
 }
 
-export function getDialogFormData() {
-  const taskTitle = document.querySelector(".title-input-dialog").value;
-  const dueDate = document.querySelector(".date-input-dialog").value;
-  const selectProject = document.querySelector(".select-project-dialog").value;
-  const selectPriority = document.querySelector(
-    ".select-priority-dialog"
-  ).value;
 
-  return {
-    title: taskTitle,
-    dueDate: parseISO(dueDate),
-    project: selectProject,
-    priority: selectPriority,
-    id: crypto.randomUUID(),
-  };
-}
 
-export function getTaskFormData() {
-  const taskTitle = document.querySelector(".title-input").value;
-  const dueDate = document.querySelector(".date-input").value;
-  const selectProject = document.querySelector(".select-project").value;
-  const selectPriority = document.querySelector(".select-priority").value;
 
-  return {
-    title: taskTitle,
-    dueDate: parseISO(dueDate),
-    project: selectProject,
-    priority: selectPriority,
-    id: crypto.randomUUID(),
-  };
-}
 
 // ========================
 // EVENT HANDLERS
@@ -90,12 +62,7 @@ export function taskActionHandler(e) {
   }
 }
 
-export function editFormHandler(e) {
-  e.preventDefault();
-  updateTaskObj();
-  editTaskForm.style.display = "none";
-  renderTasks(getCurrentProjects()[getRenderedProject()]);
-}
+
 
 // ========================
 // PRIVATE HELPERS
@@ -108,17 +75,7 @@ function populateEditForm(task) {
   editSelectPriority.value = task.priority;
 }
 
-function updateTaskObj() {
-  const task = getTaskByElementId(editTaskForm, "taskFormId");
-  if (task) {
-    task.description = editTitle.value;
-    task.date = parseISO(editDueDate.value);
-    task.project = editSelectProject.value;
-    task.priority = editSelectPriority.value;
-    findCorrectCategory();
-    saveData();
-  }
-}
+
 
 function renderEditTaskForm(task) {
   document
@@ -131,7 +88,7 @@ function renderEditTaskForm(task) {
 }
 
 //Find the task with the same id of the DOM element
-function getTaskByElementId(element, key) {
+export function getTaskByElementId(element, key) {
   const taskId = element.dataset[key];
 
   return getCurrentTasks().find((task) => task.id === taskId);

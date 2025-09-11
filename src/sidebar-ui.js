@@ -20,15 +20,11 @@ const selectProjecForm = [
   selectProjectDialog,
 ];
 
-
 // ========================
 // PUBLIC API (exports)
 // ========================
 
 // Rendering
-
-
-
 export function renderActiveProjectName(activeProject) {
   const activeProjectName = document.querySelector(".active-project-name");
 
@@ -37,7 +33,7 @@ export function renderActiveProjectName(activeProject) {
 
 // Sidebar behavior
 
-export function onProjectSidebarClick(e) {
+function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (e.target.classList.contains(`${encodeClassName(project)}`)) {
       renderedProject = project;
@@ -77,7 +73,6 @@ export function resetRenderedProject() {
 export function getRenderedProject() {
   return renderedProject;
 }
-
 
 // Project select inputs
 
@@ -142,5 +137,10 @@ function toggleAddTaskBtn(project) {
   }
 }
 
+// Sidebar Event Listeners
 
+export function setupSidebarListeners() {
+  const sidebar = document.querySelector(".sidebar");
 
+  sidebar.addEventListener("click", onProjectSidebarClick);
+}

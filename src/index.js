@@ -4,11 +4,15 @@ import { Task } from "./task-object";
 
 import { eraseProject, newProject } from "./projects";
 
-import { renderDefaultProjects, renderCustomProjects } from "./projects-ui";
+import {
+  renderDefaultProjects,
+  renderCustomProjects,
+  setupProjectListeners,
+} from "./projects-ui";
 
 import { newTask } from "./tasks";
 
-import { renderTasks } from "./tasks-ui";
+import { renderTasks, setupTaskListeners } from "./tasks-ui";
 
 import {
   getTaskFormData,
@@ -20,12 +24,12 @@ import {
 
 import {
   getRenderedProject,
-  onProjectSidebarClick,
   populateProjectSelectors,
   updateSelectInputs,
   renderActiveProjectName,
   resetRenderedProject,
   setActiveSidebarProject,
+  setupSidebarListeners,
 } from "./sidebar-ui";
 
 import { decodeClassName } from "./utils";
@@ -39,131 +43,27 @@ import {
 } from "./state";
 import { findCorrectCategory } from "./categorize-tasks";
 
-// Init
-loadData();
-findCorrectCategory();
-renderDefaultProjects();
-renderCustomProjects();
-renderTasks(getCurrentProjects()[getRenderedProject()]);
-setActiveSidebarProject(document.querySelector(".Inbox"))
-
-
-
-const sidebar = document.querySelector(".sidebar");
-sidebar.addEventListener("click", onProjectSidebarClick);
-
-const addTaskSidebar = document.querySelector(".add-task-btn-sidebar");
-const formDialogContainer = document.querySelector(
-  ".task-form-dialog-container"
-);
-const taskDialogForm = document.querySelector(".task-form-dialog");
-const cancelDialogBtn = document.querySelector(".cancel-btn-dialog");
-
-formDialogContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("task-form-dialog-container")) {
-    formDialogContainer.close();
-    taskDialogForm.style.display = "none";
-    formDialogContainer.style.display = "none";
-    taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
-    taskDialogForm.querySelector(".title-input-dialog").value = "";
-  }
-});
-
-addTaskSidebar.addEventListener("click", () => {
-  taskDialogForm.style.display = "grid";
-  formDialogContainer.style.display = "flex";
-  formDialogContainer.showModal();
-  taskDialogForm.querySelector(".title-input-dialog").focus();
-});
-
-taskDialogForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const taskData = getDialogFormData();
-  newTask(
-    new Task(
-      false,
-      taskData.dueDate,
-      taskData.title,
-      taskData.project,
-      taskData.priority,
-      taskData.id
-    )
-  );
-  saveData();
-  formDialogContainer.close();
-  taskDialogForm.style.display = "none";
-  formDialogContainer.style.display = "none";
+function initApp() {
+  // Load & render
+  loadData();
+  findCorrectCategory();
+  renderDefaultProjects();
+  renderCustomProjects();
   renderTasks(getCurrentProjects()[getRenderedProject()]);
-  taskDialogForm.querySelector(".title-input-dialog").value = "";
-  taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
-  console.log(getCurrentProjects());
-  console.log(getCurrentTasks());
-});
+  setActiveSidebarProject(document.querySelector(".Inbox"));
 
-cancelDialogBtn.addEventListener("click", () => {
-  formDialogContainer.close();
-  taskDialogForm.style.display = "none";
-  formDialogContainer.style.display = "none";
-  taskDialogForm.querySelector(".select-priority-dialog").value = "Medium";
-  taskDialogForm.querySelector(".title-input-dialog").value = "";
-});
-
-const taskForm = document.querySelector(".task-form");
-
-taskForm.addEventListener("submit", taskFormHandler);
-function taskFormHandler(e) {
-  e.preventDefault();
-  const taskData = getTaskFormData();
-  newTask(
-    new Task(
-      false,
-      taskData.dueDate,
-      taskData.title,
-      taskData.project,
-      taskData.priority,
-      taskData.id
-    )
-  );
-  saveData();
-  renderTasks(getCurrentProjects()[getRenderedProject()]);
-  taskForm.querySelector(".title-input").value = "";
-  taskForm.querySelector(".select-priority").value = "Medium";
-  taskForm.querySelector(".title-input").focus();
-  console.log(getCurrentProjects());
-  console.log(getCurrentTasks());
+  // Setup listeners
+  setupSidebarListeners();
+  setupTaskListeners();
+  setupProjectListeners();
 }
 
-const cancelBtn = document.querySelector(".cancel-btn");
-cancelBtn.addEventListener("click", () => {
-  taskForm.style.display = "none";
-  addTaskBtnMain.style.display = "flex";
+initApp();
 
-  // Reset form values
-  taskForm.querySelector(".title-input").value = "";
-  taskForm.querySelector(".date-input").value = "";
-  taskForm.querySelector(".select-priority").value = "Medium";
-});
 
-const editTaskForm = document.querySelector(".edit-task-form");
-editTaskForm.addEventListener("submit", editFormHandler);
-
-const cancelEditBtn = document.querySelector(".cancel-edit-btn");
-cancelEditBtn.addEventListener("click", () => {
-  editTaskForm.style.display = "none";
-  tasksContainer.innerHTML = "";
-  renderTasks(getCurrentProjects()[getRenderedProject()]);
-});
 
 const tasksContainer = document.querySelector(".tasks-div");
 tasksContainer.addEventListener("click", taskActionHandler);
-
-const addTaskBtnMain = document.querySelector(".add-task-btn-main");
-addTaskBtnMain.addEventListener("click", () => {
-  addTaskBtnMain.insertAdjacentElement("afterend", taskForm);
-  taskForm.style.display = "grid";
-  addTaskBtnMain.style.display = "none";
-  taskForm.querySelector(".title-input").focus();
-});
 
 const addProjectBtn = document.querySelector(".add-project");
 const newProjectForm = document.querySelector(".new-project-form");
