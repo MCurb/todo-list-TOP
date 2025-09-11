@@ -29,33 +29,18 @@ let renderedProject = "Inbox";
 
 export function renderDefaultProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
+    const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
+    if (!taskSections.includes(project)) {
+      return;
+    }
     const projectTaskContainer = createProject(project);
 
-    const icon = document.createElement("span");
-    icon.classList.add("material-symbols-outlined");
+    const icon = createSvgIcon();
+    setProjectIcon(project, icon);
+
     projectTaskContainer.prepend(icon);
 
-    const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
-    if (taskSections.includes(project)) {
-      switch (project) {
-        case "Inbox":
-          icon.textContent = "inbox";
-          break;
-        case "Completed":
-          icon.textContent = "check_circle";
-          break;
-        case "Today":
-          icon.textContent = "today";
-          break;
-        case "Upcomming":
-          icon.textContent = "calendar_month";
-          break;
-
-        default:
-          break;
-      }
-      taskCategoryContainer.appendChild(projectTaskContainer);
-    }
+    taskCategoryContainer.appendChild(projectTaskContainer);
   });
 }
 
@@ -74,50 +59,33 @@ export function renderNewProjects() {
 
     const projectTaskContainer = createProject(project);
 
-    const icon = document.createElement("span");
-    icon.classList.add("material-symbols-outlined");
-    icon.textContent = "folder";
+    const folderIcon = createSvgIcon();
+    folderIcon.textContent = "folder";
 
-    const deleteIcon = document.createElement("span");
-    deleteIcon.classList.add("material-symbols-outlined", "delete-project");
+    const deleteIcon = createSvgIcon();
+    deleteIcon.classList.add("delete-project");
     deleteIcon.textContent = "delete";
     deleteIcon.style.marginLeft = "auto";
 
-    projectTaskContainer.prepend(icon);
+    projectTaskContainer.prepend(folderIcon);
     projectTaskContainer.appendChild(deleteIcon);
     projectsSection.appendChild(projectTaskContainer);
   });
 }
 
-function createProject(project) {
-  const projectTaskContainer = document.createElement("div");
-  projectTaskContainer.textContent = `${project}`;
-  projectTaskContainer.classList.add(`${encodeClassName(project)}`, "flexbox");
-  return projectTaskContainer;
-}
-
 export function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (e.target.classList.contains(`${encodeClassName(project)}`)) {
-      const projectArr = getCurrentProjects();
-      renderTasks(projectArr[project]);
       renderedProject = project;
 
+      renderTasks(getCurrentProjects()[project]);
+
       //Make the clicked project and it's svg color red and background color a softer red
-      if (sidebar.querySelector(".active-sidebar-project")) {
-        sidebar
-          .querySelector(".active-sidebar-project")
-          .classList.remove("active-sidebar-project");
-      }
-      e.target.classList.add("active-sidebar-project");
+      setActiveSidebarProject(e.target);
+
       renderActiveProjectName(renderedProject);
 
-      const taskSections = ["Completed", "Today", "Upcomming"];
-      if (taskSections.includes(project)) {
-        addTaskBtnMain.style.display = "none";
-      } else {
-        addTaskBtnMain.style.display = "flex";
-      }
+      toggleAddTaskBtn(project);
 
       //Change selected input option when user clicks another project
       updateSelectedOption();
@@ -181,4 +149,57 @@ export function resetRenderedProject() {
 
 export function getRenderedProject() {
   return renderedProject;
+}
+
+// Helper functions:
+
+function createProject(project) {
+  const projectTaskContainer = document.createElement("div");
+  projectTaskContainer.textContent = `${project}`;
+  projectTaskContainer.classList.add(`${encodeClassName(project)}`, "flexbox");
+  return projectTaskContainer;
+}
+
+function createSvgIcon() {
+  const icon = document.createElement("span");
+  icon.classList.add("material-symbols-outlined");
+  return icon;
+}
+
+function toggleAddTaskBtn(project) {
+  const taskSections = ["Completed", "Today", "Upcomming"];
+  if (taskSections.includes(project)) {
+    addTaskBtnMain.style.display = "none";
+  } else {
+    addTaskBtnMain.style.display = "flex";
+  }
+}
+
+export function setActiveSidebarProject(sidebarElem) {
+  if (sidebar.querySelector(".active-sidebar-project")) {
+    sidebar
+      .querySelector(".active-sidebar-project")
+      .classList.remove("active-sidebar-project");
+  }
+  sidebarElem.classList.add("active-sidebar-project");
+}
+
+function setProjectIcon(project, projecIcon) {
+  switch (project) {
+    case "Inbox":
+      projecIcon.textContent = "inbox";
+      break;
+    case "Completed":
+      projecIcon.textContent = "check_circle";
+      break;
+    case "Today":
+      projecIcon.textContent = "today";
+      break;
+    case "Upcomming":
+      projecIcon.textContent = "calendar_month";
+      break;
+
+    default:
+      break;
+  }
 }

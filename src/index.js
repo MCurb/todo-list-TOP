@@ -24,6 +24,7 @@ import {
   updateSelectInputs,
   renderActiveProjectName,
   resetRenderedProject,
+  setActiveSidebarProject,
 } from "./sidebar-ui";
 
 import { decodeClassName } from "./utils";
@@ -180,12 +181,7 @@ projectsSection.addEventListener("click", (e) => {
     e.target.parentElement.remove();
     resetRenderedProject();
     renderTasks(getCurrentProjects()[getRenderedProject()]);
-    if (sidebar.querySelector(".active-sidebar-project")) {
-      sidebar
-        .querySelector(".active-sidebar-project")
-        .classList.remove("active-sidebar-project");
-    }
-    document.querySelector(".Inbox").classList.add("active-sidebar-project");
+    setActiveSidebarProject(document.querySelector(".Inbox"));
     renderActiveProjectName("Inbox");
 
     updateSelectInputs();
