@@ -24,6 +24,7 @@ import {
   deleteProjectFromSelector,
   renderActiveProjectName,
   decodeClassName,
+  resetRenderedProject,
 } from "./sidebar-ui";
 
 //Not so important now:
@@ -177,7 +178,8 @@ projectsSection.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete-project")) {
     eraseProject(decodeClassName(e.target.parentElement.classList[0]));
     e.target.parentElement.remove();
-    renderTasks(getCurrentProjects()["Inbox"]);
+    resetRenderedProject();
+    renderTasks(getCurrentProjects()[getRenderedProject()]);
     if (sidebar.querySelector(".active-sidebar-project")) {
         sidebar
           .querySelector(".active-sidebar-project")

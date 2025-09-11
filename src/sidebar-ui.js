@@ -166,6 +166,10 @@ export function renderActiveProjectName(activeProject) {
   activeProjectName.textContent = activeProject;
 }
 
+export function resetRenderedProject() {
+  renderedProject = "Inbox"
+}
+
 export function getRenderedProject() {
   return renderedProject;
 }

@@ -18,9 +18,8 @@ const editSelectPriority = document.querySelector(".select-priority-edit");
 export function renderTasks(currentTasksArray) {
   tasksContainer.innerHTML = "";
   currentTasksArray.forEach((task) => {
-    
-    const taskContainer = createTaskContent(task)
-    
+    const taskContainer = createTaskContent(task);
+
     tasksContainer.append(taskContainer);
   });
 }
@@ -34,35 +33,20 @@ export function taskActionHandler(e) {
       task.checkboxStatus = !task.checkboxStatus;
       saveData();
       findCorrectCategory();
-      tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
-
-      console.log(getCurrentTasks());
-      console.log(getCurrentProjects());
     }
   } else if (e.target.classList.contains("task-delete")) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       eraseTaskFromEverywhere(task.id);
-      tasksContainer.innerHTML = "";
       renderTasks(getCurrentProjects()[getRenderedProject()]);
-
-      console.log(getCurrentTasks());
-      console.log(getCurrentProjects());
     }
   } else if (e.target.classList.contains("task-edit-btn")) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
-      //Make a form appear at the same place the task content was
-      document
-        .querySelector(`[data-task-content-id="${task.id}"]`)
-        .insertAdjacentElement("afterend", editTaskForm);
-      editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
-      editTaskForm.style.display = "grid";
-      //Make the task content disappear
-      document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
-
-      //The form inputs, should contain the values that the current task object has
+      //Make the edit form appear at the same place of the task content
+      renderEditTaskForm(task)
+      //Populate edit form with the values of the current task object
       populateEditForm(task);
     }
   }
@@ -72,10 +56,7 @@ export function editFormHandler(e) {
   e.preventDefault();
   updateTaskObj();
   editTaskForm.style.display = "none";
-  tasksContainer.innerHTML = "";
   renderTasks(getCurrentProjects()[getRenderedProject()]);
-  console.log(getCurrentTasks());
-  console.log(getCurrentProjects());
 }
 
 //Helper Functions
@@ -139,6 +120,16 @@ function updateTaskObj() {
   }
 }
 
+function renderEditTaskForm(task) {
+  document
+    .querySelector(`[data-task-content-id="${task.id}"]`)
+    .insertAdjacentElement("afterend", editTaskForm);
+  editTaskForm.setAttribute("data-task-form-id", `${task.id}`);
+  editTaskForm.style.display = "grid";
+  //Make the task content disappear
+  document.querySelector(`[data-task-content-id="${task.id}"]`).remove();
+}
+
 //Find the task with the same id of the DOM element
 function getTaskByElementId(element, key) {
   const taskId = element.dataset[key];
@@ -162,9 +153,15 @@ function createTaskContent(task) {
 
   const taskContainer = createTaskContainer(task);
 
-  taskContainer.append(taskCheckbox, taskDate, taskTitle, taskEditBtn, taskDelete)
+  taskContainer.append(
+    taskCheckbox,
+    taskDate,
+    taskTitle,
+    taskEditBtn,
+    taskDelete
+  );
 
-  return taskContainer
+  return taskContainer;
 }
 
 function createTaskCheckbox(task) {
@@ -186,14 +183,14 @@ function createTaskDate(task) {
   const taskDueDate = document.createElement("p");
   taskDueDate.classList.add("task-date");
   taskDueDate.textContent = `Due: ${format(task.date, "MMM d")}`;
-  return taskDueDate
+  return taskDueDate;
 }
 
 function createTaskTitle(task) {
   const taskTitle = document.createElement("p");
   taskTitle.classList.add("task-title");
   taskTitle.textContent = task.description;
-  return taskTitle
+  return taskTitle;
 }
 
 function createTaskDeleteBtn(task) {
@@ -216,5 +213,5 @@ function createTaskContainer(task) {
   const taskContent = document.createElement("div");
   taskContent.setAttribute("data-task-content-id", `${task.id}`);
   taskContent.classList.add("task-details-container");
-  return taskContent
+  return taskContent;
 }
