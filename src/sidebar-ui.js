@@ -2,7 +2,7 @@ import { getCurrentProjects } from "./state";
 
 import { encodeClassName } from "./utils";
 
-import { renderTasks } from "./dom";
+import { renderTasks } from "./tasks-ui";
 
 // --- Module state ---
 let renderedProject = "Inbox";

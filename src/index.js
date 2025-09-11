@@ -6,8 +6,9 @@ import { eraseProject, newProject } from "./projects";
 
 import { newTask } from "./tasks";
 
+import { renderTasks } from "./tasks-ui";
+
 import {
-  renderTasks,
   getTaskFormData,
   getProjectFormData,
   taskActionHandler,
@@ -57,7 +58,6 @@ const formDialogContainer = document.querySelector(
 );
 const taskDialogForm = document.querySelector(".task-form-dialog");
 const cancelDialogBtn = document.querySelector(".cancel-btn-dialog");
-const selectProjectDialog = document.querySelector(".select-project-dialog");
 
 formDialogContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("task-form-dialog-container")) {
@@ -234,6 +234,4 @@ function toggleSidebar() {
   }
 }
 
-const editSelectProject = document.querySelector(".select-project-edit");
-const selectProject = document.querySelector(".select-project");
 populateProjectSelectors();
