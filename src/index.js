@@ -1,22 +1,18 @@
 import "./styles.css";
-
-import {
-  renderDefaultProjects,
-  renderCustomProjects,
-  setupProjectListeners,
-} from "./projects-ui";
-
-import { renderTasks, setupTaskListeners } from "./tasks-ui";
-
+import { setupTaskListeners } from "./tasks-listeners";
 import {
   getRenderedProject,
-  populateProjectSelectors,
   setActiveSidebarProject,
   setupSidebarListeners,
 } from "./sidebar-ui";
-
-import { getCurrentProjects, loadData } from "./state";
+import {
+  renderDefaultProjects,
+  renderCustomProjects,
+  setupProjectListeners, populateProjectSelectors
+} from "./projects-ui";
+import { renderTasks } from "./tasks-ui";
 import { findCorrectCategory } from "./categorize-tasks";
+import { getCurrentProjects, loadData } from "./state";
 
 function initApp() {
   // Load & render

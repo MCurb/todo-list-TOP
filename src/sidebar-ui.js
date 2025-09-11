@@ -54,40 +54,7 @@ export function getRenderedProject() {
   return renderedProject;
 }
 
-// Project select inputs
 
-//Add form select input options, this should be called when adding new projects
-export function populateProjectSelectors() {
-  selectProjecForm.forEach((selectInput) => {
-    Object.keys(getCurrentProjects()).forEach((project) => {
-      const defaultProjects = ["Today", "Upcomming", "Completed"];
-      if (
-        defaultProjects.includes(project) ||
-        selectInput.querySelector(`[value="${project}"]`)
-      ) {
-        return;
-      }
-      const newOption = document.createElement("option");
-      newOption.value = `${project}`;
-      newOption.textContent = `${project}`;
-      selectInput.append(newOption);
-    });
-  });
-}
-
-//Delete unexisting projects
-export function updateSelectInputs() {
-  selectProjecForm.forEach((selectInput) => {
-    const projects = Object.keys(getCurrentProjects());
-    //Update the select input options to match the current projects
-    for (let i = selectInput.children.length - 1; i >= 0; i--) {
-      const option = selectInput.children[i];
-      if (!projects.includes(option.value)) {
-        option.remove();
-      }
-    }
-  });
-}
 
 // ========================
 // PRIVATE EVENT HANDLERS
@@ -134,7 +101,7 @@ const sidebarContainer = document.querySelector(".top-sidebar");
 export function setupSidebarListeners() {
   sidebar.addEventListener("click", handleSidebarClicks);
 
-  toggleSidebarBtn.addEventListener("click", toggleSidebar);
+  toggleSidebarBtn.addEventListener("click", handleSidebarToggle);
 }
 
 // Hanlder Functions
@@ -159,7 +126,7 @@ function handleSidebarClicks(e) {
   });
 }
 
-function toggleSidebar() {
+function handleSidebarToggle() {
   body.classList.toggle("collapse-grid");
   sidebar.classList.toggle("collapse-sidebar");
   if (!header.querySelector(".top-sidebar")) {

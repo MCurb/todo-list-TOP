@@ -3,13 +3,21 @@ import { newProject, eraseProject } from "./projects";
 import { getCurrentProjects, saveData } from "./state";
 import {
   getRenderedProject,
-  populateProjectSelectors,
   resetRenderedProject,
-  updateSelectInputs,
   setActiveSidebarProject,
   renderActiveProjectName,
 } from "./sidebar-ui";
 import { renderTasks } from "./tasks-ui";
+
+const editSelectProject = document.querySelector(".select-project-edit");
+const selectProject = document.querySelector(".select-project");
+const selectProjectDialog = document.querySelector(".select-project-dialog");
+
+const selectProjecForm = [
+  selectProject,
+  editSelectProject,
+  selectProjectDialog,
+];
 
 // ========================
 // PUBLIC API (exports)
@@ -99,6 +107,41 @@ function setProjectIcon(project, projecIcon) {
     default:
       break;
   }
+}
+
+// Project select inputs
+
+//Add form select input options, this should be called when adding new projects
+export function populateProjectSelectors() {
+  selectProjecForm.forEach((selectInput) => {
+    Object.keys(getCurrentProjects()).forEach((project) => {
+      const defaultProjects = ["Today", "Upcomming", "Completed"];
+      if (
+        defaultProjects.includes(project) ||
+        selectInput.querySelector(`[value="${project}"]`)
+      ) {
+        return;
+      }
+      const newOption = document.createElement("option");
+      newOption.value = `${project}`;
+      newOption.textContent = `${project}`;
+      selectInput.append(newOption);
+    });
+  });
+}
+
+//Delete unexisting projects
+function updateSelectInputs() {
+  selectProjecForm.forEach((selectInput) => {
+    const projects = Object.keys(getCurrentProjects());
+    //Update the select input options to match the current projects
+    for (let i = selectInput.children.length - 1; i >= 0; i--) {
+      const option = selectInput.children[i];
+      if (!projects.includes(option.value)) {
+        option.remove();
+      }
+    }
+  });
 }
 
 //Project Event Listeners
