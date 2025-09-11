@@ -1,5 +1,7 @@
 import { getCurrentProjects } from "./state";
 
+import { encodeClassName } from "./utils";
+
 import { renderTasks } from "./dom";
 
 const addTaskBtnMain = document.querySelector(".add-task-btn-main");
@@ -84,10 +86,7 @@ export function renderNewProjects() {
 function createProject(project) {
   const projectTaskContainer = document.createElement("div");
   projectTaskContainer.textContent = `${project}`;
-  projectTaskContainer.classList.add(
-    `${encodeClassName(project)}`,
-    "flexbox"
-  );
+  projectTaskContainer.classList.add(`${encodeClassName(project)}`, "flexbox");
   return projectTaskContainer;
 }
 
@@ -151,38 +150,35 @@ export function dynamicProjectSelector(selectProjectForm) {
 
 //Delete unexisting projects
 
-export function deleteProjectFromSelector(selectProjectForm) {
-  //If a project is in selectProjectForm options, but it's not on the projects array, then delete it form selectProjectForm options
-  const projects = Object.keys(getCurrentProjects());
-  for (let i = selectProjectForm.children.length - 1; i >= 0; i--) {
-    const option = selectProjectForm.children[i];
-    if (!projects.includes(option.value)) {
-      option.remove();
+export function updateProjectSelectors() {
+  const selectProjecForm = [
+    selectProject,
+    editSelectProject,
+    selectProjectDialog,
+  ];
+
+  selectProjecForm.forEach((selectInput) => {
+    const projects = Object.keys(getCurrentProjects());
+    //Update the select input options to match the current projects
+    for (let i = selectInput.children.length - 1; i >= 0; i--) {
+      const option = selectInput.children[i];
+      if (!projects.includes(option.value)) {
+        option.remove();
+      }
     }
-  }
+  });
 }
+
+//Modify and use the renderedProject variable
 
 export function renderActiveProjectName(activeProject) {
   activeProjectName.textContent = activeProject;
 }
 
 export function resetRenderedProject() {
-  renderedProject = "Inbox"
+  renderedProject = "Inbox";
 }
 
 export function getRenderedProject() {
   return renderedProject;
-}
-
-export function encodeClassName(str) {
-  return str
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-zA-Z0-9_-]/g, (ch) => "_" + ch.charCodeAt(0) + "_");
-}
-
-export function decodeClassName(encoded) {
-  return encoded
-    .replace(/_(\d+)_/g, (_, code) => String.fromCharCode(code)) // convert codes to chars
-    .replace(/-/g, " "); // all remaining dashes → spaces
 }

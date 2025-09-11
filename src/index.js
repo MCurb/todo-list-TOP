@@ -21,11 +21,12 @@ import {
   dynamicProjectSelector,
   renderNewProjects,
   renderDefaultProjects,
-  deleteProjectFromSelector,
+  updateProjectSelectors,
   renderActiveProjectName,
-  decodeClassName,
   resetRenderedProject,
 } from "./sidebar-ui";
+
+import { decodeClassName } from "./utils";
 
 //Not so important now:
 import {
@@ -181,16 +182,14 @@ projectsSection.addEventListener("click", (e) => {
     resetRenderedProject();
     renderTasks(getCurrentProjects()[getRenderedProject()]);
     if (sidebar.querySelector(".active-sidebar-project")) {
-        sidebar
-          .querySelector(".active-sidebar-project")
-          .classList.remove("active-sidebar-project");
-      }
+      sidebar
+        .querySelector(".active-sidebar-project")
+        .classList.remove("active-sidebar-project");
+    }
     document.querySelector(".Inbox").classList.add("active-sidebar-project");
-    renderActiveProjectName("Inbox")
+    renderActiveProjectName("Inbox");
 
-    deleteProjectFromSelector(selectProject);
-    deleteProjectFromSelector(editSelectProject);
-    deleteProjectFromSelector(selectProjectDialog);
+    updateProjectSelectors();
   }
 });
 
