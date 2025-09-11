@@ -19,7 +19,7 @@ import {
   getRenderedProject,
   onProjectSidebarClick,
   populateProjectSelectors,
-  renderNewProjects,
+  renderCustomProjects,
   renderDefaultProjects,
   updateSelectInputs,
   renderActiveProjectName,
@@ -42,7 +42,7 @@ import { findCorrectCategory } from "./categorize-tasks";
 loadData();
 findCorrectCategory();
 renderDefaultProjects();
-renderNewProjects();
+renderCustomProjects();
 renderTasks(getCurrentProjects()[getRenderedProject()]);
 document.querySelector(".Inbox").classList.add("active-sidebar-project");
 
@@ -200,7 +200,7 @@ function projectFormHandler(e) {
   document.querySelector(".project-name-input").value = "";
   document.querySelector(".project-name-input").focus();
   console.log(getCurrentProjects());
-  renderNewProjects();
+  renderCustomProjects();
   populateProjectSelectors();
 }
 

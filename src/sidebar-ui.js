@@ -4,6 +4,10 @@ import { encodeClassName } from "./utils";
 
 import { renderTasks } from "./dom";
 
+// --- Module state ---
+let renderedProject = "Inbox";
+
+// --- Cached DOM elements (static ones) ---
 const addTaskBtnMain = document.querySelector(".add-task-btn-main");
 
 const editSelectProject = document.querySelector(".select-project-edit");
@@ -16,18 +20,16 @@ const selectProjecForm = [
   selectProjectDialog,
 ];
 
-const sidebar = document.querySelector(".sidebar");
-const taskCategoryContainer = document.querySelector(".task-categories");
-const projectsSection = document.querySelector(".projects");
 
-const activeProjectName = document.querySelector(".active-project-name");
+// ========================
+// PUBLIC API (exports)
+// ========================
 
-let renderedProject = "Inbox";
-
-//Render default projects function:
-//this one is going to be called at the init, and render just the default projects
+// Rendering
 
 export function renderDefaultProjects() {
+  const taskCategoryContainer = document.querySelector(".task-categories");
+
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (!taskSections.includes(project)) {
@@ -44,10 +46,9 @@ export function renderDefaultProjects() {
   });
 }
 
-//Render new projects function:
-//this one is going to be called every time a new project is added and it's just going to add the new projects
+export function renderCustomProjects() {
+  const projectsSection = document.querySelector(".projects");
 
-export function renderNewProjects() {
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (
@@ -73,6 +74,14 @@ export function renderNewProjects() {
   });
 }
 
+export function renderActiveProjectName(activeProject) {
+  const activeProjectName = document.querySelector(".active-project-name");
+
+  activeProjectName.textContent = activeProject;
+}
+
+// Sidebar behavior
+
 export function onProjectSidebarClick(e) {
   Object.keys(getCurrentProjects()).forEach((project) => {
     if (e.target.classList.contains(`${encodeClassName(project)}`)) {
@@ -93,18 +102,31 @@ export function onProjectSidebarClick(e) {
   });
 }
 
-//Update input project selected option when changing projects
-function updateSelectedOption() {
-  selectProjecForm.forEach((selectInput) => {
-    for (const option of selectInput.options) {
-      if (option.value === getRenderedProject()) {
-        option.selected = true;
-      }
-    }
-  });
+export function setActiveSidebarProject(sidebarElem) {
+  const sidebar = document.querySelector(".sidebar");
+
+  if (sidebar.querySelector(".active-sidebar-project")) {
+    sidebar
+      .querySelector(".active-sidebar-project")
+      .classList.remove("active-sidebar-project");
+  }
+  sidebarElem.classList.add("active-sidebar-project");
 }
 
-//Add form select input options, dynamically, this should be called when adding new projects
+//State
+
+export function resetRenderedProject() {
+  renderedProject = "Inbox";
+}
+
+export function getRenderedProject() {
+  return renderedProject;
+}
+
+
+// Project select inputs
+
+//Add form select input options, this should be called when adding new projects
 export function populateProjectSelectors() {
   selectProjecForm.forEach((selectInput) => {
     Object.keys(getCurrentProjects()).forEach((project) => {
@@ -137,21 +159,24 @@ export function updateSelectInputs() {
   });
 }
 
-//Modify and use the renderedProject variable
+// ========================
+// PRIVATE EVENT HANDLERS
+// ========================
 
-export function renderActiveProjectName(activeProject) {
-  activeProjectName.textContent = activeProject;
+//Update input project selected option when changing projects
+function updateSelectedOption() {
+  selectProjecForm.forEach((selectInput) => {
+    for (const option of selectInput.options) {
+      if (option.value === getRenderedProject()) {
+        option.selected = true;
+      }
+    }
+  });
 }
 
-export function resetRenderedProject() {
-  renderedProject = "Inbox";
-}
-
-export function getRenderedProject() {
-  return renderedProject;
-}
-
-// Helper functions:
+// ========================
+// PRIVATE HELPERS
+// ========================
 
 function createProject(project) {
   const projectTaskContainer = document.createElement("div");
@@ -164,24 +189,6 @@ function createSvgIcon() {
   const icon = document.createElement("span");
   icon.classList.add("material-symbols-outlined");
   return icon;
-}
-
-function toggleAddTaskBtn(project) {
-  const taskSections = ["Completed", "Today", "Upcomming"];
-  if (taskSections.includes(project)) {
-    addTaskBtnMain.style.display = "none";
-  } else {
-    addTaskBtnMain.style.display = "flex";
-  }
-}
-
-export function setActiveSidebarProject(sidebarElem) {
-  if (sidebar.querySelector(".active-sidebar-project")) {
-    sidebar
-      .querySelector(".active-sidebar-project")
-      .classList.remove("active-sidebar-project");
-  }
-  sidebarElem.classList.add("active-sidebar-project");
 }
 
 function setProjectIcon(project, projecIcon) {
@@ -203,3 +210,15 @@ function setProjectIcon(project, projecIcon) {
       break;
   }
 }
+
+function toggleAddTaskBtn(project) {
+  const taskSections = ["Completed", "Today", "Upcomming"];
+  if (taskSections.includes(project)) {
+    addTaskBtnMain.style.display = "none";
+  } else {
+    addTaskBtnMain.style.display = "flex";
+  }
+}
+
+
+
