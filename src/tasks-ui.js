@@ -2,25 +2,8 @@ import { eraseTaskFromEverywhere, newTask } from "./tasks";
 import { format, parseISO } from "date-fns";
 import { Task } from "./task-object";
 
-import {
-  getRenderedProject,
-  populateProjectSelectors,
-  updateSelectInputs,
-  renderActiveProjectName,
-  resetRenderedProject,
-  setActiveSidebarProject,
-  setupSidebarListeners,
-} from "./sidebar-ui";
-
-import { decodeClassName } from "./utils";
-
-//Not so important now:
-import {
-  getCurrentProjects,
-  getCurrentTasks,
-  loadData,
-  saveData,
-} from "./state";
+import { getRenderedProject } from "./sidebar-ui";
+import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
 import { findCorrectCategory } from "./categorize-tasks";
 
 // ========================

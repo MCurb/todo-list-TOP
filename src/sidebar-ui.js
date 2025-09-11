@@ -33,26 +33,6 @@ export function renderActiveProjectName(activeProject) {
 
 // Sidebar behavior
 
-function onProjectSidebarClick(e) {
-  Object.keys(getCurrentProjects()).forEach((project) => {
-    if (e.target.classList.contains(`${encodeClassName(project)}`)) {
-      renderedProject = project;
-
-      renderTasks(getCurrentProjects()[project]);
-
-      //Make the clicked project and it's svg color red and background color a softer red
-      setActiveSidebarProject(e.target);
-
-      renderActiveProjectName(renderedProject);
-
-      toggleAddTaskBtn(project);
-
-      //Change selected input option when user clicks another project
-      updateSelectedOption();
-    }
-  });
-}
-
 export function setActiveSidebarProject(sidebarElem) {
   const sidebar = document.querySelector(".sidebar");
 
@@ -139,8 +119,54 @@ function toggleAddTaskBtn(project) {
 
 // Sidebar Event Listeners
 
-export function setupSidebarListeners() {
-  const sidebar = document.querySelector(".sidebar");
+const sidebar = document.querySelector(".sidebar");
 
-  sidebar.addEventListener("click", onProjectSidebarClick);
+const header = document.querySelector(".header");
+const body = document.querySelector("body");
+const main = document.querySelector(".main");
+const toggleSidebarBtn = document.querySelector(
+  ".top-sidebar .material-symbols-outlined"
+);
+const taskCategoryContainer = document.querySelector(".task-categories");
+
+const sidebarContainer = document.querySelector(".top-sidebar");
+
+export function setupSidebarListeners() {
+  sidebar.addEventListener("click", handleSidebarClicks);
+
+  toggleSidebarBtn.addEventListener("click", toggleSidebar);
+}
+
+// Hanlder Functions
+
+function handleSidebarClicks(e) {
+  Object.keys(getCurrentProjects()).forEach((project) => {
+    if (e.target.classList.contains(`${encodeClassName(project)}`)) {
+      renderedProject = project;
+
+      renderTasks(getCurrentProjects()[project]);
+
+      //Make the clicked project and it's svg color red and background color a softer red
+      setActiveSidebarProject(e.target);
+
+      renderActiveProjectName(renderedProject);
+
+      toggleAddTaskBtn(project);
+
+      //Change selected input option when user clicks another project
+      updateSelectedOption();
+    }
+  });
+}
+
+function toggleSidebar() {
+  body.classList.toggle("collapse-grid");
+  sidebar.classList.toggle("collapse-sidebar");
+  if (!header.querySelector(".top-sidebar")) {
+    header.appendChild(sidebarContainer);
+    main.style.marginLeft = "20vw";
+  } else {
+    sidebar.insertBefore(sidebarContainer, taskCategoryContainer);
+    main.style.marginLeft = "10vw";
+  }
 }
