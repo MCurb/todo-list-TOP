@@ -10,6 +10,12 @@ const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
 const selectProjectDialog = document.querySelector(".select-project-dialog");
 
+const selectProjecForm = [
+  selectProject,
+  editSelectProject,
+  selectProjectDialog,
+];
+
 const sidebar = document.querySelector(".sidebar");
 const taskCategoryContainer = document.querySelector(".task-categories");
 const projectsSection = document.querySelector(".projects");
@@ -114,49 +120,43 @@ export function onProjectSidebarClick(e) {
       }
 
       //Change selected input option when user clicks another project
-      dynamicDefaultProject(selectProject);
-      dynamicDefaultProject(editSelectProject);
-      dynamicDefaultProject(selectProjectDialog);
-      console.log(renderedProject);
+      updateSelectedOption();
     }
   });
 }
 
-//Update default select option from forms when changing projects
-function dynamicDefaultProject(selectProjectForm) {
-  for (const option of selectProjectForm.options) {
-    if (option.value === getRenderedProject()) {
-      option.selected = true;
+//Update input project selected option when changing projects
+function updateSelectedOption() {
+  selectProjecForm.forEach((selectInput) => {
+    for (const option of selectInput.options) {
+      if (option.value === getRenderedProject()) {
+        option.selected = true;
+      }
     }
-  }
+  });
 }
 
 //Add form select input options, dynamically, this should be called when adding new projects
-export function dynamicProjectSelector(selectProjectForm) {
-  Object.keys(getCurrentProjects()).forEach((project) => {
-    const defaultProjects = ["Today", "Upcomming", "Completed"];
-    if (
-      defaultProjects.includes(project) ||
-      selectProjectForm.querySelector(`[value="${project}"]`)
-    ) {
-      return;
-    }
-    const newOption = document.createElement("option");
-    newOption.value = `${project}`;
-    newOption.textContent = `${project}`;
-    selectProjectForm.append(newOption);
+export function populateProjectSelectors() {
+  selectProjecForm.forEach((selectInput) => {
+    Object.keys(getCurrentProjects()).forEach((project) => {
+      const defaultProjects = ["Today", "Upcomming", "Completed"];
+      if (
+        defaultProjects.includes(project) ||
+        selectInput.querySelector(`[value="${project}"]`)
+      ) {
+        return;
+      }
+      const newOption = document.createElement("option");
+      newOption.value = `${project}`;
+      newOption.textContent = `${project}`;
+      selectInput.append(newOption);
+    });
   });
 }
 
 //Delete unexisting projects
-
-export function updateProjectSelectors() {
-  const selectProjecForm = [
-    selectProject,
-    editSelectProject,
-    selectProjectDialog,
-  ];
-
+export function updateSelectInputs() {
   selectProjecForm.forEach((selectInput) => {
     const projects = Object.keys(getCurrentProjects());
     //Update the select input options to match the current projects

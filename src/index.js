@@ -18,10 +18,10 @@ import {
 import {
   getRenderedProject,
   onProjectSidebarClick,
-  dynamicProjectSelector,
+  populateProjectSelectors,
   renderNewProjects,
   renderDefaultProjects,
-  updateProjectSelectors,
+  updateSelectInputs,
   renderActiveProjectName,
   resetRenderedProject,
 } from "./sidebar-ui";
@@ -138,7 +138,6 @@ cancelBtn.addEventListener("click", () => {
   // Reset form values
   taskForm.querySelector(".title-input").value = "";
   taskForm.querySelector(".date-input").value = "";
-  dynamicProjectSelector(selectProject);
   taskForm.querySelector(".select-priority").value = "Medium";
 });
 
@@ -189,7 +188,7 @@ projectsSection.addEventListener("click", (e) => {
     document.querySelector(".Inbox").classList.add("active-sidebar-project");
     renderActiveProjectName("Inbox");
 
-    updateProjectSelectors();
+    updateSelectInputs();
   }
 });
 
@@ -206,9 +205,7 @@ function projectFormHandler(e) {
   document.querySelector(".project-name-input").focus();
   console.log(getCurrentProjects());
   renderNewProjects();
-  dynamicProjectSelector(selectProject);
-  dynamicProjectSelector(editSelectProject);
-  dynamicProjectSelector(selectProjectDialog);
+  populateProjectSelectors();
 }
 
 const cancelProjectBtn = document.querySelector(".cancel-project-btn");
@@ -241,6 +238,4 @@ function toggleSidebar() {
 
 const editSelectProject = document.querySelector(".select-project-edit");
 const selectProject = document.querySelector(".select-project");
-dynamicProjectSelector(selectProject);
-dynamicProjectSelector(editSelectProject);
-dynamicProjectSelector(selectProjectDialog);
+populateProjectSelectors();
