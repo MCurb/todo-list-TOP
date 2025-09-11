@@ -4,6 +4,8 @@ import { Task } from "./task-object";
 
 import { eraseProject, newProject } from "./projects";
 
+import { renderDefaultProjects, renderCustomProjects } from "./projects-ui";
+
 import { newTask } from "./tasks";
 
 import { renderTasks } from "./tasks-ui";
@@ -20,8 +22,6 @@ import {
   getRenderedProject,
   onProjectSidebarClick,
   populateProjectSelectors,
-  renderCustomProjects,
-  renderDefaultProjects,
   updateSelectInputs,
   renderActiveProjectName,
   resetRenderedProject,

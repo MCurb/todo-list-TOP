@@ -3,6 +3,7 @@ import { findCorrectCategory } from "./categorize-tasks";
 import { eraseTaskFromEverywhere } from "./tasks";
 import { getRenderedProject } from "./sidebar-ui";
 import { format, parseISO } from "date-fns";
+import { renderTasks } from "./tasks-ui";
 
 // --- Cached DOM elements (static ones) ---
 
