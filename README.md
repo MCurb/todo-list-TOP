@@ -51,27 +51,28 @@ A simple and fun web app to help you organize your tasks, set due dates, and sta
 
 ## 📂 Project Structure
 
+```
 src/
 ├── index.js
 ├── template.html
 ├── styles/
-│   └── styles.css
+│ └── styles.css
 ├── utils/
-│   └── utils.js
+│ └── utils.js
 ├── state/
-│   └── state.js
+│ └── state.js
 ├── projects/
-│   ├── projects.js
-│   └── projects-ui.js
+│ ├── projects.js
+│ └── projects-ui.js
 ├── tasks/
-│   ├── task-object.js
-│   ├── categorize-tasks.js
-│   ├── tasks.js
-│   ├── tasks-ui.js
-│   └── tasks-listeners.js
+│ ├── task-object.js
+│ ├── categorize-tasks.js
+│ ├── tasks.js
+│ ├── tasks-ui.js
+│ └── tasks-listeners.js
 └── sidebar/
-    └── sidebar-ui.js
-
+└── sidebar-ui.js
+```
 
 ## 🧠 What I Learned
 - Using `localStorage` to save tasks between page reloads
