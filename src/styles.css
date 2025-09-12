@@ -95,7 +95,7 @@ h6 {
 
   /* Other */
   --color-white: white;
-  --color-checkbox-checked: rgb(8, 55, 158);
+  --color-checkbox-checked: hsl(5, 72%, 40%);
   --color-shadow: rgba(0, 0, 0, 0.15);
   --color-btn-text: hsl(0, 0%, 31%);
 }
@@ -127,6 +127,7 @@ body {
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-template-rows: 1fr;
+  padding: 12px;
 }
 
 .header .top-sidebar {
@@ -481,7 +482,7 @@ body {
 .top-sidebar {
   display: flex;
   justify-content: end;
-  padding: 8px 16px 0 0;
+  padding: 12px 16px 0 0;
 }
 
 .top-sidebar .material-symbols-outlined:hover {

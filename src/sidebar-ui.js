@@ -17,7 +17,7 @@ const body = document.querySelector("body");
 const header = document.querySelector(".header");
 const main = document.querySelector(".main");
 const sidebar = document.querySelector(".sidebar");
-const sidebarContainer = document.querySelector(".top-sidebar");
+const sidebarToggleContainer = document.querySelector(".top-sidebar");
 const toggleSidebarBtn = document.querySelector(
   ".top-sidebar .material-symbols-outlined"
 );
@@ -25,6 +25,7 @@ const taskCategoryContainer = document.querySelector(".task-categories");
 
 const addTaskBtnMain = document.querySelector(".add-task-btn-main");
 const taskForm = document.querySelector(".task-form");
+const newProjectForm = document.querySelector(".new-project-form");
 
 const selectProject = document.querySelector(".select-project");
 const editSelectProject = document.querySelector(".select-project-edit");
@@ -87,7 +88,7 @@ function handleSidebarClicks(e) {
       renderActiveProjectName(renderedProject);
 
       toggleAddTaskBtn(project);
-
+      newProjectForm.style.display = "none";
       //Change selected input option when user clicks another project
       updateSelectedOption();
     }
@@ -98,10 +99,10 @@ function handleSidebarToggle() {
   body.classList.toggle("collapse-grid");
   sidebar.classList.toggle("collapse-sidebar");
   if (!header.querySelector(".top-sidebar")) {
-    header.appendChild(sidebarContainer);
+    header.appendChild(sidebarToggleContainer);
     main.style.marginLeft = "20vw";
   } else {
-    sidebar.insertBefore(sidebarContainer, taskCategoryContainer);
+    sidebar.insertBefore(sidebarToggleContainer, taskCategoryContainer);
     main.style.marginLeft = "10vw";
   }
 }

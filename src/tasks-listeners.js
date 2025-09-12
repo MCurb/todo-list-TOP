@@ -146,7 +146,7 @@ function handleMainFormCancel() {
   addTaskBtnMain.style.display = "flex";
 
   // Reset form values
-  resetFormValues()
+  resetFormValues();
 }
 
 // Edit Form
@@ -170,14 +170,19 @@ function handleTaskActionClicks(e) {
     if (task) {
       task.checkboxStatus = !task.checkboxStatus;
       saveData();
-      findCorrectCategory();
       renderTasks(getCurrentProjects()[getRenderedProject()]);
+      setTimeout(() => {
+        findCorrectCategory();
+        renderTasks(getCurrentProjects()[getRenderedProject()]);
+      }, 350);
     }
   } else if (e.target.classList.contains("task-delete")) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
-      eraseTaskFromEverywhere(task.id);
-      renderTasks(getCurrentProjects()[getRenderedProject()]);
+      setTimeout(() => {
+        eraseTaskFromEverywhere(task.id);
+        renderTasks(getCurrentProjects()[getRenderedProject()]);
+      }, 250);
     }
   } else if (e.target.classList.contains("task-edit-btn")) {
     const task = getTaskByElementId(e.target, "taskId");

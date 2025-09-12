@@ -124,14 +124,16 @@ function handleAddProjectClicks(e) {
 //Delete Project
 function handleDeleteProjectClicks(e) {
   if (e.target.classList.contains("delete-project")) {
-    eraseProject(decodeClassName(e.target.parentElement.classList[0]));
-    e.target.parentElement.remove();
-    resetRenderedProject();
-    renderTasks(getCurrentProjects()[getRenderedProject()]);
-    setActiveSidebarProject(document.querySelector(".Inbox"));
-    renderActiveProjectName("Inbox");
+    setTimeout(() => {
+      eraseProject(decodeClassName(e.target.parentElement.classList[0]));
+      e.target.parentElement.remove();
+      resetRenderedProject();
+      renderTasks(getCurrentProjects()[getRenderedProject()]);
+      setActiveSidebarProject(document.querySelector(".Inbox"));
+      renderActiveProjectName("Inbox");
 
-    updateSelectInputs();
+      updateSelectInputs();
+    }, 250);
   }
 }
 
@@ -203,5 +205,3 @@ function updateSelectInputs() {
     }
   });
 }
-
-
