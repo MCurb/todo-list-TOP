@@ -1,6 +1,6 @@
 import { findCorrectCategory, eraseTaskFromProjects } from "./categorize-tasks";
 
-import { getCurrentTasks, saveData } from "./state";
+import { getCurrentTasks, saveData } from "../state/state";
 
 import { isToday, isPast } from "date-fns";
 

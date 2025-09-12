@@ -1,13 +1,13 @@
-import { encodeClassName, decodeClassName } from "./utils";
+import { encodeClassName, decodeClassName } from "../utils/utils";
 import { newProject, eraseProject } from "./projects";
-import { getCurrentProjects, saveData } from "./state";
+import { getCurrentProjects, saveData } from "../state/state";
 import {
   getRenderedProject,
   resetRenderedProject,
   setActiveSidebarProject,
   renderActiveProjectName,
-} from "./sidebar-ui";
-import { renderTasks } from "./tasks-ui";
+} from "../sidebar/sidebar-ui";
+import { renderTasks } from "../tasks/tasks-ui";
 
 // ========================
 // DOM REFERENCES

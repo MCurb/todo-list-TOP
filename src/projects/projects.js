@@ -1,5 +1,5 @@
-import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
-import { eraseTaskFromEverywhere } from "./tasks";
+import { getCurrentProjects, getCurrentTasks, saveData } from "../state/state";
+import { eraseTaskFromEverywhere } from "../tasks/tasks";
 
 // --- Module state ---
 const projects = getCurrentProjects();

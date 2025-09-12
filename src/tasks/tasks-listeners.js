@@ -1,10 +1,10 @@
 import { format, parseISO } from "date-fns";
 import { Task } from "./task-object";
-import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
+import { getCurrentProjects, getCurrentTasks, saveData } from "../state/state";
 import { findCorrectCategory } from "./categorize-tasks";
 import { eraseTaskFromEverywhere, newTask } from "./tasks";
 import { renderTasks } from "./tasks-ui";
-import { getRenderedProject } from "./sidebar-ui";
+import { getRenderedProject } from "../sidebar/sidebar-ui";
 
 // ------------------ DOM References ------------------
 

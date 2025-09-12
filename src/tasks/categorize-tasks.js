@@ -1,5 +1,5 @@
 import { isToday, isFuture } from "date-fns";
-import { getCurrentProjects, getCurrentTasks, saveData } from "./state";
+import { getCurrentProjects, getCurrentTasks, saveData } from "../state/state";
 
 // --- Module state ---
 const projectList = getCurrentProjects();

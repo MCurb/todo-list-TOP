@@ -1,5 +1,5 @@
 import { parseISO } from "date-fns";
-import { Task } from "./task-object";
+import { Task } from "../tasks/task-object";
 
 // --- Module state ---
 

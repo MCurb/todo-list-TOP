@@ -1,9 +1,9 @@
-import { getCurrentProjects } from "./state";
+import { getCurrentProjects } from "../state/state";
 
-import { encodeClassName } from "./utils";
+import { encodeClassName } from "../utils/utils";
 
-import { renderTasks } from "./tasks-ui";
-import { resetFormValues } from "./tasks-listeners";
+import { renderTasks } from "../tasks/tasks-ui";
+import { resetFormValues } from "../tasks/tasks-listeners";
 
 // ========================
 // MODULE STATE
