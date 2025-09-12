@@ -71,84 +71,88 @@
       </button>
 
       <!-- Main Task Form -->
-      <form class="task-form">
+      <form class="task-form task-form-base">
         <input
           type="text"
           placeholder="Buy some eggs"
-          class="title-input"
+          class="title-input task-title-input"
           maxlength="80"
           required
         />
 
         <div class="task-actions">
-          <input type="date" class="date-input" required />
-          <select class="select-priority">
+          <input type="date" class="date-input date task-field" required />
+          <select class="select-priority priority task-field">
             <option value="High">High</option>
             <option value="Medium" selected>Medium</option>
             <option value="Low">Low</option>
           </select>
         </div>
         <div class="line"></div>
-        <select class="select-project"></select>
+        <select class="select-project project task-field"></select>
 
         <div class="task-btns">
-          <button class="cancel-btn" type="button">Cancel</button>
-          <button type="submit" class="add-task-btn">Add Task</button>
+          <button class="cancel-btn cancel" type="button">Cancel</button>
+          <button type="submit" class="add-task-btn add">Add Task</button>
         </div>
       </form>
       <!-- Dialog Task Form -->
       <dialog class="task-form-dialog-container" closedby="any">
-        <form class="task-form-dialog">
+        <form class="task-form-dialog task-form-base">
           <input
             type="text"
             placeholder="Buy some eggs"
-            class="title-input-dialog"
+            class="title-input-dialog task-title-input"
             maxlength="80"
             required
           />
 
-          <div class="task-actions-dialog">
-            <input type="date" class="date-input-dialog" required />
-            <select class="select-priority-dialog">
+          <div class="task-actions">
+            <input type="date" class="date-input-dialog date task-field" required />
+            <select class="select-priority-dialog priority task-field">
               <option value="High">High</option>
               <option value="Medium" selected>Medium</option>
               <option value="Low">Low</option>
             </select>
           </div>
           <div class="line"></div>
-          <select class="select-project-dialog"></select>
+          <select class="select-project-dialog project task-field"></select>
 
-          <div class="task-btns-dialog">
-            <button class="cancel-btn-dialog" type="button">Cancel</button>
-            <button type="submit" class="add-task-btn-dialog">Add Task</button>
+          <div class="task-btns">
+            <button class="cancel-btn-dialog cancel" type="button">
+              Cancel
+            </button>
+            <button type="submit" class="add-task-btn-dialog add">
+              Add Task
+            </button>
           </div>
         </form>
       </dialog>
 
       <!-- Edit Task Form -->
-      <form class="edit-task-form">
+      <form class="edit-task-form task-form-base">
         <input
           type="text"
           placeholder="Buy some eggs"
-          class="title-edit-input"
+          class="title-edit-input task-title-input"
           autofocus
           required
         />
 
-        <div class="edit-task-actions">
-          <input type="date" class="date-edit-input" />
+        <div class="task-actions">
+          <input type="date" class="date-edit-input date task-field" />
 
-          <select class="select-priority-edit">
+          <select class="select-priority-edit priority task-field">
             <option value="High">High</option>
             <option value="Medium">Medium</option>
             <option value="Low">Low</option>
           </select>
         </div>
         <div class="line"></div>
-        <select class="select-project-edit"></select>
-        <div class="task-edit-btns">
-          <button type="button" class="cancel-edit-btn">Cancel</button>
-          <button type="submit" class="save-task-btn">Save</button>
+        <select class="select-project-edit project task-field"></select>
+        <div class="task-btns">
+          <button type="button" class="cancel-edit-btn cancel">Cancel</button>
+          <button type="submit" class="save-task-btn add">Save</button>
         </div>
       </form>
 
