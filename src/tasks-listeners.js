@@ -187,6 +187,8 @@ function handleTaskActionClicks(e) {
   } else if (e.target.classList.contains("task-edit-btn")) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
+      //Close Main task form if opened
+      handleMainFormCancel()
       //Make the edit form appear at the same place of the task content
       renderEditTaskForm(task);
       //Populate edit form with the values of the current task object
