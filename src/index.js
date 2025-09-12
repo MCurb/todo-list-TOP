@@ -1,5 +1,5 @@
 import "./styles.css";
-import { setupTaskListeners } from "./tasks-listeners";
+import { loadExampleTasks, setupTaskListeners } from "./tasks-listeners";
 import {
   getRenderedProject,
   setActiveSidebarProject,
@@ -8,15 +8,25 @@ import {
 import {
   renderDefaultProjects,
   renderCustomProjects,
-  setupProjectListeners, populateProjectSelectors
+  setupProjectListeners,
+  populateProjectSelectors,
+  loadExampleProjects,
 } from "./projects-ui";
 import { renderTasks } from "./tasks-ui";
 import { findCorrectCategory } from "./categorize-tasks";
 import { getCurrentProjects, loadData } from "./state";
 
 function initApp() {
-  // Load & render
+  // // Load & render
   loadData();
+  // Check if examples were already loaded
+  const examplesLoaded = localStorage.getItem("examplesLoaded");
+
+  if (!examplesLoaded) {
+    loadExampleProjects();
+    loadExampleTasks();
+    localStorage.setItem("examplesLoaded", "true");
+  }
   findCorrectCategory();
   renderDefaultProjects();
   renderCustomProjects();

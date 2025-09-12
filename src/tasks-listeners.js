@@ -55,6 +55,80 @@ export function setupTaskListeners() {
   tasksContainer.addEventListener("click", handleTaskActionClicks);
 }
 
+export function loadExampleTasks() {
+  const exampleTasks = [
+    {
+      checkboxStatus: false,
+      dueDate: new Date(),
+      title: "Explain regex to my self again",
+      project: "Inbox",
+      priority: "Low",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: false,
+      dueDate: new Date(),
+      title: "Finish tutorial, start another tutorial",
+      project: "Inbox",
+      priority: "Medium",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: false,
+      dueDate: new Date(),
+      title: "Explain bug to rubber duck, bug fixes itself",
+      project: "Inbox",
+      priority: "High",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: true,
+      dueDate: new Date(),
+      title: "Celebrate when app runs with zero errors",
+      project: "Bug Hunt",
+      priority: "High",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: true,
+      dueDate: new Date(),
+      title: "Fix bug by deleting the whole file",
+      project: "Bug Hunt",
+      priority: "Medium",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: false,
+      dueDate: new Date(),
+      title: "Refactor spaghetti code until it breaks",
+      project: "TOP Project",
+      priority: "Low",
+      id: crypto.randomUUID(),
+    },
+    {
+      checkboxStatus: false,
+      dueDate: new Date(),
+      title: "Remove one console.log… add five more",
+      project: "Bug Hunt",
+      priority: "Medium",
+      id: crypto.randomUUID(),
+    },
+  ];
+
+  exampleTasks.forEach((task) => {
+    newTask(
+      new Task(
+        task.checkboxStatus,
+        task.dueDate,
+        task.title,
+        task.project,
+        task.priority,
+        task.id
+      )
+    );
+  });
+}
+
 export function resetFormValues() {
   taskForm.querySelector(".title-input").value = "";
   taskForm.querySelector(".date-input").value = "";
@@ -188,7 +262,7 @@ function handleTaskActionClicks(e) {
     const task = getTaskByElementId(e.target, "taskId");
     if (task) {
       //Close Main task form if opened
-      handleMainFormCancel()
+      handleMainFormCancel();
       //Make the edit form appear at the same place of the task content
       renderEditTaskForm(task);
       //Populate edit form with the values of the current task object

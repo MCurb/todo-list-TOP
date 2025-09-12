@@ -12,8 +12,6 @@ let currentProjects = {
   Today: [],
   Upcomming: [],
   Completed: [],
-  Work: [],
-  Home: [],
 };
 
 // ========================

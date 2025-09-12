@@ -108,6 +108,14 @@ export function setupProjectListeners() {
   cancelProjectBtn.addEventListener("click", handleProjectFormCancel);
 }
 
+export function loadExampleProjects() {
+  const exampleProjects = ["Bug Hunt", "Rubber Duck", "TOP Project"];
+
+  exampleProjects.forEach((project) => {
+    newProject(project);
+  });
+}
+
 // ========================
 // EVENT HANDLERS
 // ========================
