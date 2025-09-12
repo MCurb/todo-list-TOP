@@ -3,6 +3,7 @@ import { getCurrentProjects } from "./state";
 import { encodeClassName } from "./utils";
 
 import { renderTasks } from "./tasks-ui";
+import { resetFormValues } from "./tasks-listeners";
 
 // ========================
 // MODULE STATE
@@ -23,6 +24,7 @@ const toggleSidebarBtn = document.querySelector(
 const taskCategoryContainer = document.querySelector(".task-categories");
 
 const addTaskBtnMain = document.querySelector(".add-task-btn-main");
+const taskForm = document.querySelector(".task-form");
 
 const selectProject = document.querySelector(".select-project");
 const editSelectProject = document.querySelector(".select-project-edit");
@@ -112,8 +114,11 @@ function toggleAddTaskBtn(project) {
   const taskSections = ["Completed", "Today", "Upcomming"];
   if (taskSections.includes(project)) {
     addTaskBtnMain.style.display = "none";
+    taskForm.style.display = "none"
   } else {
     addTaskBtnMain.style.display = "flex";
+    taskForm.style.display = "none"
+    resetFormValues()
   }
 }
 

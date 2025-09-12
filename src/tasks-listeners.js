@@ -55,6 +55,12 @@ export function setupTaskListeners() {
   tasksContainer.addEventListener("click", handleTaskActionClicks);
 }
 
+export function resetFormValues() {
+  taskForm.querySelector(".title-input").value = "";
+  taskForm.querySelector(".date-input").value = "";
+  taskForm.querySelector(".select-priority").value = "Medium";
+}
+
 // ------------------ Event Handlers ------------------
 
 // Dialog Form
@@ -140,9 +146,7 @@ function handleMainFormCancel() {
   addTaskBtnMain.style.display = "flex";
 
   // Reset form values
-  taskForm.querySelector(".title-input").value = "";
-  taskForm.querySelector(".date-input").value = "";
-  taskForm.querySelector(".select-priority").value = "Medium";
+  resetFormValues()
 }
 
 // Edit Form
