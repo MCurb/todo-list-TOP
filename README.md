@@ -51,26 +51,27 @@ A simple and fun web app to help you organize your tasks, set due dates, and sta
 
 ## 📂 Project Structure
 
-📁 `src/`
-├── 📄 `index.js` — Entry point  
-├── 📄 `template.html` — HTML template  
-├── 📁 `styles/`  
-│   └── 📄 `styles.css` — All CSS  
-├── 📁 `utils/`  
-│   └── 📄 `utils.js` — Helper functions  
-├── 📁 `state/`  
-│   └── 📄 `state.js` — Project and task state management  
-├── 📁 `projects/`  
-│   ├── 📄 `projects.js` — Project logic (add/delete projects)  
-│   └── 📄 `projects-ui.js` — Project-related DOM rendering  
-├── 📁 `tasks/`  
-│   ├── 📄 `task-object.js` — Task constructor/class  
-│   ├── 📄 `categorize-tasks.js` — Task categorization logic  
-│   ├── 📄 `tasks.js` — Task logic (add/delete/update)  
-│   ├── 📄 `tasks-ui.js` — Task-related DOM rendering  
-│   └── 📄 `tasks-listeners.js` — Task event listeners  
-└── 📁 `sidebar/`  
-    └── 📄 `sidebar-ui.js` — Sidebar rendering & events
+src/
+├── index.js             — Entry point
+├── template.html        — HTML template
+├── styles/
+│   └── styles.css       — All CSS
+├── utils/
+│   └── utils.js         — Helper functions
+├── state/
+│   └── state.js         — Project and task state management
+├── projects/
+│   ├── projects.js      — Project logic (add/delete projects)
+│   └── projects-ui.js   — Project-related DOM rendering
+├── tasks/
+│   ├── task-object.js       — Task constructor/class
+│   ├── categorize-tasks.js  — Task categorization logic
+│   ├── tasks.js             — Task logic (add/delete/update)
+│   ├── tasks-ui.js          — Task-related DOM rendering
+│   └── tasks-listeners.js   — Task event listeners
+└── sidebar/
+    └── sidebar-ui.js        — Sidebar rendering & events
+
 
 ## 🧠 What I Learned
 - Using `localStorage` to save tasks between page reloads
