@@ -156,7 +156,6 @@ function handleProjectFormSubmit(e) {
   saveData();
   projectNameInput.value = "";
   projectNameInput.focus();
-  console.log(getCurrentProjects());
   renderCustomProjects();
   populateProjectSelectors();
 }

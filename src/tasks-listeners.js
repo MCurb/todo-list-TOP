@@ -211,8 +211,6 @@ function handleMainFormSubmit(e) {
   taskForm.querySelector(".title-input").value = "";
   taskForm.querySelector(".select-priority").value = "Medium";
   taskForm.querySelector(".title-input").focus();
-  console.log(getCurrentProjects());
-  console.log(getCurrentTasks());
 }
 
 function handleMainFormCancel() {
