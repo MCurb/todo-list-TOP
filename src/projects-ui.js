@@ -9,8 +9,20 @@ import {
 } from "./sidebar-ui";
 import { renderTasks } from "./tasks-ui";
 
-const editSelectProject = document.querySelector(".select-project-edit");
+// ========================
+// DOM REFERENCES
+// ========================
+
+const taskCategoryContainer = document.querySelector(".task-categories");
+const projectsSection = document.querySelector(".projects");
+
+const addProjectBtn = document.querySelector(".add-project");
+const newProjectForm = document.querySelector(".new-project-form");
+const cancelProjectBtn = document.querySelector(".cancel-project-btn");
+const projectNameInput = document.querySelector(".project-name-input");
+
 const selectProject = document.querySelector(".select-project");
+const editSelectProject = document.querySelector(".select-project-edit");
 const selectProjectDialog = document.querySelector(".select-project-dialog");
 
 const selectProjecForm = [
@@ -23,11 +35,7 @@ const selectProjecForm = [
 // PUBLIC API (exports)
 // ========================
 
-// Rendering
-
 export function renderDefaultProjects() {
-  const taskCategoryContainer = document.querySelector(".task-categories");
-
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (!taskSections.includes(project)) {
@@ -45,8 +53,6 @@ export function renderDefaultProjects() {
 }
 
 export function renderCustomProjects() {
-  const projectsSection = document.querySelector(".projects");
-
   Object.keys(getCurrentProjects()).forEach((project) => {
     const taskSections = ["Inbox", "Completed", "Today", "Upcomming"];
     if (
@@ -72,46 +78,6 @@ export function renderCustomProjects() {
   });
 }
 
-// ========================
-// PRIVATE HELPERS
-// ========================
-
-function createProject(project) {
-  const projectTaskContainer = document.createElement("div");
-  projectTaskContainer.textContent = `${project}`;
-  projectTaskContainer.classList.add(`${encodeClassName(project)}`, "flexbox");
-  return projectTaskContainer;
-}
-
-function createSvgIcon() {
-  const icon = document.createElement("span");
-  icon.classList.add("material-symbols-outlined");
-  return icon;
-}
-
-function setProjectIcon(project, projecIcon) {
-  switch (project) {
-    case "Inbox":
-      projecIcon.textContent = "inbox";
-      break;
-    case "Completed":
-      projecIcon.textContent = "check_circle";
-      break;
-    case "Today":
-      projecIcon.textContent = "today";
-      break;
-    case "Upcomming":
-      projecIcon.textContent = "calendar_month";
-      break;
-
-    default:
-      break;
-  }
-}
-
-// Project select inputs
-
-//Add form select input options, this should be called when adding new projects
 export function populateProjectSelectors() {
   selectProjecForm.forEach((selectInput) => {
     Object.keys(getCurrentProjects()).forEach((project) => {
@@ -130,29 +96,6 @@ export function populateProjectSelectors() {
   });
 }
 
-//Delete unexisting projects
-function updateSelectInputs() {
-  selectProjecForm.forEach((selectInput) => {
-    const projects = Object.keys(getCurrentProjects());
-    //Update the select input options to match the current projects
-    for (let i = selectInput.children.length - 1; i >= 0; i--) {
-      const option = selectInput.children[i];
-      if (!projects.includes(option.value)) {
-        option.remove();
-      }
-    }
-  });
-}
-
-//Project Event Listeners
-
-const addProjectBtn = document.querySelector(".add-project");
-const projectsSection = document.querySelector(".projects");
-
-//Project Form
-const newProjectForm = document.querySelector(".new-project-form");
-const cancelProjectBtn = document.querySelector(".cancel-project-btn");
-
 export function setupProjectListeners() {
   //Add Project
   addProjectBtn.addEventListener("click", handleAddProjectClicks);
@@ -165,14 +108,16 @@ export function setupProjectListeners() {
   cancelProjectBtn.addEventListener("click", handleProjectFormCancel);
 }
 
-// Hanlder Functions
+// ========================
+// EVENT HANDLERS
+// ========================
 
 //Add Project
 function handleAddProjectClicks(e) {
   if (e.target.matches(".material-symbols-outlined")) {
     document.querySelector(".add-project").after(newProjectForm);
     newProjectForm.style.display = "grid";
-    newProjectForm.querySelector(".project-name-input").focus();
+    projectNameInput.focus();
   }
 }
 
@@ -191,7 +136,6 @@ function handleDeleteProjectClicks(e) {
 }
 
 // Project Form
-
 function handleProjectFormSubmit(e) {
   e.preventDefault();
   const newProjectData = getProjectFormData();
@@ -200,8 +144,8 @@ function handleProjectFormSubmit(e) {
     return;
   }
   saveData();
-  document.querySelector(".project-name-input").value = "";
-  document.querySelector(".project-name-input").focus();
+  projectNameInput.value = "";
+  projectNameInput.focus();
   console.log(getCurrentProjects());
   renderCustomProjects();
   populateProjectSelectors();
@@ -209,13 +153,55 @@ function handleProjectFormSubmit(e) {
 
 function handleProjectFormCancel() {
   newProjectForm.style.display = "none";
-  document.querySelector(".project-name-input").value = "";
+  projectNameInput.value = "";
+}
+
+// ========================
+// PRIVATE HELPERS
+// ========================
+
+function createProject(project) {
+  const projectTaskContainer = document.createElement("div");
+  projectTaskContainer.textContent = `${project}`;
+  projectTaskContainer.classList.add(`${encodeClassName(project)}`, "flexbox");
+  return projectTaskContainer;
+}
+
+function createSvgIcon() {
+  const icon = document.createElement("span");
+  icon.classList.add("material-symbols-outlined");
+  return icon;
+}
+
+function setProjectIcon(project, projectIcon) {
+  const icons = {
+    Inbox: "inbox",
+    Completed: "check_circle",
+    Today: "today",
+    Upcomming: "calendar_month",
+  };
+  projectIcon.textContent = icons[project] || "";
 }
 
 function getProjectFormData() {
-  const projectName = document.querySelector(".project-name-input").value;
+  const projectName = projectNameInput.value;
 
   return {
     projectName: projectName,
   };
 }
+
+function updateSelectInputs() {
+  selectProjecForm.forEach((selectInput) => {
+    const projects = Object.keys(getCurrentProjects());
+    //Update the select input options to match the current projects
+    for (let i = selectInput.children.length - 1; i >= 0; i--) {
+      const option = selectInput.children[i];
+      if (!projects.includes(option.value)) {
+        option.remove();
+      }
+    }
+  });
+}
+
+
