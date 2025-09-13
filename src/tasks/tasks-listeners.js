@@ -187,6 +187,7 @@ function handleDialogFormCancel() {
 
 // Main Form
 function handleAddTaskMainBtn() {
+  handleEditFormCancel(); //Close edit form if opened
   addTaskBtnMain.insertAdjacentElement("afterend", taskForm);
   taskForm.style.display = "grid";
   addTaskBtnMain.style.display = "none";
