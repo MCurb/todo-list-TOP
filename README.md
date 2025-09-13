@@ -53,25 +53,25 @@ A simple and fun web app to help you organize your tasks, set due dates, and sta
 
 ```
 src/
-├── index.js
-├── template.html
+├── index.js             — Entry point
+├── template.html        — HTML template
 ├── styles/
-│ └── styles.css
+│   └── styles.css       — All CSS
 ├── utils/
-│ └── utils.js
+│   └── utils.js         — Helper functions
 ├── state/
-│ └── state.js
+│   └── state.js         — Project and task state management
 ├── projects/
-│ ├── projects.js
-│ └── projects-ui.js
+│   ├── projects.js      — Project logic (add/delete projects)
+│   └── projects-ui.js   — Project-related DOM rendering
 ├── tasks/
-│ ├── task-object.js
-│ ├── categorize-tasks.js
-│ ├── tasks.js
-│ ├── tasks-ui.js
-│ └── tasks-listeners.js
+│   ├── task-object.js       — Task constructor/class
+│   ├── categorize-tasks.js  — Task categorization logic
+│   ├── tasks.js             — Task logic (add/delete/update)
+│   ├── tasks-ui.js          — Task-related DOM rendering
+│   └── tasks-listeners.js   — Task event listeners
 └── sidebar/
-└── sidebar-ui.js
+    └── sidebar-ui.js        — Sidebar rendering & events
 ```
 
 ## 🧠 What I Learned
