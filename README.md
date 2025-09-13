@@ -86,7 +86,6 @@ src/
 
 - Favicon: [Checkmark icons created by heisenberg_jr](https://www.flaticon.com/free-icons/checkmark) - from Flaticon  
 - [The Odin Project](https://www.theodinproject.com/) for its amazing lessons and guidance
-- [ChatGPT](https://chat.openai.com/) for helping me with explanations, code, and writing this README
 
 
 ## License
