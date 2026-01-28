@@ -19,7 +19,7 @@ const main = document.querySelector(".main");
 const sidebar = document.querySelector(".sidebar");
 const sidebarToggleContainer = document.querySelector(".top-sidebar");
 const toggleSidebarBtn = document.querySelector(
-  ".top-sidebar .material-symbols-outlined"
+  ".top-sidebar .material-symbols-outlined",
 );
 const taskCategoryContainer = document.querySelector(".task-categories");
 
@@ -99,8 +99,10 @@ function handleSidebarToggle() {
   body.classList.toggle("collapse-grid");
   sidebar.classList.toggle("collapse-sidebar");
   if (!header.querySelector(".top-sidebar")) {
-    header.appendChild(sidebarToggleContainer);
-    main.style.marginLeft = "20vw";
+    setTimeout(() => {
+      header.appendChild(sidebarToggleContainer);
+      main.style.marginLeft = "20vw";
+    }, 350);
   } else {
     sidebar.insertBefore(sidebarToggleContainer, taskCategoryContainer);
     main.style.marginLeft = "10vw";
@@ -115,11 +117,11 @@ function toggleAddTaskBtn(project) {
   const taskSections = ["Completed", "Today", "Upcomming"];
   if (taskSections.includes(project)) {
     addTaskBtnMain.style.display = "none";
-    taskForm.style.display = "none"
+    taskForm.style.display = "none";
   } else {
     addTaskBtnMain.style.display = "flex";
-    taskForm.style.display = "none"
-    resetFormValues()
+    taskForm.style.display = "none";
+    resetFormValues();
   }
 }
 

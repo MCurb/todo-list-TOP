@@ -113,7 +113,6 @@ body {
     "sidebar main";
   height: 100%;
   font-family: "Roboto";
-  transition: all 0.2s ease;
 }
 
 .material-symbols-outlined {
@@ -152,6 +151,7 @@ body {
   padding: 0 4vw;
   margin-bottom: 20px;
   margin-left: 10vw;
+  transition: margin-left 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Add Task Button */
@@ -415,12 +415,14 @@ select.priority {
   width: 260px;
   min-width: fit-content;
   overflow: hidden;
+  opacity: 1;
   background-color: var(--color-sidebar-bg);
-  transition: transform 0.2s ease;
+  transition: opacity, transform, 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .collapse-sidebar {
   transform: translateX(-100%);
+  opacity: 0;
 }
 
 .collapse-grid {
